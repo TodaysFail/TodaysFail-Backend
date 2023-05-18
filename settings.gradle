@@ -1,1 +1,6 @@
 rootProject.name = 'TodaysFail-Backend'
+include 'TodaysFail-Common'
+include 'TodaysFail-Domain'
+include 'TodaysFail-Interface'
+include 'TodaysFail-Infrastructure'
+
