@@ -1,8 +1,6 @@
-name: Test and Analyze
+name: develop(pull_request) Spotless, Test and SonarCloud
 on:
-  workflow_dispatch:
   pull_request:
-  push:
     branches:
       - develop
 jobs:
