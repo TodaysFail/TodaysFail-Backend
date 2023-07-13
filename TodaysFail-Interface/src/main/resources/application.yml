@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    include:
+      - infrastructure
+      - domain
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    ROOT: WARN
