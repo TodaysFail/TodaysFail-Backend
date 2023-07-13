@@ -1,0 +1,30 @@
+spring:
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+logging:
+  level:
+    com.todaysfail.outer.*: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+logging:
+  level:
+    com.todaysfail.outer.*: debug
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    com.todaysfail.outer.*: debug

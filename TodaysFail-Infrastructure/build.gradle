@@ -2,5 +2,7 @@ bootJar { enabled = false }
 jar { enabled = true }
 
 dependencies {
+    implementation(project(":TodaysFail-Common"))
 
+    api 'org.springframework.boot:spring-boot-starter-data-redis'
 }
