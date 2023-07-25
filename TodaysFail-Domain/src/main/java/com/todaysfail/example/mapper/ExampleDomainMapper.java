@@ -6,10 +6,7 @@ import com.todaysfail.example.domain.Example;
 
 @Mapper
 public class ExampleDomainMapper {
-	public Example toDomain(ExampleEntity entity) {
-		return Example.builder()
-			.exampleId(entity.getId())
-			.name(entity.getName())
-			.build();
-	}
+    public Example toDomain(ExampleEntity entity) {
+        return Example.builder().exampleId(entity.getId()).name(entity.getName()).build();
+    }
 }

@@ -1,17 +1,14 @@
 package com.todaysfail.user;
 
-import javax.persistence.Embedded;
+import com.todaysfail.common.type.user.AccountRole;
+import com.todaysfail.common.type.user.AccountStatus;
+import com.todaysfail.common.type.user.OauthProvider;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.todaysfail.common.type.user.AccountRole;
-import com.todaysfail.common.type.user.AccountStatus;
-import com.todaysfail.common.type.user.OauthProvider;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,6 @@
 package com.todaysfail.example.repository;
 
+import com.todaysfail.example.ExampleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.todaysfail.example.ExampleEntity;
-
-public interface ExampleJpaRepository extends JpaRepository<ExampleEntity, Long> {
-}
+public interface ExampleJpaRepository extends JpaRepository<ExampleEntity, Long> {}
