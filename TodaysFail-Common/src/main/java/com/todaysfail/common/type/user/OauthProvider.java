@@ -1,13 +1,13 @@
-package com.todaysfail.user.domain;
+package com.todaysfail.common.type.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AccountRole {
-    USER("USER"),
-    ADMIN("ADMIN");
+public enum OauthProvider {
+    KAKAO("KAKAO"),
+    ;
 
     private String value;
 }

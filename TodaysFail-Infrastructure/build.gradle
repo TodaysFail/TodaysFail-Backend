@@ -1,8 +1,12 @@
-bootJar { enabled = false }
-jar { enabled = true }
+bootJar.enabled = false
+jar.enabled = true
 
 dependencies {
     implementation(project(":TodaysFail-Common"))
+    implementation(project(":TodaysFail-Domain"))
 
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
     api 'org.springframework.boot:spring-boot-starter-data-redis'
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
