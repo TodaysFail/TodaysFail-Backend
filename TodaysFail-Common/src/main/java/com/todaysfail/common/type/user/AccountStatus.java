@@ -1,4 +1,4 @@
-package com.todaysfail.user.domain;
+package com.todaysfail.common.type.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
