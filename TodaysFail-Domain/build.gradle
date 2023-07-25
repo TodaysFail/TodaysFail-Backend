@@ -3,5 +3,4 @@ jar { enabled = true }
 
 dependencies {
     implementation(project(":TodaysFail-Common"))
-    implementation(project(":TodaysFail-Infrastructure"))
 }
