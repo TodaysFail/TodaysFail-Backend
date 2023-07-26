@@ -29,7 +29,7 @@ public class JwtTokenHelper {
 
     private Jws<Claims> getJws(String token) {
         try {
-            return Jwts.parserBuilder().setSigningKey(jwtSecretKey).build().parseClaimsJws(token);
+            return Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
         } catch (Exception e) {
