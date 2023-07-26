@@ -1,5 +1,6 @@
 package com.todaysfail.user;
 
+import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.common.type.user.AccountRole;
 import com.todaysfail.common.type.user.AccountStatus;
 import com.todaysfail.common.type.user.OauthProvider;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity(name = "tbl_user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserEntity {
+public class UserEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
