@@ -1,5 +1,6 @@
 package com.todaysfail.example;
 
+import com.todaysfail.common.BaseTimeEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity(name = "tbl_example")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ExampleEntity {
+public class ExampleEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
