@@ -18,13 +18,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtTokenHelper {
-    @Value("${auth.jwt.secret-key")
+    @Value("${auth.jwt.secret-key}")
     private String jwtSecretKey;
 
-    @Value("${auth.jwt.access-exp")
+    @Value("${auth.jwt.access-exp}")
     private Long jwtAccessExp;
 
-    @Value("${auth.jwt.refresh-exp")
+    @Value("${auth.jwt.refresh-exp}")
     private Long jwtRefreshExp;
 
     private Jws<Claims> getJws(String token) {
