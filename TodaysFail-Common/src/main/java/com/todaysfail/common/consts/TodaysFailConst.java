@@ -1,5 +1,8 @@
 package com.todaysfail.common.consts;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class TodaysFailConst {
     public static final String AUTH_HEADER = "Authorization";
     public static final String BEARER = "Bearer";
