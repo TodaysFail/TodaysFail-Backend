@@ -2,7 +2,7 @@ package com.todaysfail.api.web.example;
 
 import com.todaysfail.api.web.example.dto.response.ExampleResponse;
 import com.todaysfail.api.web.example.mapper.ExampleMapper;
-import com.todaysfail.example.usecase.ExampleReadUseCase;
+import com.todaysfail.domains.example.usecase.ExampleReadUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

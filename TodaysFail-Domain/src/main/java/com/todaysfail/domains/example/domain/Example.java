@@ -1,4 +1,4 @@
-package com.todaysfail.example.domain;
+package com.todaysfail.domains.example.domain;
 
 import lombok.Builder;
 

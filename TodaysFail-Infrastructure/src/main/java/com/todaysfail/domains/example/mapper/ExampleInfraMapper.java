@@ -1,8 +1,8 @@
-package com.todaysfail.example.mapper;
+package com.todaysfail.domains.example.mapper;
 
 import com.todaysfail.common.annotation.Mapper;
-import com.todaysfail.example.ExampleEntity;
-import com.todaysfail.example.domain.Example;
+import com.todaysfail.domains.example.ExampleEntity;
+import com.todaysfail.domains.example.domain.Example;
 
 @Mapper
 public class ExampleInfraMapper {

@@ -1,4 +1,4 @@
-package com.todaysfail.user;
+package com.todaysfail.domains.user;
 
 import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.common.type.user.AccountRole;
