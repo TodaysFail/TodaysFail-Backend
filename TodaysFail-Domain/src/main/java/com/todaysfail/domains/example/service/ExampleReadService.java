@@ -1,8 +1,8 @@
-package com.todaysfail.example.service;
+package com.todaysfail.domains.example.service;
 
-import com.todaysfail.example.domain.Example;
-import com.todaysfail.example.port.ExampleQueryPort;
-import com.todaysfail.example.usecase.ExampleReadUseCase;
+import com.todaysfail.domains.example.domain.Example;
+import com.todaysfail.domains.example.port.ExampleQueryPort;
+import com.todaysfail.domains.example.usecase.ExampleReadUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

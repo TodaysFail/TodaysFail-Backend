@@ -1,4 +1,4 @@
-package com.todaysfail.example;
+package com.todaysfail.domains.example;
 
 import com.todaysfail.common.BaseTimeEntity;
 import javax.persistence.Entity;

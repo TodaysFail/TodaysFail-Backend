@@ -1,12 +1,12 @@
-package com.todaysfail.example.adapter;
+package com.todaysfail.domains.example.adapter;
 
 import com.todaysfail.common.annotation.Adapter;
-import com.todaysfail.example.ExampleEntity;
-import com.todaysfail.example.domain.Example;
-import com.todaysfail.example.exception.NotFoundExampleException;
-import com.todaysfail.example.mapper.ExampleInfraMapper;
-import com.todaysfail.example.port.ExampleQueryPort;
-import com.todaysfail.example.repository.ExampleJpaRepository;
+import com.todaysfail.domains.example.ExampleEntity;
+import com.todaysfail.domains.example.domain.Example;
+import com.todaysfail.domains.example.exception.NotFoundExampleException;
+import com.todaysfail.domains.example.mapper.ExampleInfraMapper;
+import com.todaysfail.domains.example.port.ExampleQueryPort;
+import com.todaysfail.domains.example.repository.ExampleJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

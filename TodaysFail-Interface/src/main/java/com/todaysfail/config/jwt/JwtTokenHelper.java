@@ -31,9 +31,9 @@ public class JwtTokenHelper {
         try {
             return Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
-            throw new ExpiredTokenException();
+            throw ExpiredTokenException.EXCEPTION;
         } catch (Exception e) {
-            throw new InvalidTokenException();
+            throw InvalidTokenException.EXCEPTION;
         }
     }
 
@@ -95,7 +95,7 @@ public class JwtTokenHelper {
             Claims claims = getJws(token).getBody();
             return Long.parseLong(claims.getSubject());
         }
-        throw new InvalidTokenException();
+        throw InvalidTokenException.EXCEPTION;
     }
 
     public Long parseRefreshToken(String token) {
@@ -105,9 +105,9 @@ public class JwtTokenHelper {
                 return Long.parseLong(claims.getSubject());
             }
         } catch (ExpiredTokenException e) {
-            throw new RefreshTokenExpiredException();
+            throw RefreshTokenExpiredException.EXCEPTION;
         }
-        throw new InvalidTokenException();
+        throw InvalidTokenException.EXCEPTION;
     }
 
     public Long getRefreshTokenTTlSecond() {

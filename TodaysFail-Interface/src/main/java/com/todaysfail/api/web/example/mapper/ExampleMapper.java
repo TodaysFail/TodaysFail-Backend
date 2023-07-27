@@ -2,7 +2,7 @@ package com.todaysfail.api.web.example.mapper;
 
 import com.todaysfail.api.web.example.dto.response.ExampleResponse;
 import com.todaysfail.common.annotation.Mapper;
-import com.todaysfail.example.domain.Example;
+import com.todaysfail.domains.example.domain.Example;
 
 @Mapper
 public class ExampleMapper {

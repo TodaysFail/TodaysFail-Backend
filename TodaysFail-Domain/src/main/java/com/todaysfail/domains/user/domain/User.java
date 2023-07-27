@@ -1,4 +1,4 @@
-package com.todaysfail.user.domain;
+package com.todaysfail.domains.user.domain;
 
 import com.todaysfail.common.type.user.AccountRole;
 import com.todaysfail.common.type.user.AccountStatus;
