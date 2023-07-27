@@ -20,9 +20,9 @@ public class UserCommandAdapter implements UserCommandPort {
     public User registerUser(Profile profile, OauthInfoVo oauthInfoVo) {
         UserEntity userEntity =
                 UserEntity.builder()
-                        .name(profile.name())
-                        .provider(oauthInfoVo.provider())
-                        .oid(oauthInfoVo.oid())
+                        .name(profile.getName())
+                        .provider(oauthInfoVo.getProvider())
+                        .oid(oauthInfoVo.getOid())
                         .build();
         return userRepository.save(userEntity).toDomain();
     }
