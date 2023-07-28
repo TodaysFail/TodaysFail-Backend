@@ -2,9 +2,8 @@ package com.todaysfail;
 
 import org.junit.jupiter.api.Test;
 
-@InterfaceIntegrateSpringBootTest
-class TodaysFailApplicationTest {
-
+@DomainIntegrateSpringBootTest
+class TodaysFailDomainApplicationTest {
     @Test
     void contextLoads() {}
 }

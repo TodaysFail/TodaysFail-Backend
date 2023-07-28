@@ -1,10 +1,8 @@
 package com.todaysfail.domains.user.adapter;
 
 import com.todaysfail.common.annotation.Adapter;
-import com.todaysfail.domains.user.UserEntity;
-import com.todaysfail.domains.user.domain.OauthInfoVo;
-import com.todaysfail.domains.user.domain.Profile;
-import com.todaysfail.domains.user.domain.User;
+import com.todaysfail.common.type.user.OauthProvider;
+import com.todaysfail.domains.user.entity.UserEntity;
 import com.todaysfail.domains.user.port.UserCommandPort;
 import com.todaysfail.domains.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +15,8 @@ public class UserCommandAdapter implements UserCommandPort {
     private final UserRepository userRepository;
 
     @Override
-    public User registerUser(Profile profile, OauthInfoVo oauthInfoVo) {
-        UserEntity userEntity =
-                UserEntity.builder()
-                        .name(profile.getName())
-                        .provider(oauthInfoVo.getProvider())
-                        .oid(oauthInfoVo.getOid())
-                        .build();
-        return userRepository.save(userEntity).toDomain();
+    public UserEntity registerUser(String name, OauthProvider provider, String oid) {
+        UserEntity userEntity = UserEntity.registerUser(name, provider, oid);
+        return userRepository.save(userEntity);
     }
 }

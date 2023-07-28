@@ -7,9 +7,6 @@ import com.todaysfail.domains.example.domain.Example;
 @Mapper
 public class ExampleMapper {
     public ExampleResponse toResponse(final Example domain) {
-        return ExampleResponse.builder()
-                .exampleId(domain.getExampleId())
-                .name(domain.getName())
-                .build();
+        return new ExampleResponse(domain.getExampleId(), domain.getName());
     }
 }
