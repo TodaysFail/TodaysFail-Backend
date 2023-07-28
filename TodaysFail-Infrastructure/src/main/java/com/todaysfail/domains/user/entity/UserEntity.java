@@ -11,16 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @Entity(name = "tbl_user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +35,6 @@ public class UserEntity extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private AccountRole accountRole = AccountRole.USER;
 
-    @Builder
     private UserEntity(
             String name,
             OauthProvider provider,
@@ -51,5 +46,9 @@ public class UserEntity extends BaseTimeEntity {
         this.oid = oid;
         this.accountStatus = accountStatus;
         this.accountRole = accountRole;
+    }
+
+    public static UserEntity registerUser(String name, OauthProvider provider, String oid) {
+        return new UserEntity(name, provider, oid, AccountStatus.NORMAL, AccountRole.USER);
     }
 }

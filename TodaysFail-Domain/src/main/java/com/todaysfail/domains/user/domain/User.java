@@ -1,10 +1,8 @@
 package com.todaysfail.domains.user.domain;
 
-import com.todaysfail.aop.event.Events;
 import com.todaysfail.common.type.user.AccountRole;
 import com.todaysfail.common.type.user.AccountStatus;
 import com.todaysfail.domains.user.entity.UserEntity;
-import com.todaysfail.events.UserRegisterEvent;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,17 +14,17 @@ import lombok.NoArgsConstructor;
 public class User {
     private Long userId;
     private Profile profile;
-    private OauthInfoVo oauthInfoVo;
+    private OauthInfo oauthInfo;
     private AccountStatus accountStatus;
     private AccountRole accountRole;
 
     public static User of(
             Long userId,
             Profile profile,
-            OauthInfoVo oauthInfoVo,
+            OauthInfo oauthInfo,
             AccountStatus accountStatus,
             AccountRole accountRole) {
-        return new User(userId, profile, oauthInfoVo, accountStatus, accountRole);
+        return new User(userId, profile, oauthInfo, accountStatus, accountRole);
     }
 
     public static User registerUser(UserEntity userEntity) {
@@ -34,10 +32,9 @@ public class User {
                 new User(
                         userEntity.getId(),
                         Profile.from(userEntity.getName()),
-                        OauthInfoVo.of(userEntity.getProvider(), userEntity.getOid()),
+                        OauthInfo.of(userEntity.getProvider(), userEntity.getOid()),
                         userEntity.getAccountStatus(),
                         userEntity.getAccountRole());
-        Events.raise(new UserRegisterEvent(user.userId));
         return user;
     }
 }

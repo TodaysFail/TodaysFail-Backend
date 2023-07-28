@@ -16,7 +16,7 @@ public class UserCommandAdapter implements UserCommandPort {
 
     @Override
     public UserEntity registerUser(String name, OauthProvider provider, String oid) {
-        UserEntity userEntity = UserEntity.builder().name(name).provider(provider).oid(oid).build();
+        UserEntity userEntity = UserEntity.registerUser(name, provider, oid);
         return userRepository.save(userEntity);
     }
 }

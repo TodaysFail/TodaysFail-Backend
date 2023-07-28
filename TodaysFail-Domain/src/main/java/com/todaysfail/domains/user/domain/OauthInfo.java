@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class OauthInfoVo {
+public class OauthInfo {
     private OauthProvider provider;
     private String oid;
 
-    public static OauthInfoVo of(OauthProvider provider, String oid) {
-        return new OauthInfoVo(provider, oid);
+    public static OauthInfo of(OauthProvider provider, String oid) {
+        return new OauthInfo(provider, oid);
     }
 }
