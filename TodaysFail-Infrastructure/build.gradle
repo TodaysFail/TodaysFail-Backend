@@ -3,7 +3,6 @@ jar.enabled = true
 
 dependencies {
     implementation(project(":TodaysFail-Common"))
-    implementation(project(":TodaysFail-Domain"))
 
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'

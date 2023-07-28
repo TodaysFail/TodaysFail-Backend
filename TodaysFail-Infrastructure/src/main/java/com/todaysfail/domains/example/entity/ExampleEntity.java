@@ -1,18 +1,16 @@
-package com.todaysfail.domains.example;
+package com.todaysfail.domains.example.entity;
 
-import com.todaysfail.common.BaseTimeEntity;
+import com.todaysfail.domains.BaseTimeEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @Entity(name = "tbl_example")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
