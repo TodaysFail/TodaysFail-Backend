@@ -1,8 +1,10 @@
 package com.todaysfail.domains.user.domain;
 
+import com.todaysfail.aop.event.Events;
 import com.todaysfail.common.type.user.AccountRole;
 import com.todaysfail.common.type.user.AccountStatus;
 import com.todaysfail.domains.user.entity.UserEntity;
+import com.todaysfail.events.UserRegisterEvent;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +37,7 @@ public class User {
                         OauthInfo.of(userEntity.getProvider(), userEntity.getOid()),
                         userEntity.getAccountStatus(),
                         userEntity.getAccountRole());
+        Events.raise(new UserRegisterEvent(userEntity.getId()));
         return user;
     }
 }
