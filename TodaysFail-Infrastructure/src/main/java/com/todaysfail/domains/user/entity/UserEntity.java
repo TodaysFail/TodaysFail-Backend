@@ -48,7 +48,12 @@ public class UserEntity extends BaseTimeEntity {
         this.accountRole = accountRole;
     }
 
-    public static UserEntity registerUser(String name, OauthProvider provider, String oid) {
-        return new UserEntity(name, provider, oid, AccountStatus.NORMAL, AccountRole.USER);
+    public static UserEntity registerUser(
+            String name,
+            OauthProvider provider,
+            String oid,
+            AccountStatus accountStatus,
+            AccountRole accountRole) {
+        return new UserEntity(name, provider, oid, accountStatus, accountRole);
     }
 }

@@ -1,8 +1,11 @@
 package com.todaysfail.aop.event;
 
+import lombok.NoArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class Events {
+
     private static ThreadLocal<ApplicationEventPublisher> publisherLocal = new ThreadLocal<>();
 
     public static void raise(DomainEvent event) {
