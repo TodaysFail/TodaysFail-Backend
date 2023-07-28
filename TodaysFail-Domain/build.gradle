@@ -3,5 +3,7 @@ jar { enabled = true }
 
 dependencies {
     implementation(project(":TodaysFail-Common"))
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation(project(":TodaysFail-Infrastructure"))
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/examples")
 @RequiredArgsConstructor
 public class ExampleController {
-    private final ExampleReadUseCase exampleReadUseCase;
     private final ExampleMapper exampleMapper;
+    private final ExampleReadUseCase exampleReadUseCase;
 
     @Operation(summary = "Example 조회 API")
     @GetMapping("/{example-id}")

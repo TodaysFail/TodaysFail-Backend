@@ -1,12 +1,9 @@
-package com.todaysfail.domains.user;
+package com.todaysfail.domains.user.entity;
 
-import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.common.type.user.AccountRole;
 import com.todaysfail.common.type.user.AccountStatus;
 import com.todaysfail.common.type.user.OauthProvider;
-import com.todaysfail.domains.user.domain.OauthInfoVo;
-import com.todaysfail.domains.user.domain.Profile;
-import com.todaysfail.domains.user.domain.User;
+import com.todaysfail.domains.BaseTimeEntity;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -54,14 +51,5 @@ public class UserEntity extends BaseTimeEntity {
         this.oid = oid;
         this.accountStatus = accountStatus;
         this.accountRole = accountRole;
-    }
-
-    public User toDomain() {
-        return User.of(
-                id,
-                Profile.builder().name(name).build(),
-                OauthInfoVo.builder().provider(provider).oid(oid).build(),
-                accountStatus,
-                accountRole);
     }
 }

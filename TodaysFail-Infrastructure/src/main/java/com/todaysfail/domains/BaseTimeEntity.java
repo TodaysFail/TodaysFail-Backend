@@ -1,4 +1,4 @@
-package com.todaysfail.common;
+package com.todaysfail.domains;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

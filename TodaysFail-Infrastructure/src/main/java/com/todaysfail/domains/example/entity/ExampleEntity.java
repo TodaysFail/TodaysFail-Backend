@@ -1,6 +1,6 @@
-package com.todaysfail.domains.example;
+package com.todaysfail.domains.example.entity;
 
-import com.todaysfail.common.BaseTimeEntity;
+import com.todaysfail.domains.BaseTimeEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

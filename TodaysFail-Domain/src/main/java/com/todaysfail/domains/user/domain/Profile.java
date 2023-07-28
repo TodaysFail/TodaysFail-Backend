@@ -12,4 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Profile {
     private String name;
+
+    public static Profile from(String name) {
+        return new Profile(name);
+    }
 }
