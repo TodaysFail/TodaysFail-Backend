@@ -8,7 +8,7 @@ public class Events {
     public static void raise(DomainEvent event) {
         if (event == null) return;
 
-        if (publisherLocal.get() == null) {
+        if (publisherLocal.get() != null) {
             publisherLocal.get().publishEvent(event);
         }
     }
