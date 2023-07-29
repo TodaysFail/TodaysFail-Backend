@@ -49,7 +49,7 @@ class KakaoInfoClientTest {
         var response = kakaoInfoClient.kakaoUserInfo("accessToken");
 
         // then
-        assertEquals(response.getKakaoAccount().getName(), "sample@sample.com");
+        assertEquals(response.getKakaoAccount().getName(), "홍길동");
         assertEquals(
                 response.getKakaoAccount().getProfileImageUrl(),
                 "http://yyy.kakao.com/dn/.../img_640x640.jpg");
