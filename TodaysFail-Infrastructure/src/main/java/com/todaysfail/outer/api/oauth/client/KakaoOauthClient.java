@@ -2,6 +2,7 @@ package com.todaysfail.outer.api.oauth.client;
 
 import com.todaysfail.outer.api.oauth.dto.KakaoTokenResponse;
 import com.todaysfail.outer.api.oauth.dto.OIDCPublicKeysResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ public interface KakaoOauthClient {
             @PathVariable("CODE") String code,
             @PathVariable("CLIENT_SECRET") String client_secret);
 
-    // TODO: 캐싱 적용
     @GetMapping("/.well-known/jwks.json")
+    @Cacheable(cacheNames = "KakaoOIDC", cacheManager = "oidcCacheManager")
     OIDCPublicKeysResponse kakaoOIDCOpenKeys();
 }
