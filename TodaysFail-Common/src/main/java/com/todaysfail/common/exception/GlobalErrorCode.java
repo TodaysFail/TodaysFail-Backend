@@ -34,6 +34,14 @@ public enum GlobalErrorCode implements BaseErrorCode {
 
     SERVER_UNAVAILABLE(
             SERVICE_UNAVAILABLE, "GLOBAL_503_1", "현재 유지보수 및 과부하로 서버를 이용할 수 없습니다. 잠시 후 다시 시도해주세요"),
+
+    OTHER_SERVER_BAD_REQUEST(BAD_REQUEST, "FEIGN_400_1", "Other server bad request"),
+    OTHER_SERVER_UNAUTHORIZED(BAD_REQUEST, "FEIGN_400_2", "Other server unauthorized"),
+    OTHER_SERVER_FORBIDDEN(BAD_REQUEST, "FEIGN_400_3", "Other server forbidden"),
+    OTHER_SERVER_EXPIRED_TOKEN(BAD_REQUEST, "FEIGN_400_4", "Other server expired token"),
+    OTHER_SERVER_NOT_FOUND(BAD_REQUEST, "FEIGN_400_5", "Other server not found error"),
+    OTHER_SERVER_INTERNAL_SERVER_ERROR(
+            BAD_REQUEST, "FEIGN_400_6", "Other server internal server error"),
     ;
 
     private Integer status;

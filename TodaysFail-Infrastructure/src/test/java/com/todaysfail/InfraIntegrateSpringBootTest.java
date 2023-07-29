@@ -6,9 +6,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = InfraIntegrateTestConfig.class)
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = InfraIntegrateTestConfig.class)
+@ActiveProfiles(resolver = InfraIntegrateProfileResolver.class)
 @Documented
 public @interface InfraIntegrateSpringBootTest {}
