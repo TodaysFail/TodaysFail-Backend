@@ -3,6 +3,18 @@ spring:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
     password: ${REDIS_PASSWORD:}
+oauth:
+  kakao:
+    base-url: ${KAKAO_BASE_URL}
+    client-id: ${KAKAO_CLIENT}
+    client-secret: ${KAKAO_SECRET}
+    redirect-url: ${KAKAO_REDIRECT}
+    app-id: ${KAKAO_APP_ID:default}
+    admin-key: ${KAKAO_ADMIN_KEY}
+feign:
+  kakao:
+    info : https://kapi.kakao.com
+    oauth : https://kauth.kakao.com
 ---
 spring:
   config:
