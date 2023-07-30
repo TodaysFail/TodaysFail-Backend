@@ -67,7 +67,6 @@ public class RedissonLockAop {
                 rLock.unlock();
             } catch (IllegalMonitorStateException e) {
                 log.error(e + baseKey + dynamicKey);
-                throw e;
             }
         }
     }
