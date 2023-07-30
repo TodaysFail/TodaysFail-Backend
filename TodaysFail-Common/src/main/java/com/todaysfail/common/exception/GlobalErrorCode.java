@@ -42,6 +42,9 @@ public enum GlobalErrorCode implements BaseErrorCode {
     OTHER_SERVER_NOT_FOUND(BAD_REQUEST, "FEIGN_400_5", "Other server not found error"),
     OTHER_SERVER_INTERNAL_SERVER_ERROR(
             BAD_REQUEST, "FEIGN_400_6", "Other server internal server error"),
+
+    NOT_AVAILABLE_REDISSON_LOCK(500, "REDISSON_500_1", "락을 사용할 수 없습니다"),
+    BAD_LOCK_IDENTIFIER(500, "REDISSON_500_2", "락의 키값이 잘못 세팅 되었습니다"),
     ;
 
     private Integer status;
