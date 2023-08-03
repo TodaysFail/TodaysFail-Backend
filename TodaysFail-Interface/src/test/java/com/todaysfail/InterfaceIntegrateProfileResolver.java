@@ -5,6 +5,6 @@ import org.springframework.test.context.ActiveProfilesResolver;
 public class InterfaceIntegrateProfileResolver implements ActiveProfilesResolver {
     @Override
     public String[] resolve(Class<?> testClass) {
-        return new String[] {"interface", "domain", "infrastructure"};
+        return new String[] {"common", "interface", "domain", "infrastructure"};
     }
 }

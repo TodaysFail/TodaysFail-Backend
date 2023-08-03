@@ -5,10 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum AccountStatus {
-    NORMAL("NORMAL"),
-    DELETED("DELETED"),
-    FORBIDDEN("FORBIDDEN");
+public enum UserRole {
+    USER("USER"),
+    ADMIN("ADMIN");
 
     private String value;
 }

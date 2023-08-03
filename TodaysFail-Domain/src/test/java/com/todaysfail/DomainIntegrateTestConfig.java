@@ -1,5 +1,6 @@
 package com.todaysfail;
 
+import com.todaysfail.common.TodaysFailCommonApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(
         basePackageClasses = {
             TodaysFailDomainApplication.class,
-            TodaysFailInfrastructureApplication.class
+            TodaysFailInfrastructureApplication.class,
+            TodaysFailCommonApplication.class
         })
 public class DomainIntegrateTestConfig {}

@@ -1,9 +1,10 @@
 package com.todaysfail.domains.user.entity;
 
-import com.todaysfail.common.type.user.AccountRole;
-import com.todaysfail.common.type.user.AccountStatus;
 import com.todaysfail.common.type.user.OauthProvider;
+import com.todaysfail.common.type.user.UserRole;
+import com.todaysfail.common.type.user.UserStatus;
 import com.todaysfail.domains.BaseTimeEntity;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,36 +25,73 @@ public class UserEntity extends BaseTimeEntity {
 
     private String name;
 
+    private String profileImg;
+
+    private Boolean isDefaultImg;
+
     @Enumerated(EnumType.STRING)
     private OauthProvider provider;
 
     private String oid;
 
     @Enumerated(EnumType.STRING)
-    private AccountStatus accountStatus = AccountStatus.NORMAL;
+    private UserStatus userStatus = UserStatus.NORMAL;
 
     @Enumerated(EnumType.STRING)
-    private AccountRole accountRole = AccountRole.USER;
+    private UserRole userRole = UserRole.USER;
+
+    private String fcmToken = "";
+
+    private Boolean pushAlarm;
+
+    private Boolean eventAlarm;
+
+    private LocalDateTime lastLoginAt = LocalDateTime.now();
 
     private UserEntity(
             String name,
+            String profileImg,
+            Boolean isDefaultImg,
             OauthProvider provider,
             String oid,
-            AccountStatus accountStatus,
-            AccountRole accountRole) {
+            UserStatus userStatus,
+            UserRole userRole,
+            String fcmToken,
+            Boolean pushAlarm,
+            Boolean eventAlarm) {
         this.name = name;
+        this.profileImg = profileImg;
+        this.isDefaultImg = isDefaultImg;
         this.provider = provider;
         this.oid = oid;
-        this.accountStatus = accountStatus;
-        this.accountRole = accountRole;
+        this.userStatus = userStatus;
+        this.userRole = userRole;
+        this.fcmToken = fcmToken;
+        this.pushAlarm = pushAlarm;
+        this.eventAlarm = eventAlarm;
     }
 
     public static UserEntity registerUser(
             String name,
+            String profileImg,
+            Boolean isDefaultImg,
             OauthProvider provider,
             String oid,
-            AccountStatus accountStatus,
-            AccountRole accountRole) {
-        return new UserEntity(name, provider, oid, accountStatus, accountRole);
+            UserStatus userStatus,
+            UserRole userRole,
+            String fcmToken,
+            Boolean pushAlarm,
+            Boolean eventAlarm) {
+        return new UserEntity(
+                name,
+                profileImg,
+                isDefaultImg,
+                provider,
+                oid,
+                userStatus,
+                userRole,
+                fcmToken,
+                pushAlarm,
+                eventAlarm);
     }
 }

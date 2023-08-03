@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
 @JsonNaming(SnakeCaseStrategy.class)
+@ToString
 public class KakaoInformationResponse {
     private String id;
     private KakaoAccount kakaoAccount;
@@ -15,16 +17,22 @@ public class KakaoInformationResponse {
     @Getter
     @NoArgsConstructor
     @JsonNaming(SnakeCaseStrategy.class)
+    @ToString
     public static class KakaoAccount {
         private Profile profile;
-        private String name;
 
         @Getter
         @NoArgsConstructor
         @JsonNaming(SnakeCaseStrategy.class)
+        @ToString
         public static class Profile {
+            private String nickname;
             private String profileImageUrl;
             private Boolean isDefaultImage;
+        }
+
+        public String getNickname() {
+            return profile.getNickname();
         }
 
         public String getProfileImageUrl() {
@@ -40,11 +48,11 @@ public class KakaoInformationResponse {
         return id;
     }
 
-    public String getName() {
-        return kakaoAccount.getName();
+    public String getNickname() {
+        return kakaoAccount.getProfile().getNickname();
     }
 
-    public String getProfileUrl() {
+    public String getProfileImageUrl() {
         return kakaoAccount.getProfileImageUrl();
     }
 

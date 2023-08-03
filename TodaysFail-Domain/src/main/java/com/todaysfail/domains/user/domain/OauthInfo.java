@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class OauthInfo {
+    private String oauthId;
     private OauthProvider provider;
-    private String oid;
 
-    public static OauthInfo of(OauthProvider provider, String oid) {
-        return new OauthInfo(provider, oid);
+    public static OauthInfo of(String oauthId, OauthProvider provider) {
+        return new OauthInfo(oauthId, provider);
     }
 }

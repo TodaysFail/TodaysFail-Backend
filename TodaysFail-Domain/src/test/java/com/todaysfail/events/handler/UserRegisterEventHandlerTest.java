@@ -5,6 +5,7 @@ import static org.mockito.BDDMockito.*;
 import com.todaysfail.DomainIntegrateProfileResolver;
 import com.todaysfail.DomainIntegrateTestConfig;
 import com.todaysfail.common.type.user.OauthProvider;
+import com.todaysfail.domains.user.domain.FcmNotification;
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.Profile;
 import com.todaysfail.domains.user.service.UserRegisterService;
@@ -24,10 +25,12 @@ class UserRegisterEventHandlerTest {
     @Test
     void 유저_생성_이벤트가_정상적으로_핸들링_되어야_한다() {
         // given
-        Profile profile = Profile.from("name");
-        OauthInfo oauthInfo = OauthInfo.of(OauthProvider.KAKAO, "oid");
+        Profile profile = Profile.from("name", "profileImg", false);
+        OauthInfo oauthInfo = OauthInfo.of("oid", OauthProvider.KAKAO);
+        FcmNotification fcmNotification = FcmNotification.of("fcmToken", true, true);
+
         // when
-        userRegisterService.execute(profile, oauthInfo);
+        userRegisterService.execute(profile, oauthInfo, fcmNotification);
         // then
         then(userRegisterEventHandler).should(times(1)).handleUserRegisterEvent(any());
     }

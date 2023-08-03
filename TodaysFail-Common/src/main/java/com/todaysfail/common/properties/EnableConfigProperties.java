@@ -1,8 +1,8 @@
-package com.todaysfail.config.properties;
+package com.todaysfail.common.properties;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@EnableConfigurationProperties({OauthProperties.class})
+@EnableConfigurationProperties({OauthProperties.class, JwtProperties.class})
 @Configuration
 public class EnableConfigProperties {}
