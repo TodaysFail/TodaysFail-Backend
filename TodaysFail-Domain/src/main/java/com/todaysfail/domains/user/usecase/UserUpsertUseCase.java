@@ -5,6 +5,6 @@ import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.Profile;
 import com.todaysfail.domains.user.domain.User;
 
-public interface UserRegisterUseCase {
+public interface UserUpsertUseCase {
     User execute(Profile profile, OauthInfo oauthInfo, FcmNotification fcmNotification);
 }

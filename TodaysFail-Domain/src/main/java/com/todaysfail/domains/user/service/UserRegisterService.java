@@ -1,7 +1,9 @@
 package com.todaysfail.domains.user.service;
 
-import com.todaysfail.common.type.user.AccountRole;
-import com.todaysfail.common.type.user.AccountStatus;
+import com.todaysfail.aop.lock.RedissonLock;
+import com.todaysfail.common.type.user.UserRole;
+import com.todaysfail.common.type.user.UserStatus;
+import com.todaysfail.domains.user.domain.FcmNotification;
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.Profile;
 import com.todaysfail.domains.user.domain.User;
@@ -19,14 +21,20 @@ public class UserRegisterService implements UserRegisterUseCase {
 
     @Override
     @Transactional
-    public User execute(Profile profile, OauthInfo oauthInfo) {
+    @RedissonLock(lockName = "유저등록", identifier = "oauthInfo")
+    public User execute(Profile profile, OauthInfo oauthInfo, FcmNotification fcmNotification) {
         UserEntity userEntity =
                 userCommandPort.registerUser(
                         profile.getName(),
+                        profile.getProfileImg(),
+                        profile.getIsDefaultImg(),
                         oauthInfo.getProvider(),
-                        oauthInfo.getOid(),
-                        AccountStatus.NORMAL,
-                        AccountRole.USER);
+                        oauthInfo.getOauthId(),
+                        UserStatus.NORMAL,
+                        UserRole.USER,
+                        fcmNotification.getFcmToken(),
+                        fcmNotification.getPushAlarm(),
+                        fcmNotification.getEventAlarm());
         return User.registerUser(userEntity);
     }
 }
