@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Profile {
     private String name;
+    private String profileImg;
+    private Boolean isDefaultImg;
 
-    public static Profile from(String name) {
-        return new Profile(name);
+    public static Profile from(String name, String profileImg, Boolean isDefaultImg) {
+        return new Profile(name, profileImg, isDefaultImg);
     }
 }

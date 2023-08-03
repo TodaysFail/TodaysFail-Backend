@@ -6,18 +6,15 @@ import com.todaysfail.common.exception.ExpiredTokenException;
 import com.todaysfail.common.exception.InvalidTokenException;
 import com.todaysfail.common.exception.RefreshTokenExpiredException;
 import com.todaysfail.common.properties.JwtProperties;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
-
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
