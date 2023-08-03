@@ -1,15 +1,19 @@
-package com.todaysfail.config.jwt;
+package com.todaysfail.common.jwt;
 
 import static com.todaysfail.common.consts.TodaysFailConst.*;
 
 import com.todaysfail.common.exception.ExpiredTokenException;
 import com.todaysfail.common.exception.InvalidTokenException;
 import com.todaysfail.common.exception.RefreshTokenExpiredException;
+import com.todaysfail.common.properties.JwtProperties;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
@@ -17,15 +21,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenHelper {
-    @Value("${auth.jwt.secret-key}")
-    private String jwtSecretKey;
-
-    @Value("${auth.jwt.access-exp}")
-    private Long jwtAccessExp;
-
-    @Value("${auth.jwt.refresh-exp}")
-    private Long jwtRefreshExp;
+    private final JwtProperties jwtProperties;
 
     private Jws<Claims> getJws(String token) {
         try {
@@ -38,7 +36,7 @@ public class JwtTokenHelper {
     }
 
     private Key getSecretKey() {
-        return Keys.hmacShaKeyFor(jwtSecretKey.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
     }
 
     private String buildAccessToken(
@@ -70,7 +68,7 @@ public class JwtTokenHelper {
     public String generateAccessToken(Long id, String role) {
         final Date issuedAt = new Date();
         final Date accessTokenExpiresIn =
-                new Date(issuedAt.getTime() + jwtAccessExp * MILLI_TO_SECOND);
+                new Date(issuedAt.getTime() + jwtProperties.getAccessExp() * MILLI_TO_SECOND);
 
         return buildAccessToken(id, issuedAt, accessTokenExpiresIn, role);
     }
@@ -78,7 +76,7 @@ public class JwtTokenHelper {
     public String generateRefreshToken(Long id) {
         final Date issuedAt = new Date();
         final Date refreshTokenExpiresIn =
-                new Date(issuedAt.getTime() + jwtRefreshExp * MILLI_TO_SECOND);
+                new Date(issuedAt.getTime() + jwtProperties.getRefreshExp() * MILLI_TO_SECOND);
         return buildRefreshToken(id, issuedAt, refreshTokenExpiresIn);
     }
 
@@ -111,6 +109,6 @@ public class JwtTokenHelper {
     }
 
     public Long getRefreshTokenTTlSecond() {
-        return jwtRefreshExp;
+        return jwtProperties.getRefreshExp();
     }
 }

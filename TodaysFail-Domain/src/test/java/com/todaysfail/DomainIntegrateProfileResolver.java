@@ -6,6 +6,6 @@ public class DomainIntegrateProfileResolver implements ActiveProfilesResolver {
 
     @Override
     public String[] resolve(Class<?> testClass) {
-        return new String[] {"infrastructure", "domain"};
+        return new String[] {"common", "infrastructure", "domain"};
     }
 }

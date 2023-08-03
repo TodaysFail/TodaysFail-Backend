@@ -1,4 +1,4 @@
-package com.todaysfail.config.properties;
+package com.todaysfail.common.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
