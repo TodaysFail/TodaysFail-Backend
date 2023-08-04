@@ -25,11 +25,14 @@ sonarqube {
     }
 }
 
-subprojects {
+allprojects {
     group = 'com.todaysfail'
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '17'
+}
 
+
+subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
     apply plugin: 'org.springframework.boot'
@@ -103,6 +106,8 @@ subprojects {
         useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
+
+    jar.enabled = false
 }
 bootJar.enabled = false
 
@@ -136,4 +141,8 @@ exit 1
 fi
 """
     "chmod +x .git/hooks/pre-commit".execute()
+}
+
+tasks.register("projectVersion") {
+    println(project.version)
 }
