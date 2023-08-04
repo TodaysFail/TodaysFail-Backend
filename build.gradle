@@ -106,6 +106,8 @@ subprojects {
         useJUnitPlatform()
         finalizedBy jacocoTestReport
     }
+
+    jar.enabled = false
 }
 bootJar.enabled = false
 
