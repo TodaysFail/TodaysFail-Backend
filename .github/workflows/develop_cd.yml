@@ -29,7 +29,7 @@ jobs:
           remote_path: ~/TodaysFail-Backend
           remote_host: ${{ secrets.HOST }}
           remote_port: ${{ secrets.PORT }}
-          remote_user: ec2-user
+          remote_user: root
           remote_key: ${{ secrets.KEY }}
 
       - name: connect ssh
@@ -40,13 +40,13 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            echo "${{ secrets.AWS_SECRET_KEY }}" | docker login -u "${{ secrets.AWS_ACCESS_KEY }}" --password-stdin "${{ secrets.AWS_ECR_REGISTRY }}"
-            cd ~/Todaysfail-Backend
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REGISTRY_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+            cd ~/TodaysFail-Backend
             VERSION=${{ github.event.inputs.version }}
             sed -i "s/VERSION=.*/VERSION=$VERSION/" .env
-            sudo docker compose -f ~/Todaysfail-Backend/docker-compose/docker-compose-develop.yml pull
-            sudo docker compose -f ~/Todaysfail-Backend/docker-compose/docker-compose-develop.yml --env-file .env up --build -d
-            sudo docker system prune --all -f
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml pull
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml --build -d
+            docker system prune --all -f
 
       - name: Notify on success
         if: ${{ success() }}
@@ -54,11 +54,15 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-          SLACK_USERNAME: 오늘의 실패
+          SLACK_USERNAME: '오늘의 실패'
           SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
           SLACK_COLOR: '#008000'
-          SLACK_TITLE: [DEV] 배포 성공 🎉
           SLACK_MESSAGE: |
+            *[DEV] 배포 성공 🎉*
+
+            *배포 버전*
+            ${{ needs.ci.outputs.VERSION }}
+
             *배포 내역*
             ${{ join(github.event.commits.*.message, '\n') }}
 
@@ -68,10 +72,14 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-          SLACK_USERNAME: 오늘의 실패
+          SLACK_USERNAME: '오늘의 실패'
           SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
           SLACK_COLOR: '#FF0000'
-          SLACK_TITLE: [DEV] 배포 실패 😭
           SLACK_MESSAGE: |
+            *[DEV] 배포 성공 🎉*
+
+            *배포 버전*
+            ${{ needs.ci.outputs.VERSION }}
+
             *배포 내역*
             ${{ join(github.event.commits.*.message, '\n') }}
