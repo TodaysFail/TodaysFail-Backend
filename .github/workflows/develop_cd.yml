@@ -45,7 +45,7 @@ jobs:
             VERSION=${{ github.event.inputs.version }}
             sed -i "s/VERSION=.*/VERSION=$VERSION/" .env
             docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml pull
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml --build -d
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml up --build -d
             docker system prune --all -f
 
       - name: Notify on success
@@ -58,13 +58,10 @@ jobs:
           SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
           SLACK_COLOR: '#008000'
           SLACK_MESSAGE: |
-            *[DEV] 배포 성공 🎉*
+            *[DEV] 수동 배포 성공 🎉*
 
             *배포 버전*
-            ${{ needs.ci.outputs.VERSION }}
-
-            *배포 내역*
-            ${{ join(github.event.commits.*.message, '\n') }}
+            ${{ github.event.inputs.version }}
 
       - name: Notify on failure
         if: ${{ failure() }}
@@ -76,10 +73,7 @@ jobs:
           SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
           SLACK_COLOR: '#FF0000'
           SLACK_MESSAGE: |
-            *[DEV] 배포 성공 🎉*
+            *[DEV] 수동 배포 실패 😥*
 
             *배포 버전*
-            ${{ needs.ci.outputs.VERSION }}
-
-            *배포 내역*
-            ${{ join(github.event.commits.*.message, '\n') }}
+            ${{ github.event.inputs.version }}
