@@ -24,4 +24,9 @@ public class UserQueryAdapter implements UserQueryPort {
     public Boolean existsByOauthInfo(String oauthId, OauthProvider provider) {
         return userRepository.existsByOidAndProvider(oauthId, provider);
     }
+
+    @Override
+    public Boolean existsByName(String name) {
+        return userRepository.existsByName(name);
+    }
 }

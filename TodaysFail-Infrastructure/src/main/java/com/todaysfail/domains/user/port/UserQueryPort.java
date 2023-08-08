@@ -8,4 +8,6 @@ public interface UserQueryPort {
     Optional<UserEntity> findByOauthInfo(String oauthId, OauthProvider provider);
 
     Boolean existsByOauthInfo(String oauthId, OauthProvider provider);
+
+    Boolean existsByName(String name);
 }
