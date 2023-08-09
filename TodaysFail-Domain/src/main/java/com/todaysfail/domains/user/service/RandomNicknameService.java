@@ -1,14 +1,14 @@
-package com.todaysfail.domains.nickname.service;
+package com.todaysfail.domains.user.service;
 
 import static com.todaysfail.common.consts.TodaysFailConst.*;
 
 import com.todaysfail.common.utils.RandomUtil;
-import com.todaysfail.domains.nickname.domain.Nickname;
-import com.todaysfail.domains.nickname.entity.AnimalNicknameEntity;
-import com.todaysfail.domains.nickname.exception.NicknameGenerationFailedException;
-import com.todaysfail.domains.nickname.port.NicknameQueryPort;
-import com.todaysfail.domains.nickname.usecase.RandomNicknameUseCase;
+import com.todaysfail.domains.user.domain.Nickname;
+import com.todaysfail.domains.user.entity.AnimalNicknameEntity;
+import com.todaysfail.domains.user.exception.NicknameGenerationFailedException;
+import com.todaysfail.domains.user.port.NicknameQueryPort;
 import com.todaysfail.domains.user.port.UserQueryPort;
+import com.todaysfail.domains.user.usecase.RandomNicknameUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

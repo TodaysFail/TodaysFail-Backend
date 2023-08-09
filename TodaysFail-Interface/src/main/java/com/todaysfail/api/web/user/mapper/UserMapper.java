@@ -2,7 +2,7 @@ package com.todaysfail.api.web.user.mapper;
 
 import com.todaysfail.api.web.user.dto.response.RandomNicknameResponse;
 import com.todaysfail.common.annotation.Mapper;
-import com.todaysfail.domains.nickname.domain.Nickname;
+import com.todaysfail.domains.user.domain.Nickname;
 
 @Mapper
 public class UserMapper {

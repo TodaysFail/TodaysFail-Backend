@@ -1,6 +1,6 @@
-package com.todaysfail.domains.nickname.repository;
+package com.todaysfail.domains.user.repository;
 
-import com.todaysfail.domains.nickname.entity.AdjectiveNicknameEntity;
+import com.todaysfail.domains.user.entity.AdjectiveNicknameEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

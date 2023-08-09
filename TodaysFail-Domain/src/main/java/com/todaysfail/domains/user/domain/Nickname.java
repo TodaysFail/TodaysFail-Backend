@@ -1,4 +1,4 @@
-package com.todaysfail.domains.nickname.domain;
+package com.todaysfail.domains.user.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

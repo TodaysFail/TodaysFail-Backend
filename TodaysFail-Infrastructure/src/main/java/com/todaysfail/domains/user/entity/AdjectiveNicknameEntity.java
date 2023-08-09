@@ -1,4 +1,4 @@
-package com.todaysfail.domains.nickname.entity;
+package com.todaysfail.domains.user.entity;
 
 import com.todaysfail.domains.BaseTimeEntity;
 import javax.persistence.Entity;
@@ -10,19 +10,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Entity(name = "tbl_animal_nickname")
+@Entity(name = "tbl_adjective_nickname")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AnimalNicknameEntity extends BaseTimeEntity {
+public class AdjectiveNicknameEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String animal;
+    private String adjective;
 
-    private String profileImageUrl;
-
-    public AnimalNicknameEntity(String animal, String profileImageUrl) {
-        this.animal = animal;
-        this.profileImageUrl = profileImageUrl;
+    public AdjectiveNicknameEntity(String adjective) {
+        this.adjective = adjective;
     }
 }

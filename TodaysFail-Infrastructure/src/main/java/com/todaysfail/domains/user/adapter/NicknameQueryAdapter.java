@@ -1,11 +1,11 @@
-package com.todaysfail.domains.nickname.adapter;
+package com.todaysfail.domains.user.adapter;
 
 import com.todaysfail.common.annotation.Adapter;
-import com.todaysfail.domains.nickname.entity.AdjectiveNicknameEntity;
-import com.todaysfail.domains.nickname.entity.AnimalNicknameEntity;
-import com.todaysfail.domains.nickname.port.NicknameQueryPort;
-import com.todaysfail.domains.nickname.repository.AdjectiveNicknameRepository;
-import com.todaysfail.domains.nickname.repository.AnimalNicknameRepository;
+import com.todaysfail.domains.user.entity.AdjectiveNicknameEntity;
+import com.todaysfail.domains.user.entity.AnimalNicknameEntity;
+import com.todaysfail.domains.user.port.NicknameQueryPort;
+import com.todaysfail.domains.user.repository.AdjectiveNicknameRepository;
+import com.todaysfail.domains.user.repository.AnimalNicknameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

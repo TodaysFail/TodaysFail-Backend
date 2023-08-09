@@ -2,7 +2,7 @@ package com.todaysfail.api.web.user;
 
 import com.todaysfail.api.web.user.dto.response.RandomNicknameResponse;
 import com.todaysfail.api.web.user.mapper.UserMapper;
-import com.todaysfail.domains.nickname.usecase.RandomNicknameUseCase;
+import com.todaysfail.domains.user.usecase.RandomNicknameUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
