@@ -20,7 +20,10 @@ public class TodaysFailConst {
     public static final int FORBIDDEN = 403;
     public static final int NOT_FOUND = 404;
     public static final int METHOD_NOT_ALLOWED = 405;
-    public static final int INTERNAL_SERVER = 500;
     public static final int REQUEST_TIMEOUT = 408;
+    public static final int CONFLICT = 409;
     public static final int TOO_MANY_REQUESTS = 429;
+    public static final int INTERNAL_SERVER = 500;
+
+    public static final int NICKNAME_GENERATE_MAX_ATTEMPTS = 10;
 }

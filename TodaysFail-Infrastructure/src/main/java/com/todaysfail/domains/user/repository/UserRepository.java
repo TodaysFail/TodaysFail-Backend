@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByOidAndProvider(String oid, OauthProvider provider);
 
-    Boolean existsByOidAndProvider(String oauthId, OauthProvider provider);
+    Boolean existsByOidAndProvider(String oid, OauthProvider provider);
+
+    Boolean existsByName(String name);
 }
