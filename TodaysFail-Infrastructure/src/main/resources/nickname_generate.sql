@@ -8,8 +8,8 @@ VALUES
 
 INSERT INTO tbl_animal_nickname(animal, profile_image_url, created_at, updated_at)
 VALUES
-    ('강아지', 'https://image.todaysfail.com/default/강아지.jpg', now(), now()),
-    ('코알라', 'https://image.todaysfail.com/default/코알라.jpg', now(), now()),
-    ('고양이', 'https://image.todaysfail.com/default/고양이.jpg', now(), now()),
-    ('베짱이', 'https://image.todaysfail.com/default/베짱이.jpg', now(), now()),
-    ('다람쥐', 'https://image.todaysfail.com/default/다람쥐.jpg', now(), now());
+    ('강아지', 'https://image.todaysfail.com/default/dog.jpg', now(), now()),
+    ('코알라', 'https://image.todaysfail.com/default/koala.jpg', now(), now()),
+    ('고양이', 'https://image.todaysfail.com/default/cat.jpg', now(), now()),
+    ('베짱이', 'https://image.todaysfail.com/default/grasshopper.jpg', now(), now()),
+    ('다람쥐', 'https://image.todaysfail.com/default/squirrel.jpg', now(), now());
