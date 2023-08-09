@@ -2,6 +2,7 @@ package com.todaysfail.domains.nickname.service;
 
 import static com.todaysfail.common.consts.TodaysFailConst.*;
 
+import com.todaysfail.common.utils.RandomUtil;
 import com.todaysfail.domains.nickname.domain.Nickname;
 import com.todaysfail.domains.nickname.entity.AnimalNicknameEntity;
 import com.todaysfail.domains.nickname.exception.NicknameGenerationFailedException;
@@ -27,7 +28,7 @@ public class RandomNicknameService implements RandomNicknameUseCase {
             String animalNickName = animalNicknameEntity.getAnimal();
 
             String generatedNickName =
-                    adjectiveNickName + "_" + animalNickName + "_" + (int) (Math.random() * 1000);
+                    adjectiveNickName + "_" + animalNickName + "_" + RandomUtil.getRandomInt(1000);
 
             if (!userQueryPort.existsByName(generatedNickName)) {
                 return Nickname.of(generatedNickName, animalNicknameEntity.getProfileImageUrl());
