@@ -64,7 +64,7 @@ jobs:
             ${{ github.event.inputs.version }}
             
             *배포 내역 보기*
-            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ github.event.inputs.version }}
+            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ github.event.inputs.commit_hash }}
 
       - name: Notify on failure
         if: ${{ failure() }}
@@ -82,4 +82,4 @@ jobs:
             ${{ github.event.inputs.version }}
             
             *배포 내역 보기*
-            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ github.event.inputs.version }}
+            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ github.event.inputs.commit_hash }}
