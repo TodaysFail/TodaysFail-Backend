@@ -37,7 +37,7 @@ jobs:
 
       - name: get project version
         id: get_version
-        run: echo "::set-output name=VERSION::$(./gradlew projectVersion -q)"
+        run: echo "::set-output name=VERSION::${{ github.sha }}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -120,6 +120,9 @@ jobs:
             
             *배포 내역*
             ${{ join(github.event.commits.*.message, '\n') }}
+            
+            *배포 내역 보기*
+            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ needs.ci.outputs.VERSION }}
 
       - name: Notify on failure
         if: ${{ failure() }}
@@ -138,3 +141,6 @@ jobs:
             
             *배포 내역*
             ${{ join(github.event.commits.*.message, '\n') }}
+            
+            *배포 내역 보기*
+            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ needs.ci.outputs.VERSION }}
