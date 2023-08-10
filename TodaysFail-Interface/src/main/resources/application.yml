@@ -9,6 +9,7 @@ springdoc:
   default-consumes-media-type: application/json
   swagger-ui:
     tags-sorter: alpha
+    version: ${VERSION:default}
 ---
 spring:
   config:
