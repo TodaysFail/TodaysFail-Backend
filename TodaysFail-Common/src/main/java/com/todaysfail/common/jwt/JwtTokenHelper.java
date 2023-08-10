@@ -105,6 +105,10 @@ public class JwtTokenHelper {
         throw InvalidTokenException.EXCEPTION;
     }
 
+    public Long getAccessTokenTTlSecond() {
+        return jwtProperties.getAccessExp();
+    }
+
     public Long getRefreshTokenTTlSecond() {
         return jwtProperties.getRefreshExp();
     }
