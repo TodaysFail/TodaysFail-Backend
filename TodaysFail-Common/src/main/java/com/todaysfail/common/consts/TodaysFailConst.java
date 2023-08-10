@@ -26,4 +26,8 @@ public class TodaysFailConst {
     public static final int INTERNAL_SERVER = 500;
 
     public static final int NICKNAME_GENERATE_MAX_ATTEMPTS = 10;
+
+    public static final String PROD_SERVER_URL = "https://todaysfail.com";
+    public static final String DEV_SERVER_URL = "https://dev.todaysfail.com";
+    public static final String LOCAL_SERVER_URL = "http://localhost:8080";
 }
