@@ -29,4 +29,9 @@ public class UserQueryAdapter implements UserQueryPort {
     public Boolean existsByName(String name) {
         return userRepository.existsByName(name);
     }
+
+    @Override
+    public Optional<UserEntity> queryUser(Long refreshUserId) {
+        return userRepository.findById(refreshUserId);
+    }
 }

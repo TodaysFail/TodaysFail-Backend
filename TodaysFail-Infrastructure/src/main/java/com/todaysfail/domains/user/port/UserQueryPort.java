@@ -10,4 +10,6 @@ public interface UserQueryPort {
     Boolean existsByOauthInfo(String oauthId, OauthProvider provider);
 
     Boolean existsByName(String name);
+
+    Optional<UserEntity> queryUser(Long refreshUserId);
 }

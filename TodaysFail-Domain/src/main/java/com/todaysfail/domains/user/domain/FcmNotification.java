@@ -16,4 +16,8 @@ public class FcmNotification {
     public static FcmNotification of(String fcmToken, Boolean pushAlarm, Boolean eventAlarm) {
         return new FcmNotification(fcmToken, pushAlarm, eventAlarm);
     }
+
+    public static FcmNotification updateToken(FcmNotification originalState, String fcmToken) {
+        return new FcmNotification(fcmToken, originalState.pushAlarm, originalState.eventAlarm);
+    }
 }

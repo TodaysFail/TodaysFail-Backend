@@ -13,6 +13,6 @@ public class UserCanRegisterCheckService implements UserCanRegisterCheckUseCase 
 
     @Override
     public Boolean checkUserCanRegister(OauthInfo oauthInfo) {
-        return userQueryPort.existsByOauthInfo(oauthInfo.getOauthId(), oauthInfo.getProvider());
+        return !userQueryPort.existsByOauthInfo(oauthInfo.getOauthId(), oauthInfo.getProvider());
     }
 }

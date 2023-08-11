@@ -5,11 +5,11 @@ import com.todaysfail.domains.auth.domain.OauthUserInfo;
 import com.todaysfail.domains.auth.domain.TokenAndUser;
 import com.todaysfail.domains.auth.helper.KakaoOauthHelper;
 import com.todaysfail.domains.auth.usecase.RegisterUserUseCase;
+import com.todaysfail.domains.auth.usecase.TokenGenerateUseCase;
 import com.todaysfail.domains.user.domain.FcmNotification;
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.Profile;
 import com.todaysfail.domains.user.domain.User;
-import com.todaysfail.domains.user.domain.UserDetail;
 import com.todaysfail.domains.user.usecase.UserCanRegisterCheckUseCase;
 import com.todaysfail.domains.user.usecase.UserRegisterUseCase;
 import com.todaysfail.domains.user.usecase.UserUpsertUseCase;
@@ -24,6 +24,7 @@ public class RegisterUserService implements RegisterUserUseCase {
     private final UserUpsertUseCase userUpsertUseCase;
     private final UserRegisterUseCase userRegisterUseCase;
     private final UserCanRegisterCheckUseCase userCanRegisterCheckUseCase;
+    private final TokenGenerateUseCase tokenGenerateUseCase;
 
     @Override
     public TokenAndUser upsertKakaoOauthUser(String code) {
@@ -39,8 +40,7 @@ public class RegisterUserService implements RegisterUserUseCase {
         FcmNotification fcmNotification = FcmNotification.of("", false, false);
 
         User user = userUpsertUseCase.execute(profile, oauthInfo, fcmNotification);
-        UserDetail userDetail = UserDetail.from(user);
-        return new TokenAndUser("", 3600L, "", 3600L, userDetail);
+        return tokenGenerateUseCase.execute(user);
     }
 
     @Override
@@ -69,8 +69,7 @@ public class RegisterUserService implements RegisterUserUseCase {
         OauthInfo oauthInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken);
         FcmNotification fcmNotification = FcmNotification.of(fcmToken, pushAlarm, eventAlarm);
         User user = userRegisterUseCase.execute(profile, oauthInfo, fcmNotification);
-        UserDetail userDetail = UserDetail.from(user);
-        return new TokenAndUser("", 3600L, "", 3600L, userDetail);
+        return tokenGenerateUseCase.execute(user);
     }
 
     @Override
