@@ -1,13 +1,12 @@
 package com.todaysfail.domains.user.domain;
 
-import java.time.LocalDateTime;
-
 import com.todaysfail.aop.event.Events;
 import com.todaysfail.common.type.user.UserRole;
 import com.todaysfail.common.type.user.UserStatus;
 import com.todaysfail.domains.user.entity.UserEntity;
 import com.todaysfail.domains.user.exception.UserForbiddenException;
 import com.todaysfail.events.UserRegisterEvent;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +23,6 @@ public class User {
     private UserRole userRole;
     private FcmNotification fcmNotification;
     private LocalDateTime lastLoginAt;
-
 
     public static User from(UserEntity userEntity) {
         return new User(
@@ -51,7 +49,8 @@ public class User {
             UserRole userRole,
             FcmNotification fcmNotification,
             LocalDateTime lastLoginAt) {
-        return new User(userId, profile, oauthInfo, userStatus, userRole, fcmNotification, lastLoginAt);
+        return new User(
+                userId, profile, oauthInfo, userStatus, userRole, fcmNotification, lastLoginAt);
     }
 
     public UserEntity toEntity() {

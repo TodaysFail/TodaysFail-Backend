@@ -10,11 +10,11 @@ import com.todaysfail.api.web.auth.dto.response.TokenAndUserResponse;
 import com.todaysfail.api.web.auth.mapper.AuthMapper;
 import com.todaysfail.domains.auth.domain.OauthUserInfo;
 import com.todaysfail.domains.auth.domain.TokenAndUser;
-import com.todaysfail.domains.auth.usecase.UserLoginUseCase;
 import com.todaysfail.domains.auth.usecase.LogoutUseCase;
 import com.todaysfail.domains.auth.usecase.OauthUserInfoUseCase;
 import com.todaysfail.domains.auth.usecase.RefreshUseCase;
 import com.todaysfail.domains.auth.usecase.RegisterUserUseCase;
+import com.todaysfail.domains.auth.usecase.UserLoginUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
@@ -73,7 +73,9 @@ public class AuthController {
         return authMapper.toTokenAndUserResponse(tokenAndUser);
     }
 
-    @Operation(summary = "회원가입이 가능한지 id token 으로 확인합니다.", description = "canRegister가 true 일때만 사용가능합니다.")
+    @Operation(
+            summary = "회원가입이 가능한지 id token 으로 확인합니다.",
+            description = "canRegister가 true 일때만 사용가능합니다.")
     @GetMapping("/oauth/kakao/register/valid")
     public AbleRegisterResponse kakaoAuthCheckRegisterValid(
             @RequestParam("id_token") String token) {
@@ -91,10 +93,9 @@ public class AuthController {
     @Operation(summary = "id_token 으로 로그인을 합니다.")
     @PostMapping("/oauth/kakao/login")
     public TokenAndUserResponse kakaoOauthUserLogin(
-            @RequestParam("id_token") String token,
-            @Valid @RequestBody LoginRequest loginRequest
-    ) {
-        return authMapper.toTokenAndUserResponse(userLoginUseCase.execute(token, loginRequest.fcmToken()));
+            @RequestParam("id_token") String token, @Valid @RequestBody LoginRequest loginRequest) {
+        return authMapper.toTokenAndUserResponse(
+                userLoginUseCase.execute(token, loginRequest.fcmToken()));
     }
 
     @Operation(summary = "refresh token 으로 token을 재발급 받습니다.")
