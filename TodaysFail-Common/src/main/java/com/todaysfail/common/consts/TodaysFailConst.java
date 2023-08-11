@@ -30,4 +30,8 @@ public class TodaysFailConst {
     public static final String PROD_SERVER_URL = "https://todaysfail.com";
     public static final String DEV_SERVER_URL = "https://dev.todaysfail.com";
     public static final String LOCAL_SERVER_URL = "http://localhost:8080";
+
+    public static final String[] SwaggerPatterns = {
+        "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
+    };
 }
