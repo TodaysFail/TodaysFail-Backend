@@ -17,4 +17,6 @@ public interface UserCommandPort {
             String fcmToken,
             Boolean pushAlarm,
             Boolean eventAlarm);
+
+    UserEntity save(UserEntity from);
 }

@@ -42,4 +42,9 @@ public class UserCommandAdapter implements UserCommandPort {
                         eventAlarm);
         return userRepository.save(userEntity);
     }
+
+    @Override
+    public UserEntity save(UserEntity userEntity) {
+        return userRepository.save(userEntity);
+    }
 }

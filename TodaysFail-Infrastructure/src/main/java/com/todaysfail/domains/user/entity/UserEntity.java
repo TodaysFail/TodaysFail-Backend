@@ -49,6 +49,7 @@ public class UserEntity extends BaseTimeEntity {
     private LocalDateTime lastLoginAt = LocalDateTime.now();
 
     private UserEntity(
+            Long id,
             String name,
             String profileImg,
             Boolean isDefaultImg,
@@ -58,7 +59,8 @@ public class UserEntity extends BaseTimeEntity {
             UserRole userRole,
             String fcmToken,
             Boolean pushAlarm,
-            Boolean eventAlarm) {
+            Boolean eventAlarm,
+            LocalDateTime lastLoginAt) {
         this.name = name;
         this.profileImg = profileImg;
         this.isDefaultImg = isDefaultImg;
@@ -69,6 +71,7 @@ public class UserEntity extends BaseTimeEntity {
         this.fcmToken = fcmToken;
         this.pushAlarm = pushAlarm;
         this.eventAlarm = eventAlarm;
+        this.lastLoginAt = lastLoginAt;
     }
 
     public static UserEntity registerUser(
@@ -83,6 +86,7 @@ public class UserEntity extends BaseTimeEntity {
             Boolean pushAlarm,
             Boolean eventAlarm) {
         return new UserEntity(
+                null,
                 name,
                 profileImg,
                 isDefaultImg,
@@ -92,6 +96,35 @@ public class UserEntity extends BaseTimeEntity {
                 userRole,
                 fcmToken,
                 pushAlarm,
-                eventAlarm);
+                eventAlarm,
+                LocalDateTime.now());
+    }
+
+    public static UserEntity from(
+            Long id,
+            String name,
+            String profileImg,
+            Boolean isDefaultImg,
+            OauthProvider provider,
+            String oid,
+            UserStatus userStatus,
+            UserRole userRole,
+            String fcmToken,
+            Boolean pushAlarm,
+            Boolean eventAlarm,
+            LocalDateTime lastLoginAt) {
+        return new UserEntity(
+                id,
+                name,
+                profileImg,
+                isDefaultImg,
+                provider,
+                oid,
+                userStatus,
+                userRole,
+                fcmToken,
+                pushAlarm,
+                eventAlarm,
+                lastLoginAt);
     }
 }

@@ -9,7 +9,7 @@ import com.todaysfail.domains.user.domain.Profile;
 import com.todaysfail.domains.user.domain.User;
 import com.todaysfail.domains.user.entity.UserEntity;
 import com.todaysfail.domains.user.exception.AlreadySignUpUserException;
-import com.todaysfail.domains.user.exception.AlreadyUserNameException;
+import com.todaysfail.domains.user.exception.AlreadyUsedUserNameException;
 import com.todaysfail.domains.user.port.UserCommandPort;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import com.todaysfail.domains.user.usecase.UserRegisterUseCase;
@@ -56,6 +56,6 @@ public class UserRegisterService implements UserRegisterUseCase {
 
     public void validUserCanRegister(OauthInfo oauthInfo, Profile profile) {
         if (checkUserCanRegister(oauthInfo)) throw AlreadySignUpUserException.EXCEPTION;
-        if (checkUserName(profile)) throw AlreadyUserNameException.EXCEPTION;
+        if (checkUserName(profile)) throw AlreadyUsedUserNameException.EXCEPTION;
     }
 }
