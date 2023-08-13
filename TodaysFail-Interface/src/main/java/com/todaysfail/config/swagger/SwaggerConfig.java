@@ -3,9 +3,11 @@ package com.todaysfail.config.swagger;
 import static com.todaysfail.common.consts.TodaysFailConst.*;
 
 import com.todaysfail.common.helper.SpringEnvironmentHelper;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,10 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI openAPI() {
-        return new OpenAPI().servers(swaggerServers()).info(swaggerInfo());
+        return new OpenAPI()
+                .servers(swaggerServers())
+                .info(swaggerInfo())
+                .components(authSetting());
     }
 
     private List<Server> swaggerServers() {
@@ -59,5 +64,17 @@ public class SwaggerConfig {
                 .description(API_DESCRIPTION)
                 .version(swaggerVersion)
                 .license(license);
+    }
+
+    private Components authSetting() {
+        return new Components()
+                .addSecuritySchemes(
+                        "access-token",
+                        new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT")
+                                .in(SecurityScheme.In.HEADER)
+                                .name("Authorization"));
     }
 }
