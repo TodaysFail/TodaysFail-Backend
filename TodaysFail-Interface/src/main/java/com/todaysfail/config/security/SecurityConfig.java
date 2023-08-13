@@ -32,12 +32,12 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        UserDetails swaggerUser =
-                User.withUsername(this.swaggerUser)
-                        .password(swaggerPassword)
+        UserDetails user =
+                User.withUsername(swaggerUser)
+                        .password(passwordEncoder().encode(swaggerPassword))
                         .roles("SWAGGER")
                         .build();
-        return new InMemoryUserDetailsManager(swaggerUser);
+        return new InMemoryUserDetailsManager(user);
     }
 
     @Bean
