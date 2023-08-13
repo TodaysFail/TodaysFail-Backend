@@ -56,9 +56,9 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .mvcMatchers(SwaggerPatterns)
                 .permitAll()
-                .mvcMatchers("/v1/auth/oauth/**")
+                .mvcMatchers("/api/v1/auth/oauth/**")
                 .permitAll()
-                .mvcMatchers("/v1/auth/token/refresh")
+                .mvcMatchers("/api/v1/auth/token/refresh")
                 .permitAll()
                 .anyRequest()
                 .hasRole("USER");
