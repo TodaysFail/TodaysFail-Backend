@@ -2,6 +2,7 @@ package com.todaysfail.common.jwt;
 
 import static com.todaysfail.common.consts.TodaysFailConst.*;
 
+import com.todaysfail.common.dto.AccessTokenInfo;
 import com.todaysfail.common.exception.ExpiredTokenException;
 import com.todaysfail.common.exception.InvalidTokenException;
 import com.todaysfail.common.exception.RefreshTokenExpiredException;
@@ -85,10 +86,13 @@ public class JwtTokenHelper {
         return getJws(token).getBody().get(TOKEN_TYPE).equals(REFRESH_TOKEN);
     }
 
-    public Long parseAccessToken(String token) {
+    public AccessTokenInfo parseAccessToken(String token) {
         if (isAccessToken(token)) {
             Claims claims = getJws(token).getBody();
-            return Long.parseLong(claims.getSubject());
+            return AccessTokenInfo.builder()
+                    .userId(Long.parseLong(claims.getSubject()))
+                    .role((String) claims.get(TOKEN_ROLE))
+                    .build();
         }
         throw InvalidTokenException.EXCEPTION;
     }
