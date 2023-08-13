@@ -11,7 +11,7 @@ public class LogoutService implements LogoutUseCase {
     private final RefreshTokenPort refreshTokenPort;
 
     @Override
-    public void execute() {
-        // TODO: Security 구현 후 context 정보 조회 후 로그아웃
+    public void execute(Long userId) {
+        refreshTokenPort.deleteByUserId(userId);
     }
 }

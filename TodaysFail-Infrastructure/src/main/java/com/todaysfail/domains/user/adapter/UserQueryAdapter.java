@@ -31,7 +31,7 @@ public class UserQueryAdapter implements UserQueryPort {
     }
 
     @Override
-    public Optional<UserEntity> queryUser(Long refreshUserId) {
-        return userRepository.findById(refreshUserId);
+    public Optional<UserEntity> queryUser(Long userId) {
+        return userRepository.findById(userId);
     }
 }

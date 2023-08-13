@@ -10,6 +10,9 @@ springdoc:
   swagger-ui:
     tags-sorter: alpha
     version: ${VERSION:default}
+swagger:
+  user: ${SWAGGER_USER:user}
+  password: ${SWAGGER_PASSWORD:password}
 ---
 spring:
   config:

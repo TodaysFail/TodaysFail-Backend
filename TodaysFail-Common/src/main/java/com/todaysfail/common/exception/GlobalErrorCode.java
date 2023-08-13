@@ -45,6 +45,7 @@ public enum GlobalErrorCode implements BaseErrorCode {
 
     NOT_AVAILABLE_REDISSON_LOCK(500, "REDISSON_500_1", "락을 사용할 수 없습니다"),
     BAD_LOCK_IDENTIFIER(500, "REDISSON_500_2", "락의 키값이 잘못 세팅 되었습니다"),
+    SECURITY_CONTEXT_NOT_FOUND(500, "GLOBAL_500_3", "SecurityContext를 찾을 수 없습니다"),
     ;
 
     private Integer status;
