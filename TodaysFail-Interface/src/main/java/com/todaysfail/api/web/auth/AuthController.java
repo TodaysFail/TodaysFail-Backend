@@ -8,6 +8,7 @@ import com.todaysfail.api.web.auth.dto.response.OauthTokenResponse;
 import com.todaysfail.api.web.auth.dto.response.OauthUserInfoResponse;
 import com.todaysfail.api.web.auth.dto.response.TokenAndUserResponse;
 import com.todaysfail.api.web.auth.mapper.AuthMapper;
+import com.todaysfail.config.security.SecurityUtils;
 import com.todaysfail.domains.auth.domain.OauthUserInfo;
 import com.todaysfail.domains.auth.domain.TokenAndUser;
 import com.todaysfail.domains.auth.usecase.LogoutUseCase;
@@ -107,6 +108,6 @@ public class AuthController {
     @Operation(summary = "로그아웃을 합니다.")
     @PostMapping("/logout")
     public void logout() {
-        logoutUseCase.execute();
+        logoutUseCase.execute(SecurityUtils.getCurrentUserId());
     }
 }
