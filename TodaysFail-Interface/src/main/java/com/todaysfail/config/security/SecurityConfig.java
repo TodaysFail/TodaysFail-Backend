@@ -21,6 +21,7 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final FilterConfig filterConfig;
     private final SpringEnvironmentHelper springEnvironmentHelper;
 
     @Value("${swagger.user}")
@@ -62,6 +63,7 @@ public class SecurityConfig {
                 .permitAll()
                 .anyRequest()
                 .hasRole("USER");
+        http.apply(filterConfig);
         return http.build();
     }
 
