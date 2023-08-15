@@ -18,4 +18,10 @@ public class Profile {
     public static Profile from(String name, String profileImg, Boolean isDefaultImg) {
         return new Profile(name, profileImg, isDefaultImg);
     }
+
+    public void withDraw() {
+        this.name = "탈퇴한 사용자";
+        this.profileImg = "";
+        this.isDefaultImg = true;
+    }
 }

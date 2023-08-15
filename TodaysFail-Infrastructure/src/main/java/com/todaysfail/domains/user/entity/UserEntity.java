@@ -61,6 +61,7 @@ public class UserEntity extends BaseTimeEntity {
             Boolean pushAlarm,
             Boolean eventAlarm,
             LocalDateTime lastLoginAt) {
+        this.id = id;
         this.name = name;
         this.profileImg = profileImg;
         this.isDefaultImg = isDefaultImg;

@@ -45,13 +45,16 @@ public class AuthController {
         return authMapper.toTokenAndUserResponse(registerUserUseCase.upsertKakaoOauthUser(code));
     }
 
-    @Operation(summary = "kakao oauth 링크발급 ( 백엔드용 )", description = "kakao 링크를 받아볼수 있습니다.")
+    @Operation(
+            summary = "kakao oauth 링크발급 ( 백엔드용 )",
+            description = "kakao 링크를 받아볼수 있습니다.",
+            deprecated = true)
     @GetMapping("/oauth/kakao/link/test")
     public OauthLoginLinkResponse getKakaoOauthLink() {
         return authMapper.toOauthLoginLinkResponse(registerUserUseCase.getKaKaoOauthLink());
     }
 
-    @Operation(summary = "카카오 code 요청받는 곳입니다. ( 백엔드 용 ) ")
+    @Operation(summary = "카카오 code 요청받는 곳입니다. ( 백엔드용 )", deprecated = true)
     @GetMapping("/oauth/kakao")
     public OauthTokenResponse getCredentialFromKaKao(@RequestParam("code") String code) {
         return authMapper.toOauthTokenResponse(registerUserUseCase.getCredentialFromKaKao(code));
@@ -83,7 +86,7 @@ public class AuthController {
         return authMapper.toAbleRegisterResponse(registerUserUseCase.checkAvailableRegister(token));
     }
 
-    @Operation(summary = "accessToken 으로 oauth user 정보를 가져옵니다.")
+    @Operation(summary = "accessToken 으로 oauth user 정보를 가져옵니다.", deprecated = true)
     @PostMapping("/oauth/kakao/info")
     public OauthUserInfoResponse kakaoOauthUserInfo(
             @RequestParam("access_token") String accessToken) {
