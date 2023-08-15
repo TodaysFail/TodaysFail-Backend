@@ -13,6 +13,7 @@ import com.todaysfail.outer.api.oauth.client.KakaoOauthClient;
 import com.todaysfail.outer.api.oauth.dto.KakaoInformationResponse;
 import com.todaysfail.outer.api.oauth.dto.KakaoTokenResponse;
 import com.todaysfail.outer.api.oauth.dto.OIDCPublicKeysResponse;
+import com.todaysfail.outer.api.oauth.dto.UnlinkKaKaoTarget;
 import lombok.RequiredArgsConstructor;
 
 @Helper
@@ -65,5 +66,12 @@ public class KakaoOauthHelper {
     public OauthInfo getOauthInfoByIdToken(String idToken) {
         OIDCDecodePayload oidcDecodePayload = getOIDCDecodePayload(idToken);
         return OauthInfo.of(oidcDecodePayload.getSub(), OauthProvider.KAKAO);
+    }
+
+    public void unlink(String oid) {
+        String kakaoAdminKey = oauthProperties.getKakaoAdminKey();
+        UnlinkKaKaoTarget unlinkKaKaoTarget = UnlinkKaKaoTarget.from(oid);
+        String header = "KakaoAK " + kakaoAdminKey;
+        kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget);
     }
 }

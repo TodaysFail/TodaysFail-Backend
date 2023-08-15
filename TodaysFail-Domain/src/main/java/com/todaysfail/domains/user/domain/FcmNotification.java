@@ -20,4 +20,10 @@ public class FcmNotification {
     public static FcmNotification updateToken(FcmNotification originalState, String fcmToken) {
         return new FcmNotification(fcmToken, originalState.pushAlarm, originalState.eventAlarm);
     }
+
+    public void withDraw() {
+        this.fcmToken = "";
+        this.pushAlarm = false;
+        this.eventAlarm = false;
+    }
 }

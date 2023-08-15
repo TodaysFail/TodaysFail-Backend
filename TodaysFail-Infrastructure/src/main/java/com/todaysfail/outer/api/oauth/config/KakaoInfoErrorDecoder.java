@@ -1,4 +1,4 @@
-package com.todaysfail.config.feign;
+package com.todaysfail.outer.api.oauth.config;
 
 import com.todaysfail.common.exception.OtherServerBadRequestException;
 import com.todaysfail.common.exception.OtherServerExpiredTokenException;
@@ -8,7 +8,7 @@ import feign.FeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
-public class FeignClientErrorDecoder implements ErrorDecoder {
+public class KakaoInfoErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {

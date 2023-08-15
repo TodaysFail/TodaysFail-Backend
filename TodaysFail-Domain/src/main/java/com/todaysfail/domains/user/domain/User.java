@@ -4,6 +4,7 @@ import com.todaysfail.aop.event.Events;
 import com.todaysfail.common.type.user.UserRole;
 import com.todaysfail.common.type.user.UserStatus;
 import com.todaysfail.domains.user.entity.UserEntity;
+import com.todaysfail.domains.user.exception.AlreadyDeletedUserException;
 import com.todaysfail.domains.user.exception.UserForbiddenException;
 import com.todaysfail.events.UserRegisterEvent;
 import java.time.LocalDateTime;
@@ -92,5 +93,15 @@ public class User {
             throw UserForbiddenException.EXCEPTION;
         }
         lastLoginAt = LocalDateTime.now();
+    }
+
+    public void withDraw() {
+        if (userStatus == UserStatus.DELETED) {
+            throw AlreadyDeletedUserException.EXCEPTION;
+        }
+        userStatus = UserStatus.DELETED;
+        profile.withDraw();
+        fcmNotification.withDraw();
+        oauthInfo.withDraw();
     }
 }
