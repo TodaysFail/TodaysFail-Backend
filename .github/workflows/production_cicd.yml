@@ -1,0 +1,167 @@
+name: production(cicd)
+on:
+  push:
+    tags:
+      - v*.*.*
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    environment: PRODUCTION
+    strategy:
+      matrix:
+        java-version: [ 17 ]
+    outputs:
+      VERSION: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'adopt'
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: spotless check
+        run: ./gradlew spotlessCheck --no-daemon
+
+      - name: Start containers
+        run: docker compose -f docker-compose-test.yml up -d
+
+      - name: test and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew test sonar --info --stacktrace --no-daemon
+
+      - name: build
+        run: ./gradlew clean build -x test
+
+      - name: get project version
+        id: get_version
+        run: |
+         VERSION="$(cut -d'v' -f2 <<< ${GITHUB_REF#refs/*/})"
+         echo ::set-output name=VERSION::$VERSION
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build And Push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./TodaysFail-Interface
+          push: true
+          tags: ${{secrets.AWS_ECR_REGISTRY_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/${{secrets.AWS_ECR_REGISTRY_NAME}}:${{ steps.get_version.outputs.VERSION }}
+
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+    environment: PRODUCTION
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: create remote directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: root
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: mkdir -p ~/TodaysFail-Backend
+
+      - name: copy source via ssh key
+        uses: burnett01/rsync-deployments@4.1
+        with:
+          switches: -avzr
+          remote_path: ~/TodaysFail-Backend
+          remote_host: ${{ secrets.HOST }}
+          remote_port: ${{ secrets.PORT }}
+          remote_user: root
+          remote_key: ${{ secrets.KEY }}
+
+      - name: connect ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: root
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REGISTRY_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+            cd ~/TodaysFail-Backend
+            VERSION=${{ needs.ci.outputs.VERSION }}
+            sed -i "s/VERSION=.*/VERSION=$VERSION/" .env
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml pull
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml up --build -d
+            docker system prune --all -f
+
+      - name: Notify on success
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          SLACK_USERNAME: '오늘의 실패'
+          SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
+          SLACK_COLOR: '#008000'
+          SLACK_MESSAGE: |
+            *[PROD] 배포 성공 🎉*
+            
+            *배포 버전*
+            ${{ needs.ci.outputs.VERSION }}
+            
+            *배포 내역*
+            ${{ join(github.event.commits.*.message, '\n') }}
+            
+            *배포 내역 보기*
+            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ needs.ci.outputs.VERSION }}
+
+      - name: Notify on failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          SLACK_USERNAME: '오늘의 실패'
+          SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
+          SLACK_COLOR: '#FF0000'
+          SLACK_MESSAGE: |
+            *[PROD] 배포 실패 😥*
+            
+            *배포 버전*
+            ${{ needs.ci.outputs.VERSION }}
+            
+            *배포 내역*
+            ${{ join(github.event.commits.*.message, '\n') }}
+            
+            *배포 내역 보기*
+            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ needs.ci.outputs.VERSION }}
