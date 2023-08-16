@@ -142,7 +142,3 @@ fi
 """
     "chmod +x .git/hooks/pre-commit".execute()
 }
-
-tasks.register("projectVersion") {
-    println(project.version)
-}
