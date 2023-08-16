@@ -1,14 +1,14 @@
-name: develop(cd)
+name: production(cd)
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'commit_hash'
+        description: 'version'
         required: true
 jobs:
   cd:
     runs-on: ubuntu-latest
-    environment: DEVELOP
+    environment: PRODUCTION
     steps:
       - name: checkout
         uses: actions/checkout@master
@@ -47,7 +47,6 @@ jobs:
             docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml pull
             docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml up --build -d
             docker system prune --all -f
-
       - name: Notify on success
         if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
@@ -58,14 +57,12 @@ jobs:
           SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
           SLACK_COLOR: '#008000'
           SLACK_MESSAGE: |
-            *[DEV] 수동 배포 성공 🎉*
-
+            *[PROD] 수동 배포 성공 🎉*
             *배포 버전*
             ${{ github.event.inputs.version }}
             
             *배포 내역 보기*
             https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ github.event.inputs.version }}
-
       - name: Notify on failure
         if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@v2
@@ -76,8 +73,7 @@ jobs:
           SLACK_ICON: https://avatars.slack-edge.com/2023-07-26/5653063434977_51d6e36ad6977fe04337_192.png
           SLACK_COLOR: '#FF0000'
           SLACK_MESSAGE: |
-            *[DEV] 수동 배포 실패 😥*
-
+            *[PROD] 수동 배포 실패 😥*
             *배포 버전*
             ${{ github.event.inputs.version }}
             
