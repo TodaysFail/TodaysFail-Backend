@@ -44,8 +44,8 @@ jobs:
             cd ~/TodaysFail-Backend
             VERSION=${{ github.event.inputs.version }}
             sed -i "s/VERSION=.*/VERSION=$VERSION/" .env
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml pull
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop.yml up --build -d
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-production.yml pull
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-production.yml up --build -d
             docker system prune --all -f
       - name: Notify on success
         if: ${{ success() }}
