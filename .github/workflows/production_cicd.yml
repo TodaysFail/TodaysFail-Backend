@@ -137,11 +137,8 @@ jobs:
             *배포 버전*
             ${{ needs.ci.outputs.VERSION }}
             
-            *배포 내역*
-            ${{ join(github.event.commits.*.message, '\n') }}
-            
             *배포 내역 보기*
-            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ needs.ci.outputs.VERSION }}
+            https://github.com/TodaysFail/TodaysFail-Backend/releases/tag/v${{ needs.ci.outputs.VERSION }}
       - name: Notify on failure
         if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@v2
@@ -157,8 +154,5 @@ jobs:
             *배포 버전*
             ${{ needs.ci.outputs.VERSION }}
             
-            *배포 내역*
-            ${{ join(github.event.commits.*.message, '\n') }}
-            
             *배포 내역 보기*
-            https://github.com/TodaysFail/TodaysFail-Backend/commit/${{ needs.ci.outputs.VERSION }}
+            https://github.com/TodaysFail/TodaysFail-Backend/releases/tag/v${{ needs.ci.outputs.VERSION }}
