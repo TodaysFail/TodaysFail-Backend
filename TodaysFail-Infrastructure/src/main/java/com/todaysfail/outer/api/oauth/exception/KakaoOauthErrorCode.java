@@ -2,8 +2,11 @@ package com.todaysfail.outer.api.oauth.exception;
 
 import static com.todaysfail.common.consts.TodaysFailConst.*;
 
+import com.todaysfail.common.annotation.ExplainError;
 import com.todaysfail.common.dto.ErrorReason;
 import com.todaysfail.common.exception.BaseErrorCode;
+import java.lang.reflect.Field;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -47,5 +50,12 @@ public enum KakaoOauthErrorCode implements BaseErrorCode {
     @Override
     public ErrorReason getErrorReason() {
         return ErrorReason.builder().status(status).code(errorCode).reason(reason).build();
+    }
+
+    @Override
+    public String getExplainError() throws NoSuchFieldException {
+        Field field = this.getClass().getField(this.name());
+        ExplainError annotation = field.getAnnotation(ExplainError.class);
+        return Objects.nonNull(annotation) ? annotation.value() : this.getReason();
     }
 }
