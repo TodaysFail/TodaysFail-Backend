@@ -17,6 +17,7 @@ import com.todaysfail.domains.auth.usecase.RefreshUseCase;
 import com.todaysfail.domains.auth.usecase.RegisterUserUseCase;
 import com.todaysfail.domains.auth.usecase.UserLoginUseCase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -108,6 +109,7 @@ public class AuthController {
         return authMapper.toTokenAndUserResponse(refreshUseCase.execute(refreshToken));
     }
 
+    @SecurityRequirement(name = "access-token")
     @Operation(summary = "로그아웃을 합니다.")
     @PostMapping("/logout")
     public void logout() {

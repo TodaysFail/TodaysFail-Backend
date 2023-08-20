@@ -5,4 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @EnableConfigurationProperties({OauthProperties.class, JwtProperties.class})
 @Configuration
-public class EnableConfigProperties {}
+public class EnableCommonConfigProperties {}

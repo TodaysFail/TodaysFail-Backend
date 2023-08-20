@@ -61,6 +61,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers("/api/v1/auth/token/refresh")
                 .permitAll()
+                .antMatchers("/api/v1/users/nickname/generate")
+                .permitAll()
                 .anyRequest()
                 .hasRole("USER");
         http.apply(filterConfig);
