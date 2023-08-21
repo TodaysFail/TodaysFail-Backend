@@ -2,6 +2,7 @@ package com.todaysfail.api.web.user;
 
 import com.todaysfail.api.web.user.dto.response.RandomNicknameResponse;
 import com.todaysfail.api.web.user.mapper.UserMapper;
+import com.todaysfail.common.annotation.DisableSwaggerSecurity;
 import com.todaysfail.config.security.SecurityUtils;
 import com.todaysfail.domains.user.domain.UserDetail;
 import com.todaysfail.domains.user.usecase.RandomNicknameUseCase;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "2. [유저]")
 @RestController
 @RequestMapping("/api/v1/users")
+@SecurityRequirement(name = "access-token")
 @RequiredArgsConstructor
 public class UserController {
     private final UserMapper userMapper;
@@ -40,6 +42,7 @@ public class UserController {
         userWithDrawUseCase.execute(SecurityUtils.getCurrentUserId());
     }
 
+    @DisableSwaggerSecurity
     @Operation(summary = "사용 가능 한 랜덤 닉네임을 발급합니다.")
     @GetMapping("/nickname/generate")
     public RandomNicknameResponse generateRandomNickname() {
