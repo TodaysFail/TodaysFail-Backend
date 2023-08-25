@@ -1,8 +1,8 @@
 version: "3.7"
 services:
-  todaysfail-green:
+  todaysfail-blue:
     image: ${AWS_ECR_REGISTRY_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${AWS_ECR_REGISTRY_NAME}:${VERSION}
-    container_name: todaysfail-green
+    container_name: todaysfail-blue
     env_file:
       - .env
     network_mode: "host"
