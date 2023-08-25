@@ -57,6 +57,8 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .mvcMatchers(SwaggerPatterns)
                 .permitAll()
+                .antMatchers("/api/v1/examples/health")
+                .permitAll()
                 .mvcMatchers("/api/v1/auth/oauth/**")
                 .permitAll()
                 .mvcMatchers("/api/v1/auth/token/refresh")

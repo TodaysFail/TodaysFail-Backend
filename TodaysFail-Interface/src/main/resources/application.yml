@@ -13,6 +13,8 @@ springdoc:
 swagger:
   user: ${SWAGGER_USER:user}
   password: ${SWAGGER_PASSWORD:password}
+server:
+  port: ${API_SERVER_PORT:8080}
 ---
 spring:
   config:
