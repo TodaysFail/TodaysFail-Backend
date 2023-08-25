@@ -119,7 +119,7 @@ jobs:
             VERSION=${{ needs.ci.outputs.VERSION }}
             sed -i "s/VERSION=.*/VERSION=$VERSION/" .env
             
-            EXIST_BLUE=$(docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-bule.yml ps | grep todaysfail-blue | awk '{print $1}')
+            EXIST_BLUE=$(docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-blue.yml ps | grep todaysfail-blue | awk '{print $1}')
             if [ -z "${EXIST_BLUE}" ]
             then
                 # GREEN이 실행중인 경우
@@ -137,13 +137,13 @@ jobs:
                 sed -i "s/API_SERVER_PORT=.*/API_SERVER_PORT=8081/" .env
             fi
             
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$(START-CONTAINER).yml pull
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$(START-CONTAINER).yml up --build -d
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$START-CONTAINER.yml pull
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$START-CONTAINER.yml up --build -d
             docker system prune --all -f
             
             for cnt in {1..10}
             do
-                DEPLOY_STATUS=$(curl -s http://localhost:$(START_PORT)/api/v1/examples/health | grep \"status\":200'
+                DEPLOY_STATUS=$(curl -s http://localhost:$START_PORT/api/v1/examples/health | grep \"status\":200'
                 if [ -z "${DEPLOY_STATUS}" ]
                 then
                     echo "Deploying..."
@@ -159,10 +159,10 @@ jobs:
                 exit 1
             fi
             
-            sed -i "s/$(STOP_PORT)/$(START_PORT)/" ~/../etc/nginx/conf.d/service-url.inc
+            sed -i "s/$STOP_PORT/$START_PORT/" ~/../etc/nginx/conf.d/service-url.inc
             service nginx reload
             
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$(STOP-CONTAINER).yml down
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$STOP-CONTAINER.yml down
 
       - name: Notify on success
         if: ${{ success() }}
