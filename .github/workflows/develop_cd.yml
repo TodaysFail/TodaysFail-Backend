@@ -63,8 +63,8 @@ jobs:
                 sed -i "s/API_SERVER_PORT=.*/API_SERVER_PORT=8081/" .env
             fi
             
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$START-CONTAINER.yml pull
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$START-CONTAINER.yml up --build -d
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$START_CONTAINER.yml pull
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$START_CONTAINER.yml up --build -d
             docker system prune --all -f
             
             for cnt in {1..10}
@@ -85,10 +85,10 @@ jobs:
                 exit 1
             fi
             
-            sed -i "s/$STOP_PORT/$START_PORT/" ~/../etc/nginx/conf.d/service-url.inc
+            sed -i "s/$STOP_PORT/$START_PORT/" ~/../etc/nginx/conf.d/service_url.inc
             service nginx reload
             
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$STOP-CONTAINER.yml down
+            docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$STOP_CONTAINER.yml down
 
       - name: Notify on success
         if: ${{ success() }}
