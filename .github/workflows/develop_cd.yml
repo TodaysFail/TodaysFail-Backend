@@ -85,7 +85,7 @@ jobs:
                 exit 1
             fi
             
-            sed -i "s/$(STOP_PORT)/$(START_PORT)/" ~/nginx/service-url.inc
+            sed -i "s/$(STOP_PORT)/$(START_PORT)/" ~/../etc/nginx/conf.d/service-url.inc
             service nginx reload
             
             docker-compose -f ~/TodaysFail-Backend/docker-compose-develop-$(STOP-CONTAINER).yml down
