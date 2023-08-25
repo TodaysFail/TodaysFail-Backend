@@ -20,7 +20,9 @@ public class ExampleController {
 
     @GetMapping("/health")
     @Operation(summary = "헬스체크")
-    public void health() {}
+    public void health() {
+        // health check
+    }
 
     @GetMapping("/global")
     @DevelopOnly
