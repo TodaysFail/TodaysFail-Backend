@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/examples")
 @RequiredArgsConstructor
 public class ExampleController {
+
+    @GetMapping("/health")
+    @Operation(summary = "헬스체크")
+    public void health() {}
+
     @GetMapping("/global")
     @DevelopOnly
     @Operation(summary = "글로벌 ( 인증 , aop, 서버 내부 오류등)  관련 에러 코드 나열")
