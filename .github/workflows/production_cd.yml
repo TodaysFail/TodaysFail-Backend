@@ -44,9 +44,51 @@ jobs:
             cd ~/TodaysFail-Backend
             VERSION=${{ github.event.inputs.version }}
             sed -i "s/VERSION=.*/VERSION=$VERSION/" .env
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-production.yml pull
-            docker-compose -f ~/TodaysFail-Backend/docker-compose-production.yml up --build -d
-            docker system prune --all -f
+            
+            EXIST_BLUE=$(docker-compose -f ~/TodaysFail-Backend/docker-compose-production-blue.yml ps | grep todaysfail-blue | awk '{print $1}')
+                        if [ -z "${EXIST_BLUE}" ]
+                        then
+                            # GREEN이 실행중인 경우
+                            START_CONTAINER=blue
+                            START_PORT=8080
+                            STOP_CONTAINER=green
+                            STOP_PORT=8081
+                            sed -i "s/API_SERVER_PORT=.*/API_SERVER_PORT=8080/" .env
+                        else
+                            # BLUE가 실행중인 경우
+                            START_CONTAINER=green
+                            START_PORT=8081
+                            STOP_CONTAINER=blue
+                            STOP_PORT=8080
+                            sed -i "s/API_SERVER_PORT=.*/API_SERVER_PORT=8081/" .env
+                        fi
+
+                        docker-compose -f ~/TodaysFail-Backend/docker-compose-production-$START_CONTAINER.yml pull
+                        docker-compose -f ~/TodaysFail-Backend/docker-compose-production-$START_CONTAINER.yml up --build -d
+                        docker system prune --all -f
+
+                        for cnt in {1..10}
+                        do
+                            DEPLOY_STATUS=$(curl -s http://localhost:$START_PORT/api/v1/examples/health | grep \"status\":200)
+                            if [ -z "${DEPLOY_STATUS}" ]
+                            then
+                                echo "Deploying..."
+                            else
+                                break
+                            fi
+                            sleep 5
+                        done
+
+                        if [ $cnt -eq 10 ]
+                        then
+                            echo "Deploy Failed"
+                            exit 1
+                        fi
+
+                        sed -i "s/$STOP_PORT/$START_PORT/" ~/../etc/nginx/conf.d/service_url.inc
+                        service nginx reload
+
+                        docker-compose -f ~/TodaysFail-Backend/docker-compose-production-$STOP_CONTAINER.yml down
       - name: Notify on success
         if: ${{ success() }}
         uses: rtCamp/action-slack-notify@v2
