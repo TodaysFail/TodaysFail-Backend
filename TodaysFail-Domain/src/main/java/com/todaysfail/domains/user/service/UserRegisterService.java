@@ -46,7 +46,6 @@ public class UserRegisterService implements UserRegisterUseCase {
     public Boolean checkUserCanRegister(OauthInfo oauthInfo) {
         Boolean aBoolean =
                 userQueryPort.existsByOauthInfo(oauthInfo.getOauthId(), oauthInfo.getProvider());
-        System.out.println("aBoolean = " + aBoolean);
         return aBoolean;
     }
 
