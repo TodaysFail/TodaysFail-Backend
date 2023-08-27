@@ -14,21 +14,17 @@ public class Image {
     private Long imageId;
     private ImageType imageType;
     private String imageKey;
-    private String imageUri;
+    private String imageUrl;
 
     private static Image from(ImageEntity userEntity) {
         return new Image(
                 userEntity.getId(),
                 userEntity.getImageType(),
                 userEntity.getImageKey(),
-                userEntity.getImageUri());
+                userEntity.getImageUrl());
     }
 
-    public static Image of(ImageType imageType, String imageKey, String imageUri) {
-        return new Image(null, imageType, imageKey, imageUri);
-    }
-
-    public static Image registerUser(ImageEntity imageEntity) {
+    public static Image registerImage(ImageEntity imageEntity) {
         return Image.from(imageEntity);
     }
 }

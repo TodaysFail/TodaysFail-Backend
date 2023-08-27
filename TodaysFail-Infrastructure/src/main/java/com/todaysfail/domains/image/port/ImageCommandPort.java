@@ -1,3 +1,7 @@
 package com.todaysfail.domains.image.port;
 
-public interface ImageCommandPort {}
+import com.todaysfail.domains.image.entity.ImageEntity;
+
+public interface ImageCommandPort {
+    ImageEntity save(ImageEntity imageEntity);
+}
