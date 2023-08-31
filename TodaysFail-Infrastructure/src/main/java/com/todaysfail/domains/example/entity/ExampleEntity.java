@@ -1,6 +1,7 @@
 package com.todaysfail.domains.example.entity;
 
 import com.todaysfail.domains.BaseTimeEntity;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class ExampleEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "example_id")
     private Long id;
 
     private String name;
