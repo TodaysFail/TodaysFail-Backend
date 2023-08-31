@@ -5,6 +5,7 @@ import com.todaysfail.common.type.user.UserRole;
 import com.todaysfail.common.type.user.UserStatus;
 import com.todaysfail.domains.BaseTimeEntity;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 public class UserEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     private String name;

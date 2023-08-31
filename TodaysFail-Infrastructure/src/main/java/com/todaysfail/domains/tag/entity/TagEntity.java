@@ -1,6 +1,5 @@
-package com.todaysfail.domains.example.entity;
+package com.todaysfail.domains.tag.entity;
 
-import com.todaysfail.domains.BaseTimeEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +10,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Entity(name = "tbl_example")
+@Entity(name = "tbl_tag")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ExampleEntity extends BaseTimeEntity {
+public class TagEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "example_id")
+    @Column(name = "tag_id")
     private Long id;
 
-    private String name;
+    private String tagName;
 }

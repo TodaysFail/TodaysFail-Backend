@@ -1,6 +1,5 @@
-package com.todaysfail.domains.example.entity;
+package com.todaysfail.domains.category.entity;
 
-import com.todaysfail.domains.BaseTimeEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +10,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Entity(name = "tbl_example")
+@Entity(name = "tbl_category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ExampleEntity extends BaseTimeEntity {
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "example_id")
+    @Column(name = "category_id")
     private Long id;
 
+    private Long userId;
+
     private String name;
+
+    private Long categoryColorId;
 }
