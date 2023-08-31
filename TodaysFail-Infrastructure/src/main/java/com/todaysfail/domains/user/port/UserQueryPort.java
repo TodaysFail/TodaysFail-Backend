@@ -11,5 +11,5 @@ public interface UserQueryPort {
 
     Boolean existsByName(String name);
 
-    Optional<UserEntity> queryUser(Long refreshUserId);
+    Optional<UserEntity> queryUser(Long userId);
 }

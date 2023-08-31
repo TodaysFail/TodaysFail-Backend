@@ -3,6 +3,7 @@ package com.todaysfail.domains.image.entity;
 import com.todaysfail.common.type.image.ImageFileExtension;
 import com.todaysfail.common.type.image.ImageType;
 import com.todaysfail.domains.BaseTimeEntity;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class ImageEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "image_id")
     private Long id;
 
     private Long userId;
