@@ -16,9 +16,6 @@ public class TagQueryAdapter implements TagQueryPort {
 
     @Override
     public List<TagEntity> queryTagList(List<Long> tagIdList) {
-        // tagIdList.stream()
-        // 		.forEach(tagId -> tagRepository.findById(tagId).orElseThrow(() -> new
-        // RuntimeException()));
         return tagRepository.findAllById(tagIdList);
     }
 }
