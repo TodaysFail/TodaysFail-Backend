@@ -69,9 +69,11 @@ public class FailureRegisterService implements FailureRegisterUseCase {
     }
 
     private void validateFailureTagSize(List<Long> tagIdList, List<TagEntity> tagEntities) {
+        /** 태그는 최대 3개까지만 등록 가능하다. */
         if (tagIdList.size() > 3) {
             throw TagCountExceedException.EXCEPTION;
         }
+        /** 태그가 존재하지 않는 경우 예외를 발생시킨다. */
         if (tagEntities.size() != tagIdList.size()) {
             throw TagNotFoundException.EXCEPTION;
         }
