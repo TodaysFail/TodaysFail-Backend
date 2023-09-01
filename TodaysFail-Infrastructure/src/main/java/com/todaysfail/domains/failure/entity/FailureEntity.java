@@ -1,7 +1,7 @@
 package com.todaysfail.domains.failure.entity;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -40,9 +40,11 @@ public class FailureEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tbl_failure_tag", joinColumns = @JoinColumn(name = "failure_id"))
-    private List<Long> tagIdList;
+    private Set<String> tags;
 
     private int heartCount;
+
+    private boolean secret;
 
     public static FailureEntity registerFailure(
             Long useId,
@@ -51,8 +53,8 @@ public class FailureEntity {
             String title,
             String content,
             String impression,
-            List<Long> tagIdList) {
+            Set<String> tagSet) {
         return new FailureEntity(
-                null, useId, categoryId, date, title, content, impression, tagIdList, 0);
+                null, useId, categoryId, date, title, content, impression, tagSet, 0, false);
     }
 }

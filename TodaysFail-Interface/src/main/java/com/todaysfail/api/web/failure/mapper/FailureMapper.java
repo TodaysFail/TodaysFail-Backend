@@ -23,7 +23,8 @@ public class FailureMapper {
                 failure.getTitle(),
                 failure.getContent(),
                 failure.getImpression(),
-                tagMapper.toTagResponseList(failure.getTagList()),
-                failure.getHeartCount());
+                tagMapper.toTagResponseSet(failure.getTagSet()),
+                failure.getHeartCount(),
+                failure.isSecret());
     }
 }

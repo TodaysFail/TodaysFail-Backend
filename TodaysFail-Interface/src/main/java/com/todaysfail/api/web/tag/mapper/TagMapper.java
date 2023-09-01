@@ -3,7 +3,7 @@ package com.todaysfail.api.web.tag.mapper;
 import com.todaysfail.api.web.tag.dto.response.TagResponse;
 import com.todaysfail.common.annotation.Mapper;
 import com.todaysfail.domains.tag.domain.Tag;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper
@@ -12,7 +12,7 @@ public class TagMapper {
         return new TagResponse(tag.getTagId(), tag.getTagName());
     }
 
-    public List<TagResponse> toTagResponseList(List<Tag> tagList) {
-        return tagList.stream().map(this::toTagResponse).collect(Collectors.toList());
+    public Set<TagResponse> toTagResponseSet(Set<Tag> tagSet) {
+        return tagSet.stream().map(this::toTagResponse).collect(Collectors.toSet());
     }
 }
