@@ -15,4 +15,5 @@ public record FailureResponse(
         String content,
         String impression,
         List<TagResponse> tagList,
-        int heartCount) {}
+        int heartCount,
+        boolean secret) {}

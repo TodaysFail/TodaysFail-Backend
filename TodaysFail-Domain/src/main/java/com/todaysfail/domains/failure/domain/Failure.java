@@ -5,7 +5,7 @@ import com.todaysfail.domains.failure.entity.FailureEntity;
 import com.todaysfail.domains.tag.domain.Tag;
 import com.todaysfail.domains.user.domain.User;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,11 +22,12 @@ public class Failure {
     private String title;
     private String content;
     private String impression;
-    private List<Tag> tagList;
+    private Set<Tag> tagSet;
     private int heartCount;
+    private boolean secret;
 
     public static Failure registerFailure(
-            FailureEntity failureEntity, User user, Category category, List<Tag> tagList) {
+            FailureEntity failureEntity, User user, Category category, Set<Tag> tagSet) {
         return new Failure(
                 failureEntity.getId(),
                 user,
@@ -35,7 +36,8 @@ public class Failure {
                 failureEntity.getTitle(),
                 failureEntity.getContent(),
                 failureEntity.getImpression(),
-                tagList,
-                failureEntity.getHeartCount());
+                tagSet,
+                failureEntity.getHeartCount(),
+                false);
     }
 }

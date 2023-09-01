@@ -2,7 +2,7 @@ package com.todaysfail.domains.failure.port;
 
 import com.todaysfail.domains.failure.entity.FailureEntity;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 public interface FailureCommandPort {
     FailureEntity registerFailure(
@@ -12,5 +12,5 @@ public interface FailureCommandPort {
             String title,
             String content,
             String impression,
-            List<Long> tagIdList);
+            Set<String> tagSet);
 }

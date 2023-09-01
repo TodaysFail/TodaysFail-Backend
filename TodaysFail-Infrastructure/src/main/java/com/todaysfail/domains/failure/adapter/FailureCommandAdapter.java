@@ -5,7 +5,7 @@ import com.todaysfail.domains.failure.entity.FailureEntity;
 import com.todaysfail.domains.failure.port.FailureCommandPort;
 import com.todaysfail.domains.failure.repository.FailureRepository;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +23,10 @@ public class FailureCommandAdapter implements FailureCommandPort {
             String title,
             String content,
             String impression,
-            List<Long> tagIdList) {
+            Set<String> tagSet) {
         FailureEntity failureEntity =
                 FailureEntity.registerFailure(
-                        useId, categoryId, date, title, content, impression, tagIdList);
+                        useId, categoryId, date, title, content, impression, tagSet);
         return failureRepository.save(failureEntity);
     }
 }

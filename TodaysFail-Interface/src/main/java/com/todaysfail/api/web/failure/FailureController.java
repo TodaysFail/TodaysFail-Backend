@@ -36,7 +36,7 @@ public class FailureController {
                                 request.title(),
                                 request.content(),
                                 request.impression(),
-                                request.tagIdList()));
+                                request.tagSet()));
         return failureMapper.toFailureResponse(failure);
     }
 }

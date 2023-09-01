@@ -24,6 +24,7 @@ public class FailureMapper {
                 failure.getContent(),
                 failure.getImpression(),
                 tagMapper.toTagResponseList(failure.getTagList()),
-                failure.getHeartCount());
+                failure.getHeartCount(),
+                failure.isSecret());
     }
 }
