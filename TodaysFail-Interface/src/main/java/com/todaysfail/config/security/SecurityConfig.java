@@ -6,6 +6,7 @@ import com.todaysfail.common.helper.SpringEnvironmentHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -65,6 +66,8 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/api/v1/users/nickname/generate")
                 .permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/categories")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .hasRole("USER");
         http.apply(filterConfig);
