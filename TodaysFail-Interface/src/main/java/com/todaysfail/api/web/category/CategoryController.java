@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "5. [카테고리]")
+@Tag(name = "5-1. [카테고리]")
 @RestController
 @RequestMapping("/api/v1/categories")
 @SecurityRequirement(name = "access-token")
