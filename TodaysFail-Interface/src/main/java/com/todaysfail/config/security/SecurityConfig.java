@@ -69,7 +69,9 @@ public class SecurityConfig {
                 .antMatchers("/api/v1/categories")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/category-colors")
-                .permitAll()
+                .hasRole("USER")
+                .antMatchers("/api/v1/category-colors/**")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .hasRole("USER");
         http.apply(filterConfig);

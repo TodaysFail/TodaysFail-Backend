@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CategoryColor {
     private Long categoryColorId;
-    private String colorName;
     private String colorCode;
+    private String colorName;
 
-    public static CategoryColor of(Long categoryColorId, String colorName, String colorCode) {
-        return new CategoryColor(categoryColorId, colorName, colorCode);
+    public static CategoryColor of(Long categoryColorId, String colorCode, String colorName) {
+        return new CategoryColor(categoryColorId, colorCode, colorName);
     }
 }
