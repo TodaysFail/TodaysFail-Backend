@@ -3,7 +3,7 @@ package com.todaysfail.api.web.category.dto.request;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-public record CategoryColorRegisterRequest(
+public record CategoryColorModifyRequest(
         @NotNull(message = "색상 코드는 필수입니다.")
                 @Pattern(
                         regexp = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",

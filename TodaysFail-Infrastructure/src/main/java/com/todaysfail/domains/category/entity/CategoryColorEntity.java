@@ -27,4 +27,9 @@ public class CategoryColorEntity {
     public static CategoryColorEntity registerCategoryColor(String colorCode, String colorName) {
         return new CategoryColorEntity(null, colorName, colorCode);
     }
+
+    public void modify(String colorCode, String colorName) {
+        this.colorCode = colorCode;
+        this.colorName = colorName;
+    }
 }
