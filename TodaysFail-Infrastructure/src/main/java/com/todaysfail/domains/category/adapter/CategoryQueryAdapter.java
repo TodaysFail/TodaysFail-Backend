@@ -4,6 +4,7 @@ import com.todaysfail.common.annotation.Adapter;
 import com.todaysfail.domains.category.entity.CategoryEntity;
 import com.todaysfail.domains.category.port.CategoryQueryPort;
 import com.todaysfail.domains.category.repository.CategoryRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,5 +18,10 @@ public class CategoryQueryAdapter implements CategoryQueryPort {
     @Override
     public Optional<CategoryEntity> queryCategory(Long categoryId) {
         return categoryRepository.findById(categoryId);
+    }
+
+    @Override
+    public List<CategoryEntity> queryCategoryByUserId(Long userId) {
+        return categoryRepository.findAllByUserId(userId);
     }
 }

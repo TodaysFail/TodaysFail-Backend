@@ -29,4 +29,9 @@ public class CategoryEntity {
     public static CategoryEntity registerCategory(Long userId, String name, Long categoryColorId) {
         return new CategoryEntity(null, userId, name, categoryColorId);
     }
+
+    public void modify(String categoryName, Long categoryColorId) {
+        this.name = categoryName;
+        this.categoryColorId = categoryColorId;
+    }
 }

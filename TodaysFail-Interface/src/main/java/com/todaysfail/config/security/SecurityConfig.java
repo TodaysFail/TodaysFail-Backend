@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .antMatchers("/api/v1/users/nickname/generate")
                 .permitAll()
                 .antMatchers("/api/v1/categories")
-                .permitAll()
+                .hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/v1/category-colors")
                 .hasRole("USER")
                 .antMatchers("/api/v1/category-colors/**")
