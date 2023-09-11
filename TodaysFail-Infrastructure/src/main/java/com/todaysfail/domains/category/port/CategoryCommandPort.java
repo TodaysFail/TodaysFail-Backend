@@ -1,11 +1,12 @@
 package com.todaysfail.domains.category.port;
 
 import com.todaysfail.domains.category.entity.CategoryEntity;
-import java.util.List;
 import java.util.Optional;
 
-public interface CategoryQueryPort {
+public interface CategoryCommandPort {
+    CategoryEntity save(CategoryEntity categoryEntity);
+
     Optional<CategoryEntity> queryCategory(Long categoryId);
 
-    List<CategoryEntity> queryCategoryByUserId(Long userId);
+    void delete(CategoryEntity categoryEntity);
 }

@@ -2,18 +2,22 @@ package com.todaysfail.domains.category.adapter;
 
 import com.todaysfail.common.annotation.Adapter;
 import com.todaysfail.domains.category.entity.CategoryEntity;
-import com.todaysfail.domains.category.port.CategoryQueryPort;
+import com.todaysfail.domains.category.port.CategoryCommandPort;
 import com.todaysfail.domains.category.repository.CategoryRepository;
-import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @Adapter
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
-public class CategoryQueryAdapter implements CategoryQueryPort {
+public class CategoryCommandAdapter implements CategoryCommandPort {
     private final CategoryRepository categoryRepository;
+
+    @Override
+    public CategoryEntity save(CategoryEntity categoryEntity) {
+        return categoryRepository.save(categoryEntity);
+    }
 
     @Override
     public Optional<CategoryEntity> queryCategory(Long categoryId) {
@@ -21,7 +25,7 @@ public class CategoryQueryAdapter implements CategoryQueryPort {
     }
 
     @Override
-    public List<CategoryEntity> queryCategoryByUserId(Long userId) {
-        return categoryRepository.findAllByUserId(userId);
+    public void delete(CategoryEntity categoryEntity) {
+        categoryRepository.delete(categoryEntity);
     }
 }
