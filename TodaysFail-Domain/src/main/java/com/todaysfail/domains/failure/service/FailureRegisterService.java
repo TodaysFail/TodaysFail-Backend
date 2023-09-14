@@ -56,6 +56,7 @@ public class FailureRegisterService implements FailureRegisterUseCase {
                         .content(command.content())
                         .impression(command.impression())
                         .tags(tagSet)
+                        .secret(command.secret())
                         .build());
     }
 

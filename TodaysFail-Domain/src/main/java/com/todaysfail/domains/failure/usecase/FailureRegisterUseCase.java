@@ -14,5 +14,6 @@ public interface FailureRegisterUseCase {
             String title,
             String content,
             String impression,
-            Set<String> tagSet) {}
+            Set<String> tagSet,
+            boolean secret) {}
 }
