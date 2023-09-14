@@ -1,8 +1,7 @@
 package com.todaysfail.domains.category.service;
 
 import com.todaysfail.domains.category.domain.Category;
-import com.todaysfail.domains.category.entity.CategoryColorEntity;
-import com.todaysfail.domains.category.entity.CategoryEntity;
+import com.todaysfail.domains.category.domain.CategoryColor;
 import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
 import com.todaysfail.domains.category.exception.CategoryNotFoundException;
 import com.todaysfail.domains.category.exception.CategoryNotOwnedByUserException;
@@ -20,21 +19,21 @@ public class CategoryModifyService implements CategoryModifyUseCase {
 
     @Override
     public Category execute(Command command) {
-        CategoryEntity categoryEntity =
+        Category category =
                 categoryCommandPort
                         .queryCategory(command.categoryId())
                         .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
-        CategoryColorEntity categoryColorEntity =
+        CategoryColor categoryColor =
                 categoryColorQueryPort
                         .queryCategoryColor(command.categoryColorId())
                         .orElseThrow(() -> CategoryColorNotFoundException.EXCEPTION);
-        validationOwner(command, categoryEntity);
-        categoryEntity.modify(command.categoryName(), command.categoryColorId());
-        return Category.of(categoryEntity, categoryColorEntity);
+        validationOwner(command, category);
+        category.modify(command.categoryName(), categoryColor);
+        return category;
     }
 
-    private void validationOwner(Command command, CategoryEntity categoryEntity) {
-        if (categoryEntity.getUserId() != command.userId()) {
+    private void validationOwner(Command command, Category category) {
+        if (category.getUserId() != command.userId()) {
             throw CategoryNotOwnedByUserException.EXCEPTION;
         }
     }

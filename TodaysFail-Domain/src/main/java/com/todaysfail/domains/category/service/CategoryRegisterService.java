@@ -1,10 +1,7 @@
 package com.todaysfail.domains.category.service;
 
-import static com.todaysfail.domains.category.usecase.CategoryRegisterUseCase.*;
-
 import com.todaysfail.domains.category.domain.Category;
-import com.todaysfail.domains.category.entity.CategoryColorEntity;
-import com.todaysfail.domains.category.entity.CategoryEntity;
+import com.todaysfail.domains.category.domain.CategoryColor;
 import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
 import com.todaysfail.domains.category.port.CategoryColorQueryPort;
 import com.todaysfail.domains.category.port.CategoryCommandPort;
@@ -22,14 +19,15 @@ public class CategoryRegisterService implements CategoryRegisterUseCase {
     @Override
     @Transactional
     public Category execute(Command command) {
-        CategoryColorEntity categoryColorEntity =
+        CategoryColor categoryColor =
                 categoryColorQueryPort
                         .queryCategoryColor(command.categoryColorId())
                         .orElseThrow(() -> CategoryColorNotFoundException.EXCEPTION);
-        CategoryEntity categoryEntity =
-                CategoryEntity.registerCategory(
-                        command.userId(), command.categoryName(), categoryColorEntity.getId());
-        CategoryEntity savedCategoryEntity = categoryCommandPort.save(categoryEntity);
-        return Category.of(savedCategoryEntity, categoryColorEntity);
+        return categoryCommandPort.save(
+                Category.builder()
+                        .userId(command.userId())
+                        .name(command.categoryName())
+                        .categoryColor(categoryColor)
+                        .build());
     }
 }

@@ -65,7 +65,10 @@ public class KakaoOauthHelper {
 
     public OauthInfo getOauthInfoByIdToken(String idToken) {
         OIDCDecodePayload oidcDecodePayload = getOIDCDecodePayload(idToken);
-        return OauthInfo.of(oidcDecodePayload.getSub(), OauthProvider.KAKAO);
+        return OauthInfo.builder()
+                .oauthId(oidcDecodePayload.getSub())
+                .provider(OauthProvider.KAKAO)
+                .build();
     }
 
     public void unlink(String oid) {

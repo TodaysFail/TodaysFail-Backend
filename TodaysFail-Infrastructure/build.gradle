@@ -4,6 +4,7 @@ jar.enabled = true
 dependencies {
     implementation(project(":TodaysFail-Common"))
 
+
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
     api 'org.springframework.boot:spring-boot-starter-data-redis'

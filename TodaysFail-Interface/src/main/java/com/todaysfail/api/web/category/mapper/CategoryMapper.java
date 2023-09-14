@@ -13,13 +13,15 @@ public class CategoryMapper {
 
     public CategoryResponse toCategoryResponse(Category category) {
         return new CategoryResponse(
-                category.getCategoryId(),
+                category.getId(),
                 category.getUserId(),
-                category.getCategoryName(),
+                category.getName(),
                 categoryColorMapper.toCategoryColorResponse(category.getCategoryColor()));
     }
 
     public List<CategoryResponse> toCategoryResponse(List<Category> categoryList) {
-        return categoryList.stream().map(this::toCategoryResponse).toList();
+        return categoryList.stream()
+                .map(this::toCategoryResponse)
+                .collect(java.util.stream.Collectors.toList());
     }
 }

@@ -1,7 +1,6 @@
 package com.todaysfail.domains.category.service;
 
 import com.todaysfail.domains.category.domain.CategoryColor;
-import com.todaysfail.domains.category.entity.CategoryColorEntity;
 import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
 import com.todaysfail.domains.category.port.CategoryColorCommandPort;
 import com.todaysfail.domains.category.usecase.CategoryColorModifyUseCase;
@@ -17,14 +16,11 @@ public class CategoryColorModifyService implements CategoryColorModifyUseCase {
     @Override
     @Transactional
     public CategoryColor execute(Command command) {
-        CategoryColorEntity categoryColorEntity =
+        CategoryColor categoryColor =
                 categoryColorCommandPort
                         .queryCategoryColor(command.categoryColorId())
                         .orElseThrow(() -> CategoryColorNotFoundException.EXCEPTION);
-        categoryColorEntity.modify(command.colorCode(), command.colorName());
-        return CategoryColor.of(
-                categoryColorEntity.getId(),
-                categoryColorEntity.getColorCode(),
-                categoryColorEntity.getColorName());
+        categoryColor.modify(command.colorCode(), command.colorName());
+        return categoryColor;
     }
 }

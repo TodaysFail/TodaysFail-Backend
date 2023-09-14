@@ -5,7 +5,6 @@ import com.todaysfail.common.helper.SpringEnvironmentHelper;
 import com.todaysfail.common.type.image.ImageFileExtension;
 import com.todaysfail.common.type.image.ImageType;
 import com.todaysfail.domains.image.domain.Image;
-import com.todaysfail.domains.image.entity.ImageEntity;
 import com.todaysfail.domains.image.port.ImageCommandPort;
 import com.todaysfail.domains.image.usecase.ImageUploadSuccessUseCase;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +34,15 @@ public class ImageUploadSuccessService implements ImageUploadSuccessUseCase {
                         + imageKey
                         + "."
                         + imageFileExtension.getUploadExtension();
-        ImageEntity imageEntity =
-                ImageEntity.registerImage(
-                        userId, imageType, imageFileExtension, imageKey, imageUrl);
-        Image image = Image.registerImage(imageEntity);
-        imageCommandPort.save(imageEntity);
-        return image.getImageUrl();
+        return imageCommandPort
+                .save(
+                        Image.builder()
+                                .userId(userId)
+                                .imageType(imageType)
+                                .imageFileExtension(imageFileExtension)
+                                .imageKey(imageKey)
+                                .imageUrl(imageUrl)
+                                .build())
+                .getImageUrl();
     }
 }

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 @Mapper
 public class TagMapper {
     public TagResponse toTagResponse(Tag tag) {
-        return new TagResponse(tag.getTagId(), tag.getTagName());
+        return new TagResponse(tag.getId(), tag.getTagName());
     }
 
     public Set<TagResponse> toTagResponseSet(Set<Tag> tagSet) {

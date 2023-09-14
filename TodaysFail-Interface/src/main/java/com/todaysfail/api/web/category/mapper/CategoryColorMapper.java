@@ -10,9 +10,7 @@ import java.util.stream.Collectors;
 public class CategoryColorMapper {
     public CategoryColorResponse toCategoryColorResponse(CategoryColor categoryColor) {
         return new CategoryColorResponse(
-                categoryColor.getCategoryColorId(),
-                categoryColor.getColorCode(),
-                categoryColor.getColorName());
+                categoryColor.getId(), categoryColor.getColorCode(), categoryColor.getColorName());
     }
 
     public List<CategoryColorResponse> toCategoryColorResponse(

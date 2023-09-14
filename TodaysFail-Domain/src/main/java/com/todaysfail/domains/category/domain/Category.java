@@ -1,35 +1,44 @@
 package com.todaysfail.domains.category.domain;
 
-import com.todaysfail.domains.category.entity.CategoryColorEntity;
-import com.todaysfail.domains.category.entity.CategoryEntity;
 import com.todaysfail.domains.category.exception.CategoryNotOwnedByUserException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
+@Entity(name = "tbl_category")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Category {
-    private Long categoryId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
+    private Long id;
+
     private Long userId;
-    private String categoryName;
+
+    private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_color_id")
     private CategoryColor categoryColor;
 
-    public static Category of(
-            CategoryEntity categoryEntity, CategoryColorEntity categoryColorEntity) {
-        return new Category(
-                categoryEntity.getId(),
-                categoryEntity.getUserId(),
-                categoryEntity.getName(),
-                CategoryColor.of(
-                        categoryColorEntity.getId(),
-                        categoryColorEntity.getColorName(),
-                        categoryColorEntity.getColorCode()));
+    public void modify(String categoryName, CategoryColor categoryColor) {
+        this.name = categoryName;
+        this.categoryColor = categoryColor;
     }
 
-    /** 본인이 생성 한 카테고리인지 확인 */
     public void validateOwnership(Long userId) {
         if (!this.userId.equals(userId)) {
             throw CategoryNotOwnedByUserException.EXCEPTION;
