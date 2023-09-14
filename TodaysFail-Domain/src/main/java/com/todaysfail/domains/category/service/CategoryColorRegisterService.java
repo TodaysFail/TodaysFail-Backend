@@ -1,7 +1,6 @@
 package com.todaysfail.domains.category.service;
 
 import com.todaysfail.domains.category.domain.CategoryColor;
-import com.todaysfail.domains.category.entity.CategoryColorEntity;
 import com.todaysfail.domains.category.port.CategoryColorCommandPort;
 import com.todaysfail.domains.category.usecase.CategoryColorRegisterUseCase;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +13,10 @@ public class CategoryColorRegisterService implements CategoryColorRegisterUseCas
 
     @Override
     public CategoryColor execute(Command command) {
-        CategoryColorEntity categoryColorEntity =
-                CategoryColorEntity.registerCategoryColor(command.colorCode(), command.colorName());
-        CategoryColorEntity savedCategoryColorEntity =
-                categoryColorCommandPort.save(categoryColorEntity);
-        return CategoryColor.of(
-                savedCategoryColorEntity.getId(),
-                savedCategoryColorEntity.getColorCode(),
-                savedCategoryColorEntity.getColorName());
+        return categoryColorCommandPort.save(
+                CategoryColor.builder()
+                        .colorCode(command.colorCode())
+                        .colorName(command.colorName())
+                        .build());
     }
 }

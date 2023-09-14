@@ -3,8 +3,8 @@ package com.todaysfail.api.web.user;
 import com.todaysfail.api.web.user.dto.response.RandomNicknameResponse;
 import com.todaysfail.api.web.user.mapper.UserMapper;
 import com.todaysfail.common.annotation.DisableSwaggerSecurity;
+import com.todaysfail.common.vo.UserDetail;
 import com.todaysfail.config.security.SecurityUtils;
-import com.todaysfail.domains.user.domain.UserDetail;
 import com.todaysfail.domains.user.usecase.RandomNicknameUseCase;
 import com.todaysfail.domains.user.usecase.UserQueryUseCase;
 import com.todaysfail.domains.user.usecase.UserWithDrawUseCase;
@@ -32,7 +32,7 @@ public class UserController {
     @Operation(summary = "내 정보를 조회합니다.")
     @GetMapping("/me")
     public UserDetail queryMyInfo() {
-        return userQueryUseCase.queryMyInfo(SecurityUtils.getCurrentUserId());
+        return userQueryUseCase.queryUser(SecurityUtils.getCurrentUserId());
     }
 
     @SecurityRequirement(name = "access-token")

@@ -1,6 +1,6 @@
 package com.todaysfail.api.web.auth.dto.response;
 
-import com.todaysfail.domains.user.domain.UserDetail;
+import com.todaysfail.common.vo.UserDetail;
 
 public record TokenAndUserResponse(
         String accessToken,

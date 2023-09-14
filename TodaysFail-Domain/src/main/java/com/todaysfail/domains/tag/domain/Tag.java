@@ -1,19 +1,26 @@
 package com.todaysfail.domains.tag.domain;
 
-import com.todaysfail.domains.tag.entity.TagEntity;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
+@Entity(name = "tbl_tag")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Tag {
-    private Long tagId;
-    private String tagName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tag_id")
+    private Long id;
 
-    public static Tag from(TagEntity tagEntity) {
-        return new Tag(tagEntity.getId(), tagEntity.getTagName());
-    }
+    private String tagName;
 }

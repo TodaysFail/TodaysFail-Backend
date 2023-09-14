@@ -1,7 +1,6 @@
 package com.todaysfail.domains.category.service;
 
 import com.todaysfail.domains.category.domain.Category;
-import com.todaysfail.domains.category.entity.CategoryEntity;
 import com.todaysfail.domains.category.exception.CategoryNotFoundException;
 import com.todaysfail.domains.category.exception.CategoryNotOwnedByUserException;
 import com.todaysfail.domains.category.port.CategoryCommandPort;
@@ -15,18 +14,17 @@ public class CategoryDeleteService implements CategoryDeleteUseCase {
     private final CategoryCommandPort categoryCommandPort;
 
     @Override
-    public Category execute(Command command) {
-        CategoryEntity categoryEntity =
+    public void execute(Command command) {
+        Category category =
                 categoryCommandPort
                         .queryCategory(command.categoryId())
                         .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
-        validationOwner(command, categoryEntity);
-        categoryCommandPort.delete(categoryEntity);
-        return null;
+        validationOwner(command, category);
+        categoryCommandPort.delete(category);
     }
 
-    private void validationOwner(Command command, CategoryEntity categoryEntity) {
-        if (command.userId() != categoryEntity.getUserId()) {
+    private void validationOwner(Command command, Category category) {
+        if (command.userId() != category.getUserId()) {
             throw CategoryNotOwnedByUserException.EXCEPTION;
         }
     }

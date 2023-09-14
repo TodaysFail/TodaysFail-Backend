@@ -1,6 +1,6 @@
 package com.todaysfail.domains.auth.domain;
 
-import com.todaysfail.domains.user.domain.UserDetail;
+import com.todaysfail.common.vo.UserDetail;
 
 public record TokenAndUser(
         String accessToken,

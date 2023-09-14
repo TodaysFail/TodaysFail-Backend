@@ -4,24 +4,29 @@ import static com.todaysfail.common.consts.TodaysFailConst.*;
 
 import com.todaysfail.common.type.user.OauthProvider;
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Embeddable
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class OauthInfo {
     private String oauthId;
+
+    @Enumerated(EnumType.STRING)
     private OauthProvider provider;
 
-    public static OauthInfo of(String oauthId, OauthProvider provider) {
-        return new OauthInfo(oauthId, provider);
-    }
-
-    public void withDraw() {
-        String withDrawOid = WITHDRAW_PREFIX + LocalDateTime.now() + ":" + oauthId;
-        this.oauthId = withDrawOid;
+    public OauthInfo withDraw() {
+        return OauthInfo.builder()
+                .oauthId(WITHDRAW_PREFIX + LocalDateTime.now().toString() + ":" + oauthId)
+                .provider(provider)
+                .build();
     }
 }

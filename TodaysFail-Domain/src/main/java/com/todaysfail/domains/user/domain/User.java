@@ -1,107 +1,78 @@
 package com.todaysfail.domains.user.domain;
 
 import com.todaysfail.aop.event.Events;
+import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.common.type.user.UserRole;
 import com.todaysfail.common.type.user.UserStatus;
-import com.todaysfail.domains.user.entity.UserEntity;
 import com.todaysfail.domains.user.exception.AlreadyDeletedUserException;
 import com.todaysfail.domains.user.exception.UserForbiddenException;
 import com.todaysfail.events.UserRegisterEvent;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class User {
-    private Long userId;
-    private Profile profile;
-    private OauthInfo oauthInfo;
-    private UserStatus userStatus;
-    private UserRole userRole;
-    private FcmNotification fcmNotification;
-    private LocalDateTime lastLoginAt;
+@Builder
+@Entity(name = "tbl_user")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class User extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
-    public static User from(UserEntity userEntity) {
-        return new User(
-                userEntity.getId(),
-                Profile.from(
-                        userEntity.getName(),
-                        userEntity.getProfileImg(),
-                        userEntity.getIsDefaultImg()),
-                OauthInfo.of(userEntity.getOid(), userEntity.getProvider()),
-                userEntity.getUserStatus(),
-                userEntity.getUserRole(),
-                FcmNotification.of(
-                        userEntity.getFcmToken(),
-                        userEntity.getPushAlarm(),
-                        userEntity.getEventAlarm()),
-                userEntity.getLastLoginAt());
-    }
+    @Embedded private Profile profile;
 
-    public static User of(
-            Long userId,
-            Profile profile,
-            OauthInfo oauthInfo,
-            UserStatus userStatus,
-            UserRole userRole,
-            FcmNotification fcmNotification,
-            LocalDateTime lastLoginAt) {
-        return new User(
-                userId, profile, oauthInfo, userStatus, userRole, fcmNotification, lastLoginAt);
-    }
+    @Embedded private OauthInfo oauthInfo;
 
-    public UserEntity toEntity() {
-        return UserEntity.from(
-                this.getUserId(),
-                this.getProfile().getName(),
-                this.getProfile().getProfileImg(),
-                this.getProfile().getIsDefaultImg(),
-                this.getOauthInfo().getProvider(),
-                this.getOauthInfo().getOauthId(),
-                this.getUserStatus(),
-                this.getUserRole(),
-                this.getFcmNotification().getFcmToken(),
-                this.getFcmNotification().getPushAlarm(),
-                this.getFcmNotification().getEventAlarm(),
-                this.getLastLoginAt());
-    }
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus = UserStatus.NORMAL;
 
-    public static User registerUser(UserEntity userEntity) {
-        User user = User.from(userEntity);
-        Events.raise(new UserRegisterEvent(userEntity.getId()));
-        return user;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole = UserRole.USER;
+
+    @Embedded private FcmNotification fcmNotification;
+
+    private LocalDateTime lastLoginAt = LocalDateTime.now();
+
+    @PostPersist
+    public void registerEvent() {
+        Events.raise(new UserRegisterEvent(this.id));
     }
 
     public void login(String fcmToken) {
-        if (userStatus != UserStatus.NORMAL) {
-            throw UserForbiddenException.EXCEPTION;
-        }
-        lastLoginAt = LocalDateTime.now();
+        if (userStatus != UserStatus.NORMAL) throw UserForbiddenException.EXCEPTION;
+        this.lastLoginAt = LocalDateTime.now();
         updateToken(fcmToken);
     }
 
     private void updateToken(String fcmToken) {
-        fcmNotification = FcmNotification.updateToken(this.fcmNotification, fcmToken);
-    }
-
-    public void refresh() {
-        if (userStatus != UserStatus.NORMAL) {
-            throw UserForbiddenException.EXCEPTION;
-        }
-        lastLoginAt = LocalDateTime.now();
+        fcmNotification = fcmNotification.updateToken(fcmToken);
     }
 
     public void withDraw() {
-        if (userStatus == UserStatus.DELETED) {
-            throw AlreadyDeletedUserException.EXCEPTION;
-        }
+        if (userStatus == UserStatus.DELETED) throw AlreadyDeletedUserException.EXCEPTION;
         userStatus = UserStatus.DELETED;
-        profile.withDraw();
-        fcmNotification.withDraw();
-        oauthInfo.withDraw();
+        profile = profile.withDraw();
+        oauthInfo = oauthInfo.withDraw();
+        fcmNotification = fcmNotification.disableAlarm();
+    }
+
+    public void refresh() {
+        if (userStatus != UserStatus.NORMAL) throw UserForbiddenException.EXCEPTION;
+        this.lastLoginAt = LocalDateTime.now();
     }
 }

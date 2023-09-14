@@ -1,6 +1,6 @@
 package com.todaysfail.domains.category.service;
 
-import com.todaysfail.domains.category.entity.CategoryColorEntity;
+import com.todaysfail.domains.category.domain.CategoryColor;
 import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
 import com.todaysfail.domains.category.port.CategoryColorCommandPort;
 import com.todaysfail.domains.category.usecase.CategoryColorDeleteUseCase;
@@ -14,10 +14,10 @@ public class CategoryColorDeleteService implements CategoryColorDeleteUseCase {
 
     @Override
     public void delete(Long categoryColorId) {
-        CategoryColorEntity categoryColorEntity =
+        CategoryColor categoryColor =
                 categoryColorCommandPort
                         .queryCategoryColor(categoryColorId)
                         .orElseThrow(() -> CategoryColorNotFoundException.EXCEPTION);
-        categoryColorCommandPort.delete(categoryColorEntity);
+        categoryColorCommandPort.delete(categoryColor);
     }
 }

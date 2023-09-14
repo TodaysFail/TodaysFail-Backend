@@ -1,27 +1,24 @@
 package com.todaysfail.domains.user.domain;
 
-import lombok.AccessLevel;
+import javax.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Embeddable
 @Getter
 @Builder
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class Profile {
     private String name;
+
     private String profileImg;
+
     private Boolean isDefaultImg;
 
-    public static Profile from(String name, String profileImg, Boolean isDefaultImg) {
-        return new Profile(name, profileImg, isDefaultImg);
-    }
-
-    public void withDraw() {
-        this.name = "탈퇴한 사용자";
-        this.profileImg = "";
-        this.isDefaultImg = true;
+    public Profile withDraw() {
+        return Profile.builder().name("탈퇴한 유저").profileImg("").isDefaultImg(true).build();
     }
 }
