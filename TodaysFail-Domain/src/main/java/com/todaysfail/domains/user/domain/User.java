@@ -8,7 +8,6 @@ import com.todaysfail.domains.user.exception.AlreadyDeletedUserException;
 import com.todaysfail.domains.user.exception.UserForbiddenException;
 import com.todaysfail.events.UserRegisterEvent;
 import java.time.LocalDateTime;
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -17,6 +16,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity(name = "tbl_user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +48,7 @@ public class User extends BaseTimeEntity {
 
     private LocalDateTime lastLoginAt = LocalDateTime.now();
 
-    @PostConstruct
+    @PostPersist
     public void registerEvent() {
         Events.raise(new UserRegisterEvent(this.id));
     }
