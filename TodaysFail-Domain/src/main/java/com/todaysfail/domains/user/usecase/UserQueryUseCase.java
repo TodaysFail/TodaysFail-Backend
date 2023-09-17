@@ -1,7 +1,7 @@
 package com.todaysfail.domains.user.usecase;
 
-import com.todaysfail.domains.user.domain.UserDetail;
+import com.todaysfail.common.vo.UserDetail;
 
 public interface UserQueryUseCase {
-    UserDetail queryMyInfo(Long userId);
+    UserDetail queryUser(Long userId);
 }

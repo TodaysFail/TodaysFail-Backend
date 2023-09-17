@@ -24,7 +24,7 @@ public enum GlobalErrorCode implements BaseErrorCode {
     @ExplainError("인증 토큰이 잘못됐을 때 발생하는 오류입니다.")
     INVALID_TOKEN(FORBIDDEN, "AUTH_403_2", "토큰의 형식이 일치하지 않습니다. 적절한 형식으로 다시 요청하세요"),
     @ExplainError("헤더에 올바른 accessToken을 담지않았을 때 발생하는 오류(형식 불일치 등)")
-    ACCESS_TOKEN_NOT_EXIST(UNAUTHORIZED, "AUTH_403_3", "토큰이 존재하지 않습니다. 적절한 토큰을 헤더에 넣어주세요"),
+    ACCESS_TOKEN_NOT_EXIST(FORBIDDEN, "AUTH_403_3", "토큰이 존재하지 않습니다. 적절한 토큰을 헤더에 넣어주세요"),
 
     @ExplainError("없는 resource로 요청했습니다. 다른 요청으로 다시 시도해주세요")
     RESOURCE_NOT_FOUND(NOT_FOUND, "GLOBAL_404_1", "요청한 리소스를 서버에서 찾을 수 없습니다."),

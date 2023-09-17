@@ -7,7 +7,6 @@ import com.todaysfail.domains.user.domain.FcmNotification;
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.Profile;
 import com.todaysfail.domains.user.domain.User;
-import com.todaysfail.domains.user.entity.UserEntity;
 import com.todaysfail.domains.user.exception.AlreadySignUpUserException;
 import com.todaysfail.domains.user.exception.AlreadyUsedUserNameException;
 import com.todaysfail.domains.user.port.UserCommandPort;
@@ -28,25 +27,18 @@ public class UserRegisterService implements UserRegisterUseCase {
     @RedissonLock(lockName = "유저등록", identifier = "oauthInfo")
     public User execute(Profile profile, OauthInfo oauthInfo, FcmNotification fcmNotification) {
         validUserCanRegister(oauthInfo, profile);
-        UserEntity userEntity =
-                userCommandPort.registerUser(
-                        profile.getName(),
-                        profile.getProfileImg(),
-                        profile.getIsDefaultImg(),
-                        oauthInfo.getProvider(),
-                        oauthInfo.getOauthId(),
-                        UserStatus.NORMAL,
-                        UserRole.USER,
-                        fcmNotification.getFcmToken(),
-                        fcmNotification.getPushAlarm(),
-                        fcmNotification.getEventAlarm());
-        return User.registerUser(userEntity);
+        return userCommandPort.save(
+                User.builder()
+                        .profile(profile)
+                        .oauthInfo(oauthInfo)
+                        .fcmNotification(fcmNotification)
+                        .userRole(UserRole.USER)
+                        .userStatus(UserStatus.NORMAL)
+                        .build());
     }
 
     public Boolean checkUserCanRegister(OauthInfo oauthInfo) {
-        Boolean aBoolean =
-                userQueryPort.existsByOauthInfo(oauthInfo.getOauthId(), oauthInfo.getProvider());
-        return aBoolean;
+        return userQueryPort.existsByOauthInfo(oauthInfo);
     }
 
     public Boolean checkUserName(Profile profile) {

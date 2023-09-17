@@ -32,12 +32,18 @@ public class RegisterUserService implements RegisterUserUseCase {
         OauthUserInfo oauthUserInfo = kakaoOauthHelper.getUserInfo(oauthAccessToken);
 
         Profile profile =
-                Profile.from(
-                        oauthUserInfo.name(),
-                        oauthUserInfo.profileImage(),
-                        oauthUserInfo.isDefaultImage());
-        OauthInfo oauthInfo = OauthInfo.of(oauthUserInfo.oauthId(), oauthUserInfo.oauthProvider());
-        FcmNotification fcmNotification = FcmNotification.of("", false, false);
+                Profile.builder()
+                        .name(oauthUserInfo.name())
+                        .profileImg(oauthUserInfo.profileImage())
+                        .isDefaultImg(oauthUserInfo.isDefaultImage())
+                        .build();
+        OauthInfo oauthInfo =
+                OauthInfo.builder()
+                        .oauthId(oauthUserInfo.oauthId())
+                        .provider(oauthUserInfo.oauthProvider())
+                        .build();
+        FcmNotification fcmNotification =
+                FcmNotification.builder().fcmToken("").pushAlarm(false).eventAlarm(false).build();
 
         User user = userUpsertUseCase.execute(profile, oauthInfo, fcmNotification);
         return tokenGenerateUseCase.execute(user);
@@ -65,9 +71,19 @@ public class RegisterUserService implements RegisterUserUseCase {
             Boolean pushAlarm,
             Boolean eventAlarm) {
 
-        Profile profile = Profile.from(name, profileImage, isDefaultImage);
+        Profile profile =
+                Profile.builder()
+                        .name(name)
+                        .profileImg(profileImage)
+                        .isDefaultImg(isDefaultImage)
+                        .build();
         OauthInfo oauthInfo = kakaoOauthHelper.getOauthInfoByIdToken(idToken);
-        FcmNotification fcmNotification = FcmNotification.of(fcmToken, pushAlarm, eventAlarm);
+        FcmNotification fcmNotification =
+                FcmNotification.builder()
+                        .fcmToken(fcmToken)
+                        .pushAlarm(pushAlarm)
+                        .eventAlarm(eventAlarm)
+                        .build();
         User user = userRegisterUseCase.execute(profile, oauthInfo, fcmNotification);
         return tokenGenerateUseCase.execute(user);
     }

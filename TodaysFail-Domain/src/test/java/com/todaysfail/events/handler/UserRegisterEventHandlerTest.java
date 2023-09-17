@@ -25,10 +25,16 @@ class UserRegisterEventHandlerTest {
     @Test
     void 유저_생성_이벤트가_정상적으로_핸들링_되어야_한다() {
         // given
-        Profile profile = Profile.from("name", "profileImg", false);
-        OauthInfo oauthInfo = OauthInfo.of("oid", OauthProvider.KAKAO);
-        FcmNotification fcmNotification = FcmNotification.of("fcmToken", true, true);
-
+        Profile profile =
+                Profile.builder().name("name").profileImg("profileImg").isDefaultImg(false).build();
+        OauthInfo oauthInfo =
+                OauthInfo.builder().oauthId("oauthId").provider(OauthProvider.KAKAO).build();
+        FcmNotification fcmNotification =
+                FcmNotification.builder()
+                        .fcmToken("fcmToken")
+                        .pushAlarm(true)
+                        .eventAlarm(true)
+                        .build();
         // when
         userRegisterService.execute(profile, oauthInfo, fcmNotification);
         // then
