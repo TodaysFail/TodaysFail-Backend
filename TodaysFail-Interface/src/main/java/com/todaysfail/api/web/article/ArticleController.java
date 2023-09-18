@@ -5,6 +5,7 @@ import com.todaysfail.api.web.article.mapper.ArticleMapper;
 import com.todaysfail.api.web.common.SliceResponse;
 import com.todaysfail.domains.article.usecase.ArticleQueryUseCase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "6. [아티클]")
 @RestController
 @RequestMapping("/api/v1/articles")
+@SecurityRequirement(name = "access-token")
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleMapper articleMapper;

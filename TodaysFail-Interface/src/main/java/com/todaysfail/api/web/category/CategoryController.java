@@ -10,6 +10,7 @@ import com.todaysfail.domains.category.usecase.CategoryDeleteUseCase;
 import com.todaysfail.domains.category.usecase.CategoryModifyUseCase;
 import com.todaysfail.domains.category.usecase.CategoryQueryUseCase;
 import com.todaysfail.domains.category.usecase.CategoryRegisterUseCase;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -36,6 +37,7 @@ public class CategoryController {
     private final CategoryModifyUseCase categoryModifyUseCase;
     private final CategoryDeleteUseCase categoryDeleteUseCase;
 
+    @Operation(summary = "카테고리 등록")
     @PostMapping
     public CategoryResponse registerCategory(@RequestBody @Valid CategoryRegisterRequest request) {
         Long userId = SecurityUtils.getCurrentUserId();
@@ -46,6 +48,7 @@ public class CategoryController {
         return categoryMapper.toCategoryResponse(category);
     }
 
+    @Operation(summary = "자신의 카테고리 조회")
     @GetMapping("/me")
     public List<CategoryResponse> myCategoryQueryAll() {
         Long userId = SecurityUtils.getCurrentUserId();
@@ -53,6 +56,7 @@ public class CategoryController {
         return categoryMapper.toCategoryResponse(categoryList);
     }
 
+    @Operation(summary = "카테고리 수정")
     @PutMapping("/{categoryId}")
     public CategoryResponse modifyCategory(
             @PathVariable Long categoryId, @RequestBody @Valid CategoryModifyRequest request) {
@@ -67,6 +71,7 @@ public class CategoryController {
         return categoryMapper.toCategoryResponse(category);
     }
 
+    @Operation(summary = "카테고리 삭제")
     @DeleteMapping("/{categoryId}")
     public void deleteCategory(@PathVariable Long categoryId) {
         Long userId = SecurityUtils.getCurrentUserId();

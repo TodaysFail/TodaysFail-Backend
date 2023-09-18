@@ -6,6 +6,7 @@ import com.todaysfail.api.web.failure.mapper.FailureMapper;
 import com.todaysfail.config.security.SecurityUtils;
 import com.todaysfail.domains.failure.domain.Failure;
 import com.todaysfail.domains.failure.usecase.FailureRegisterUseCase;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ public class FailureController {
     private final FailureMapper failureMapper;
     private final FailureRegisterUseCase failureRegisterUseCase;
 
+    @Operation(summary = "실패 등록")
     @PostMapping
     public FailureResponse registerFailure(@RequestBody @Valid FailureRegisterRequest request) {
         Long userId = SecurityUtils.getCurrentUserId();
