@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface ArticleQueryUseCase {
-    Slice<Article> execute(Query query);
+    Slice<Article> execute(final Query query);
 
     record Query(Pageable pageable) {}
 }

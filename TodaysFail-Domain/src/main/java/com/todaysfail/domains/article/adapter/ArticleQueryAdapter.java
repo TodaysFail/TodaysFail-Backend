@@ -16,7 +16,7 @@ public class ArticleQueryAdapter implements ArticleQueryPort {
     private final ArticleRepository articleRepository;
 
     @Override
-    public Slice<Article> queryArticle(Pageable pageable) {
+    public Slice<Article> queryArticle(final Pageable pageable) {
         return articleRepository.findAll(pageable);
     }
 }

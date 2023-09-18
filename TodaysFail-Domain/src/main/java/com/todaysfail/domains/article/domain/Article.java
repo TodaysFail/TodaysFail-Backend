@@ -30,4 +30,12 @@ public class Article extends BaseTimeEntity {
     private String thumbnail;
 
     private String link;
+
+    public void modify(
+            final String title, final String content, final String thumbnail, final String link) {
+        this.title = title;
+        this.content = content;
+        this.thumbnail = thumbnail;
+        this.link = link;
+    }
 }

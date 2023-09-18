@@ -27,7 +27,7 @@ public class ArticleController {
     @Operation(summary = "아티클을 조회합니다.")
     @GetMapping
     public SliceResponse<ArticleResponse> queryArticle(
-            @ParameterObject @PageableDefault Pageable pageable) {
+            @ParameterObject @PageableDefault final Pageable pageable) {
         return articleMapper.toArticleSliceResponse(
                 articleQueryUseCase.execute(new ArticleQueryUseCase.Query(pageable)));
     }

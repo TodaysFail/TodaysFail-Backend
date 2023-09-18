@@ -13,7 +13,7 @@ public class ArticleQueryService implements ArticleQueryUseCase {
     private final ArticleQueryPort articleQueryPort;
 
     @Override
-    public Slice<Article> execute(Query query) {
+    public Slice<Article> execute(final Query query) {
         return articleQueryPort.queryArticle(query.pageable());
     }
 }
