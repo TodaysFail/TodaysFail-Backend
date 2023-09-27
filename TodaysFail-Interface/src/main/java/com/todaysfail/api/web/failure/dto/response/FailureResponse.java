@@ -16,4 +16,5 @@ public record FailureResponse(
         String impression,
         Set<TagResponse> tagList,
         int heartCount,
-        boolean secret) {}
+        boolean secret,
+        boolean isMine) {}
