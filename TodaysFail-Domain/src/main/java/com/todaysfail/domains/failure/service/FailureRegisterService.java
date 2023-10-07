@@ -3,7 +3,6 @@ package com.todaysfail.domains.failure.service;
 import com.todaysfail.domains.category.domain.Category;
 import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
 import com.todaysfail.domains.category.exception.CategoryNotFoundException;
-import com.todaysfail.domains.category.port.CategoryColorQueryPort;
 import com.todaysfail.domains.category.port.CategoryQueryPort;
 import com.todaysfail.domains.failure.domain.Failure;
 import com.todaysfail.domains.failure.exception.FutureFailureDateException;

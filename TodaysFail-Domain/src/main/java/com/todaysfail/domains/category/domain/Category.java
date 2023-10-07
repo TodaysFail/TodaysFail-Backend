@@ -3,12 +3,11 @@ package com.todaysfail.domains.category.domain;
 import com.todaysfail.domains.category.exception.CategoryNotOwnedByUserException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +29,7 @@ public class Category {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_color_id")
+    @Enumerated(EnumType.STRING)
     private CategoryColor categoryColor;
 
     public void modify(String categoryName, CategoryColor categoryColor) {

@@ -2,7 +2,6 @@ package com.todaysfail.api.web.category;
 
 import com.todaysfail.api.web.category.dto.response.CategoryColorResponse;
 import com.todaysfail.api.web.category.mapper.CategoryColorMapper;
-import com.todaysfail.domains.category.domain.CategoryColor;
 import com.todaysfail.domains.category.usecase.CategoryColorQueryUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

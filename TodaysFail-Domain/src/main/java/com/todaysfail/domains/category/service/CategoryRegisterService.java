@@ -1,9 +1,7 @@
 package com.todaysfail.domains.category.service;
 
 import com.todaysfail.domains.category.domain.Category;
-import com.todaysfail.domains.category.domain.CategoryColor;
 import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
-import com.todaysfail.domains.category.port.CategoryColorQueryPort;
 import com.todaysfail.domains.category.port.CategoryCommandPort;
 import com.todaysfail.domains.category.usecase.CategoryRegisterUseCase;
 import lombok.RequiredArgsConstructor;

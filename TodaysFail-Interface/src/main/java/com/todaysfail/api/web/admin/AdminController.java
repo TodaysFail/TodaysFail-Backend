@@ -10,7 +10,6 @@ import com.todaysfail.api.web.category.mapper.CategoryColorMapper;
 import com.todaysfail.domains.article.usecase.ArticleDeleteUseCase;
 import com.todaysfail.domains.article.usecase.ArticleModifyUseCase;
 import com.todaysfail.domains.article.usecase.ArticleRegisterUseCase;
-import com.todaysfail.domains.category.domain.CategoryColor;
 import com.todaysfail.domains.category.usecase.CategoryColorDeleteUseCase;
 import com.todaysfail.domains.category.usecase.CategoryColorModifyUseCase;
 import com.todaysfail.domains.category.usecase.CategoryColorRegisterUseCase;
