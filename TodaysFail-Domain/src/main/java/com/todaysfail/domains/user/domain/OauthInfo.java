@@ -25,7 +25,7 @@ public class OauthInfo {
 
     public OauthInfo withDraw() {
         return OauthInfo.builder()
-                .oauthId(WITHDRAW_PREFIX + LocalDateTime.now().toString() + ":" + oauthId)
+                .oauthId(WITHDRAW_PREFIX + LocalDateTime.now() + ":" + oauthId)
                 .provider(provider)
                 .build();
     }

@@ -5,7 +5,6 @@ import com.todaysfail.domains.auth.domain.TokenAndUser;
 import com.todaysfail.domains.auth.usecase.RefreshUseCase;
 import com.todaysfail.domains.auth.usecase.TokenGenerateUseCase;
 import com.todaysfail.domains.user.domain.User;
-import com.todaysfail.domains.user.exception.UserNotFountException;
 import com.todaysfail.domains.user.port.RefreshTokenPort;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +22,7 @@ public class RefreshService implements RefreshUseCase {
     public TokenAndUser execute(String refreshToken) {
         refreshTokenPort.queryRefreshToken(refreshToken);
         Long refreshUserId = jwtTokenHelper.parseRefreshToken(refreshToken);
-        User user =
-                userQueryPort
-                        .queryUser(refreshUserId)
-                        .orElseThrow(() -> UserNotFountException.EXCEPTION);
+        User user = userQueryPort.queryUser(refreshUserId);
         user.refresh();
         return tokenGenerateUseCase.execute(user);
     }

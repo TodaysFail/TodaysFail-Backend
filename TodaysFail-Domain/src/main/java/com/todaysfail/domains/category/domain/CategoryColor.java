@@ -8,8 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum CategoryColor {
-    BLACK("#000000"),
+    BLACK("BLACK", "#000000"),
     ;
 
+    private String color;
     private String code;
 }

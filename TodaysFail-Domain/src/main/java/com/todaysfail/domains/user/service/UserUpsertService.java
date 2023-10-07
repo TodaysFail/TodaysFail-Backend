@@ -7,6 +7,7 @@ import com.todaysfail.domains.user.domain.FcmNotification;
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.Profile;
 import com.todaysfail.domains.user.domain.User;
+import com.todaysfail.domains.user.exception.UserNotFountException;
 import com.todaysfail.domains.user.port.UserCommandPort;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import com.todaysfail.domains.user.usecase.UserUpsertUseCase;
@@ -21,19 +22,25 @@ public class UserUpsertService implements UserUpsertUseCase {
     private final UserQueryPort userQueryPort;
 
     @Override
-    @Transactional
+    @Transactional(noRollbackFor = UserNotFountException.class)
+    /**
+     * try catch로 감싸더라도 queryPort에서 UserNotFoundException(RunTimeException) 발생하게되면 rollback-only로
+     * 마킹되면서 외부메소드에서도 롤백이 일어나게되어 noRollbackFor를 사용
+     * https://keencho.github.io/posts/transaction-rollback/
+     */
     @RedissonLock(lockName = "개발용회원가입", identifier = "oauthInfo")
     public User execute(Profile profile, OauthInfo oauthInfo, FcmNotification fcmNotification) {
-        return userQueryPort
-                .findByOauthInfo(oauthInfo)
-                .orElse(
-                        userCommandPort.save(
-                                User.builder()
-                                        .profile(profile)
-                                        .oauthInfo(oauthInfo)
-                                        .fcmNotification(fcmNotification)
-                                        .userRole(UserRole.USER)
-                                        .userStatus(UserStatus.NORMAL)
-                                        .build()));
+        try {
+            return userQueryPort.findByOauthInfo(oauthInfo);
+        } catch (UserNotFountException e) {
+            return userCommandPort.save(
+                    User.builder()
+                            .profile(profile)
+                            .oauthInfo(oauthInfo)
+                            .fcmNotification(fcmNotification)
+                            .userRole(UserRole.USER)
+                            .userStatus(UserStatus.NORMAL)
+                            .build());
+        }
     }
 }

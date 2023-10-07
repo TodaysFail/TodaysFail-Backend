@@ -1,5 +1,6 @@
 package com.todaysfail.domains.category.domain;
 
+import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.domains.category.exception.CategoryNotOwnedByUserException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "tbl_category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Category {
+public class Category extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")

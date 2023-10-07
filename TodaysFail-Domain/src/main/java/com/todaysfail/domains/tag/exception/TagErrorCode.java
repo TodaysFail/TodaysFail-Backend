@@ -1,7 +1,5 @@
 package com.todaysfail.domains.tag.exception;
 
-import static com.todaysfail.common.consts.TodaysFailConst.*;
-
 import com.todaysfail.common.annotation.ExplainError;
 import com.todaysfail.common.consts.TodaysFailConst;
 import com.todaysfail.common.dto.ErrorReason;
@@ -15,8 +13,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TagErrorCode implements BaseErrorCode {
     @ExplainError("허용된 최대 태그 개수를 초과했습니다.")
-    FAILURE_TAG_COUNT_EXCEED(TodaysFailConst.BAD_REQUEST, "TAG_400_1", "허용된 최대 태그 개수를 초과했습니다."),
-    ;
+    TAG_COUNT_EXCEED(TodaysFailConst.BAD_REQUEST, "TAG_400_1", "허용된 최대 태그 개수를 초과했습니다."),
+
+    @ExplainError("태그를 찾을 수 없습니다.")
+    TAG_NOT_FOUND(TodaysFailConst.BAD_REQUEST, "TAG_400_2", "태그를 찾을 수 없습니다.");
 
     private Integer status;
     private String code;

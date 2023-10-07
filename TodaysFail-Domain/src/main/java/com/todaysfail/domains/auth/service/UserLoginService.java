@@ -6,7 +6,6 @@ import com.todaysfail.domains.auth.usecase.TokenGenerateUseCase;
 import com.todaysfail.domains.auth.usecase.UserLoginUseCase;
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.User;
-import com.todaysfail.domains.user.exception.UserNotFountException;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,10 +20,7 @@ public class UserLoginService implements UserLoginUseCase {
     @Override
     public TokenAndUser execute(String token, String fcmToken) {
         OauthInfo oauthInfo = kakaoOauthHelper.getOauthInfoByIdToken(token);
-        User user =
-                userQueryPort
-                        .findByOauthInfo(oauthInfo)
-                        .orElseThrow(() -> UserNotFountException.EXCEPTION);
+        User user = userQueryPort.findByOauthInfo(oauthInfo);
         user.login(fcmToken);
         return tokenGenerateUseCase.execute(user);
     }

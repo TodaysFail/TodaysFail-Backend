@@ -1,5 +1,6 @@
 package com.todaysfail.domains.failure.domain;
 
+import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.config.converter.LongArrayConverter;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "tbl_failure")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Failure {
+public class Failure extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "failure_id")
@@ -45,4 +46,8 @@ public class Failure {
     private int heartCount;
 
     private boolean secret;
+
+    public boolean isMine(Long userId) {
+        return this.userId.equals(userId);
+    }
 }

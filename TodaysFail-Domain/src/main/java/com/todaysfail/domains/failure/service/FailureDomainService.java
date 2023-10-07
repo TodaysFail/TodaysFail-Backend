@@ -1,0 +1,37 @@
+package com.todaysfail.domains.failure.service;
+
+import com.todaysfail.domains.category.domain.Category;
+import com.todaysfail.domains.failure.domain.Failure;
+import com.todaysfail.domains.failure.exception.FutureFailureDateException;
+import com.todaysfail.domains.failure.port.FailureCommandPort;
+import com.todaysfail.domains.tag.exception.TagCountExceedException;
+import java.time.LocalDate;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class FailureDomainService {
+    private final FailureCommandPort failureCommandPort;
+
+    public Failure register(final Failure failure, Category category) {
+        validateFailureTagSize(failure.getTags());
+        validateFailureDate(failure.getFailureDate());
+        category.validateOwnership(failure.getUserId());
+        return failureCommandPort.save(failure);
+    }
+
+    private void validateFailureTagSize(List<Long> tags) {
+        /** 태그는 최대 3개까지만 등록 가능하다. */
+        if (tags.size() > 3) {
+            throw TagCountExceedException.EXCEPTION;
+        }
+    }
+
+    private void validateFailureDate(LocalDate date) {
+        if (date.isAfter(LocalDate.now())) {
+            throw FutureFailureDateException.EXCEPTION;
+        }
+    }
+}

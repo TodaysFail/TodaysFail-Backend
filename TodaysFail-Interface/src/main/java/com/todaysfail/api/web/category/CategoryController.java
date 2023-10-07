@@ -56,7 +56,7 @@ public class CategoryController {
     public List<CategoryResponse> myCategoryQueryAll() {
         Long userId = SecurityUtils.getCurrentUserId();
         List<Category> categoryList = categoryQueryUseCase.execute(userId);
-        return categoryMapper.toCategoryResponse(categoryList);
+        return categoryMapper.toCategoryResponseList(categoryList);
     }
 
     @Operation(summary = "카테고리 수정")
@@ -81,7 +81,7 @@ public class CategoryController {
         categoryDeleteUseCase.execute(new CategoryDeleteUseCase.Command(userId, categoryId));
     }
 
-    @Operation(summary = "카테고리 컬러 조회")
+    @Operation(summary = "카테고리 컬러 Enum 조회 [주의: Swagger 응답 예시와 다르니 꼭 호출해서 확인해 볼 것]")
     @GetMapping
     public List<CategoryColor> categoryColorQueryAll() {
         return Arrays.stream(CategoryColor.values()).collect(Collectors.toList());
