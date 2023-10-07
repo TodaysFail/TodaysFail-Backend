@@ -6,6 +6,7 @@ import com.todaysfail.api.web.category.dto.response.CategoryResponse;
 import com.todaysfail.api.web.category.mapper.CategoryMapper;
 import com.todaysfail.config.security.SecurityUtils;
 import com.todaysfail.domains.category.domain.Category;
+import com.todaysfail.domains.category.domain.CategoryColor;
 import com.todaysfail.domains.category.usecase.CategoryDeleteUseCase;
 import com.todaysfail.domains.category.usecase.CategoryModifyUseCase;
 import com.todaysfail.domains.category.usecase.CategoryQueryUseCase;
@@ -13,7 +14,9 @@ import com.todaysfail.domains.category.usecase.CategoryRegisterUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +47,7 @@ public class CategoryController {
         Category category =
                 categoryRegisterUseCase.execute(
                         new CategoryRegisterUseCase.Command(
-                                userId, request.categoryName(), request.categoryColorId()));
+                                userId, request.categoryName(), request.categoryColor()));
         return categoryMapper.toCategoryResponse(category);
     }
 
@@ -67,7 +70,7 @@ public class CategoryController {
                                 userId,
                                 categoryId,
                                 request.categoryName(),
-                                request.categoryColorId()));
+                                request.categoryColor()));
         return categoryMapper.toCategoryResponse(category);
     }
 
@@ -76,5 +79,11 @@ public class CategoryController {
     public void deleteCategory(@PathVariable Long categoryId) {
         Long userId = SecurityUtils.getCurrentUserId();
         categoryDeleteUseCase.execute(new CategoryDeleteUseCase.Command(userId, categoryId));
+    }
+
+    @Operation(summary = "카테고리 컬러 조회")
+    @GetMapping
+    public List<CategoryColor> categoryColorQueryAll() {
+        return Arrays.stream(CategoryColor.values()).collect(Collectors.toList());
     }
 }

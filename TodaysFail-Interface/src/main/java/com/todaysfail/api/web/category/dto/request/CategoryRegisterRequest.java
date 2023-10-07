@@ -1,3 +1,5 @@
 package com.todaysfail.api.web.category.dto.request;
 
-public record CategoryRegisterRequest(String categoryName, Long categoryColorId) {}
+import com.todaysfail.domains.category.domain.CategoryColor;
+
+public record CategoryRegisterRequest(String categoryName, CategoryColor categoryColor) {}

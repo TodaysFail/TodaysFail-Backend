@@ -1,8 +1,6 @@
 package com.todaysfail.domains.failure.service;
 
 import com.todaysfail.domains.category.domain.Category;
-import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
-import com.todaysfail.domains.category.exception.CategoryNotFoundException;
 import com.todaysfail.domains.category.port.CategoryQueryPort;
 import com.todaysfail.domains.failure.domain.Failure;
 import com.todaysfail.domains.failure.exception.FutureFailureDateException;
@@ -15,6 +13,7 @@ import com.todaysfail.domains.user.domain.User;
 import com.todaysfail.domains.user.exception.UserNotFountException;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 public class FailureRegisterService implements FailureRegisterUseCase {
     private final FailureCommandPort failureCommandPort;
     private final CategoryQueryPort categoryQueryPort;
-    private final CategoryColorQueryPort categoryColorQueryPort;
     private final TagCommandPort tagCommandPort;
     private final UserQueryPort userQueryPort;
 
@@ -36,25 +34,19 @@ public class FailureRegisterService implements FailureRegisterUseCase {
                 userQueryPort
                         .queryUser(command.userId())
                         .orElseThrow(() -> UserNotFountException.EXCEPTION);
-        Category category =
-                categoryQueryPort
-                        .queryCategory(command.categoryId())
-                        .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
-        categoryColorQueryPort
-                .queryCategoryColor(command.categoryId())
-                .orElseThrow(() -> CategoryColorNotFoundException.EXCEPTION);
-        Set<Tag> tagSet = tagCommandPort.saveAndRetrieveAllTags(command.tagSet());
+        Category category = categoryQueryPort.queryCategory(command.categoryId());
+        List<Tag> tags = tagCommandPort.saveAndRetrieveAllTags(command.tagSet());
         category.validateOwnership(command.userId());
 
         return failureCommandPort.save(
                 Failure.builder()
-                        .user(user)
-                        .category(category)
+                        .userId(user.getId())
+                        .categoryId(category.getId())
                         .failureDate(command.date())
                         .title(command.title())
                         .content(command.content())
                         .impression(command.impression())
-                        .tags(tagSet)
+                        .tags(tags.stream().map(Tag::getId).toList())
                         .secret(command.secret())
                         .build());
     }

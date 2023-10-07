@@ -1,3 +1,5 @@
 package com.todaysfail.api.web.category.dto.request;
 
-public record CategoryModifyRequest(String categoryName, Long categoryColorId) {}
+import com.todaysfail.domains.category.domain.CategoryColor;
+
+public record CategoryModifyRequest(String categoryName, CategoryColor categoryColor) {}

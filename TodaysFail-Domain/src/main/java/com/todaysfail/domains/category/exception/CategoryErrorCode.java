@@ -18,9 +18,6 @@ public enum CategoryErrorCode implements BaseErrorCode {
 
     @ExplainError("본인이 생성한 카테고리가 아닙니다.")
     CATEGORY_NOT_OWNED_BY_USER(BAD_REQUEST, "CATEGORY_400_2", "본인이 생성한 카테고리가 아닙니다."),
-
-    @ExplainError("카테고리 색상을 찾을 수 없습니다.")
-    CATEGORY_COLOR_NOT_FOUND(BAD_REQUEST, "CATEGORY_COLOR_400_1", "카테고리 색상을 찾을 수 없습니다."),
     ;
 
     private Integer status;

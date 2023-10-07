@@ -1,8 +1,6 @@
 package com.todaysfail.domains.category.service;
 
 import com.todaysfail.domains.category.domain.Category;
-import com.todaysfail.domains.category.exception.CategoryColorNotFoundException;
-import com.todaysfail.domains.category.exception.CategoryNotFoundException;
 import com.todaysfail.domains.category.exception.CategoryNotOwnedByUserException;
 import com.todaysfail.domains.category.port.CategoryCommandPort;
 import com.todaysfail.domains.category.usecase.CategoryModifyUseCase;
@@ -13,20 +11,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CategoryModifyService implements CategoryModifyUseCase {
     private final CategoryCommandPort categoryCommandPort;
-    private final CategoryColorQueryPort categoryColorQueryPort;
 
     @Override
     public Category execute(Command command) {
-        Category category =
-                categoryCommandPort
-                        .queryCategory(command.categoryId())
-                        .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
-        CategoryColor categoryColor =
-                categoryColorQueryPort
-                        .queryCategoryColor(command.categoryColorId())
-                        .orElseThrow(() -> CategoryColorNotFoundException.EXCEPTION);
+        Category category = categoryCommandPort.queryCategory(command.categoryId());
         validationOwner(command, category);
-        category.modify(command.categoryName(), categoryColor);
+        category.modify(command.categoryName(), command.categoryColor());
         return category;
     }
 

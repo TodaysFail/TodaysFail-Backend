@@ -1,4 +1,6 @@
 package com.todaysfail.api.web.category.dto.response;
 
+import com.todaysfail.domains.category.domain.CategoryColor;
+
 public record CategoryResponse(
-        Long categoryId, Long userId, String categoryName, CategoryColorResponse categoryColor) {}
+        Long categoryId, Long userId, String categoryName, CategoryColor categoryColor) {}
