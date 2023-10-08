@@ -8,4 +8,14 @@ public record ArticleResponse(
         String content,
         String thumbnail,
         String link,
-        LocalDateTime createdAt) {}
+        LocalDateTime createdAt) {
+    public static ArticleResponse of(
+            Long articleId,
+            String title,
+            String content,
+            String thumbnail,
+            String link,
+            LocalDateTime createdAt) {
+        return new ArticleResponse(articleId, title, content, thumbnail, link, createdAt);
+    }
+}

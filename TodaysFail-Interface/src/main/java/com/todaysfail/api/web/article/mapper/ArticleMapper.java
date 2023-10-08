@@ -13,7 +13,7 @@ public class ArticleMapper {
     }
 
     public ArticleResponse toArticleResponse(Article article) {
-        return new ArticleResponse(
+        return ArticleResponse.of(
                 article.getId(),
                 article.getTitle(),
                 article.getContent(),
