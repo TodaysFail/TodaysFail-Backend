@@ -14,7 +14,7 @@ public class CategoryMapper {
         return CategoryResponse.from(category);
     }
 
-    public List<CategoryResponse> toCategoryResponseList(List<Category> categoryList) {
+    public List<CategoryResponse> toCategoryResponses(List<Category> categoryList) {
         return categoryList.stream().map(this::toCategoryResponse).collect(Collectors.toList());
     }
 }

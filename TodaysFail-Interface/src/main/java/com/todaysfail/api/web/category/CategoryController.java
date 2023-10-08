@@ -3,14 +3,11 @@ package com.todaysfail.api.web.category;
 import com.todaysfail.api.web.category.dto.request.CategoryModifyRequest;
 import com.todaysfail.api.web.category.dto.request.CategoryRegisterRequest;
 import com.todaysfail.api.web.category.dto.response.CategoryResponse;
-import com.todaysfail.api.web.category.mapper.CategoryMapper;
-import com.todaysfail.config.security.SecurityUtils;
-import com.todaysfail.domains.category.domain.Category;
+import com.todaysfail.api.web.category.usecase.CategoryDeleteUseCase;
+import com.todaysfail.api.web.category.usecase.CategoryModifyUseCase;
+import com.todaysfail.api.web.category.usecase.CategoryQueryUseCase;
+import com.todaysfail.api.web.category.usecase.CategoryRegisterUseCase;
 import com.todaysfail.domains.category.domain.CategoryColor;
-import com.todaysfail.domains.category.usecase.CategoryDeleteUseCase;
-import com.todaysfail.domains.category.usecase.CategoryModifyUseCase;
-import com.todaysfail.domains.category.usecase.CategoryQueryUseCase;
-import com.todaysfail.domains.category.usecase.CategoryRegisterUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "access-token")
 @RequiredArgsConstructor
 public class CategoryController {
-    private final CategoryMapper categoryMapper;
     private final CategoryRegisterUseCase categoryRegisterUseCase;
     private final CategoryQueryUseCase categoryQueryUseCase;
     private final CategoryModifyUseCase categoryModifyUseCase;
@@ -42,43 +38,29 @@ public class CategoryController {
 
     @Operation(summary = "카테고리 등록")
     @PostMapping
-    public CategoryResponse registerCategory(@RequestBody @Valid CategoryRegisterRequest request) {
-        Long userId = SecurityUtils.getCurrentUserId();
-        Category category =
-                categoryRegisterUseCase.execute(
-                        new CategoryRegisterUseCase.Command(
-                                userId, request.categoryName(), request.categoryColor()));
-        return categoryMapper.toCategoryResponse(category);
+    public CategoryResponse registerCategory(
+            @RequestBody @Valid final CategoryRegisterRequest request) {
+        return categoryRegisterUseCase.execute(request);
     }
 
     @Operation(summary = "자신의 카테고리 조회")
     @GetMapping("/me")
     public List<CategoryResponse> myCategoryQueryAll() {
-        Long userId = SecurityUtils.getCurrentUserId();
-        List<Category> categoryList = categoryQueryUseCase.execute(userId);
-        return categoryMapper.toCategoryResponseList(categoryList);
+        return categoryQueryUseCase.execute();
     }
 
     @Operation(summary = "카테고리 수정")
     @PutMapping("/{categoryId}")
     public CategoryResponse modifyCategory(
-            @PathVariable Long categoryId, @RequestBody @Valid CategoryModifyRequest request) {
-        Long userId = SecurityUtils.getCurrentUserId();
-        Category category =
-                categoryModifyUseCase.execute(
-                        new CategoryModifyUseCase.Command(
-                                userId,
-                                categoryId,
-                                request.categoryName(),
-                                request.categoryColor()));
-        return categoryMapper.toCategoryResponse(category);
+            @PathVariable Long categoryId,
+            @RequestBody @Valid final CategoryModifyRequest request) {
+        return categoryModifyUseCase.execute(categoryId, request);
     }
 
     @Operation(summary = "카테고리 삭제")
     @DeleteMapping("/{categoryId}")
-    public void deleteCategory(@PathVariable Long categoryId) {
-        Long userId = SecurityUtils.getCurrentUserId();
-        categoryDeleteUseCase.execute(new CategoryDeleteUseCase.Command(userId, categoryId));
+    public void deleteCategory(@PathVariable final Long categoryId) {
+        categoryDeleteUseCase.execute(categoryId);
     }
 
     @Operation(summary = "카테고리 컬러 Enum 조회 [주의: Swagger 응답 예시와 다르니 꼭 호출해서 확인해 볼 것]")

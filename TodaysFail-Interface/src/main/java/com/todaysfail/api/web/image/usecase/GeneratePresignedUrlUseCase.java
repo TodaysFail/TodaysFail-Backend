@@ -17,8 +17,8 @@ public class GeneratePresignedUrlUseCase {
     private final ImageDomainService imageDomainService;
 
     public PresignedUrlResponse execute(
-            ImageType imageType, ImageFileExtension imageFileExtension) {
-        Long userId = SecurityUtils.getCurrentUserId();
+            final ImageType imageType, final ImageFileExtension imageFileExtension) {
+        final Long userId = SecurityUtils.getCurrentUserId();
         PresignedUrl presignedUrl =
                 imageDomainService.generatePresignedUrl(userId, imageType, imageFileExtension);
         return imageMapper.toPresignedUrlResponse(presignedUrl);
