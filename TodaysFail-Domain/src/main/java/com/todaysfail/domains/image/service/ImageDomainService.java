@@ -4,13 +4,15 @@ import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import com.todaysfail.common.consts.TodaysFailConst;
 import com.todaysfail.common.helper.SpringEnvironmentHelper;
 import com.todaysfail.common.type.image.ImageFileExtension;
 import com.todaysfail.common.type.image.ImageType;
 import com.todaysfail.config.properties.AwsS3Properties;
+import com.todaysfail.domains.image.domain.Image;
 import com.todaysfail.domains.image.domain.PresignedUrl;
+import com.todaysfail.domains.image.port.ImageCommandPort;
 import com.todaysfail.domains.image.port.PresignedUrlGeneratePort;
-import com.todaysfail.domains.image.usecase.GeneratePresignedUrlUseCase;
 import java.util.Date;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +20,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GeneratePresignedUrlService implements GeneratePresignedUrlUseCase {
+public class ImageDomainService {
     private final AwsS3Properties awsS3Properties;
     private final SpringEnvironmentHelper springEnvironmentHelper;
     private final PresignedUrlGeneratePort presignedUrlGeneratePort;
+    private final ImageCommandPort imageCommandPort;
 
-    @Override
-    public PresignedUrl execute(
+    public PresignedUrl generatePresignedUrl(
             Long userId, ImageType imageType, ImageFileExtension imageFileExtension) {
         String imageKey = UUID.randomUUID().toString();
         String fileName = getFileName(userId, imageType, imageFileExtension, imageKey);
@@ -38,6 +40,35 @@ public class GeneratePresignedUrlService implements GeneratePresignedUrlUseCase 
                 presignedUrlGeneratePort.generatePresignedUrl(
                         fileName, generatePresignedUrlRequest);
         return PresignedUrl.of(presignedUrl, imageKey);
+    }
+
+    public String uploadSuccess(
+            Long userId,
+            ImageType imageType,
+            ImageFileExtension imageFileExtension,
+            String imageKey) {
+        String imageUrl =
+                TodaysFailConst.IMAGE_DOMAIN
+                        + "/"
+                        + springEnvironmentHelper.getCurrentProfile()
+                        + "/"
+                        + imageType.getValue()
+                        + "/"
+                        + userId
+                        + "/"
+                        + imageKey
+                        + "."
+                        + imageFileExtension.getUploadExtension();
+        return imageCommandPort
+                .save(
+                        Image.builder()
+                                .userId(userId)
+                                .imageType(imageType)
+                                .imageFileExtension(imageFileExtension)
+                                .imageKey(imageKey)
+                                .imageUrl(imageUrl)
+                                .build())
+                .getImageUrl();
     }
 
     private String getFileName(

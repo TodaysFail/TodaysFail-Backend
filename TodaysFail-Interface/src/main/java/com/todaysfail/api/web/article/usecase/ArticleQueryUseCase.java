@@ -20,7 +20,4 @@ public class ArticleQueryUseCase {
         Slice<Article> articles = articleQueryPort.queryArticle(pageable);
         return articleMapper.toArticleSliceResponse(articles);
     }
-    // Slice<Article> execute(final Query query);
-    //
-    // record Query(Pageable pageable) {}
 }

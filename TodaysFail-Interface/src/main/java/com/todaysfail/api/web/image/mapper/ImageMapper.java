@@ -8,10 +8,10 @@ import com.todaysfail.domains.image.domain.PresignedUrl;
 @Mapper
 public class ImageMapper {
     public PresignedUrlResponse toPresignedUrlResponse(PresignedUrl presignedUrl) {
-        return new PresignedUrlResponse(presignedUrl.getPresignUrl(), presignedUrl.getImageKey());
+        return PresignedUrlResponse.of(presignedUrl.getPresignUrl(), presignedUrl.getImageKey());
     }
 
     public ImageResponse toImageResponse(String imageUrl) {
-        return new ImageResponse(imageUrl);
+        return ImageResponse.from(imageUrl);
     }
 }
