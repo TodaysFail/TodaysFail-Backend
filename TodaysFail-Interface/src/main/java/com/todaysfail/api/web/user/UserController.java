@@ -1,12 +1,11 @@
 package com.todaysfail.api.web.user;
 
 import com.todaysfail.api.web.user.dto.response.RandomNicknameResponse;
-import com.todaysfail.api.web.user.mapper.UserMapper;
+import com.todaysfail.api.web.user.usecase.RandomNicknameUseCase;
+import com.todaysfail.api.web.user.usecase.UserQueryUseCase;
 import com.todaysfail.common.annotation.DisableSwaggerSecurity;
 import com.todaysfail.common.vo.UserDetail;
 import com.todaysfail.config.security.SecurityUtils;
-import com.todaysfail.domains.user.usecase.RandomNicknameUseCase;
-import com.todaysfail.domains.user.usecase.UserQueryUseCase;
 import com.todaysfail.domains.user.usecase.UserWithDrawUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "access-token")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserMapper userMapper;
     private final UserQueryUseCase userQueryUseCase;
     private final RandomNicknameUseCase randomNicknameUseCase;
     private final UserWithDrawUseCase userWithDrawUseCase;
@@ -32,7 +30,7 @@ public class UserController {
     @Operation(summary = "내 정보를 조회합니다.")
     @GetMapping("/me")
     public UserDetail queryMyInfo() {
-        return userQueryUseCase.queryUser(SecurityUtils.getCurrentUserId());
+        return userQueryUseCase.queryMyInfo();
     }
 
     @SecurityRequirement(name = "access-token")
@@ -46,6 +44,6 @@ public class UserController {
     @Operation(summary = "사용 가능 한 랜덤 닉네임을 발급합니다.")
     @GetMapping("/nickname/generate")
     public RandomNicknameResponse generateRandomNickname() {
-        return userMapper.toRandomNicknameResponse(randomNicknameUseCase.execute());
+        return randomNicknameUseCase.execute();
     }
 }

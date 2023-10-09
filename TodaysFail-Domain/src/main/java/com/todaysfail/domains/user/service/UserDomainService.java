@@ -8,17 +8,15 @@ import com.todaysfail.domains.user.domain.AnimalType;
 import com.todaysfail.domains.user.domain.Nickname;
 import com.todaysfail.domains.user.exception.NicknameGenerationFailedException;
 import com.todaysfail.domains.user.port.UserQueryPort;
-import com.todaysfail.domains.user.usecase.RandomNicknameUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RandomNicknameService implements RandomNicknameUseCase {
+public class UserDomainService {
     private final UserQueryPort userQueryPort;
 
-    @Override
-    public Nickname execute() {
+    public Nickname randomNicknameGeneration() {
         for (int attempt = 1; attempt <= NICKNAME_GENERATE_MAX_ATTEMPTS; attempt++) {
 
             AdjectiveType randomAdjective = AdjectiveType.getRandomAdjective();
