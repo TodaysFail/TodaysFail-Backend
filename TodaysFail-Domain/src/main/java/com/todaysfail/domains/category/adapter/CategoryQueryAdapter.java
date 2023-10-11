@@ -2,10 +2,10 @@ package com.todaysfail.domains.category.adapter;
 
 import com.todaysfail.common.annotation.Adapter;
 import com.todaysfail.domains.category.domain.Category;
+import com.todaysfail.domains.category.exception.CategoryNotFoundException;
 import com.todaysfail.domains.category.port.CategoryQueryPort;
 import com.todaysfail.domains.category.repository.CategoryRepository;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +16,10 @@ public class CategoryQueryAdapter implements CategoryQueryPort {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Optional<Category> queryCategory(Long categoryId) {
-        return categoryRepository.findById(categoryId);
+    public Category queryCategory(Long categoryId) {
+        return categoryRepository
+                .findById(categoryId)
+                .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
     }
 
     @Override

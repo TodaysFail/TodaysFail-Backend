@@ -8,7 +8,7 @@ import com.todaysfail.common.type.user.OauthProvider;
 import com.todaysfail.domains.user.domain.FcmNotification;
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.Profile;
-import com.todaysfail.domains.user.service.UserRegisterService;
+import com.todaysfail.domains.user.service.UserDomainService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(classes = DomainIntegrateTestConfig.class)
 @ActiveProfiles(resolver = DomainIntegrateProfileResolver.class)
 class UserRegisterEventHandlerTest {
-    @Autowired private UserRegisterService userRegisterService;
+    @Autowired private UserDomainService userDomainService;
 
     @MockBean private UserRegisterEventHandler userRegisterEventHandler;
 
@@ -36,7 +36,7 @@ class UserRegisterEventHandlerTest {
                         .eventAlarm(true)
                         .build();
         // when
-        userRegisterService.execute(profile, oauthInfo, fcmNotification);
+        userDomainService.register(profile, oauthInfo, fcmNotification);
         // then
         then(userRegisterEventHandler).should(times(1)).handleUserRegisterEvent(any());
     }

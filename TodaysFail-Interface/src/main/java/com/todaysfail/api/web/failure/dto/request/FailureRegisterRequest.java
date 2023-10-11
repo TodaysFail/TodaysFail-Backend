@@ -12,5 +12,5 @@ public record FailureRegisterRequest(
         @NotNull @Size(min = 1, max = 50) String title,
         @NotNull @Size(min = 1, max = 500) String content,
         @NotNull @Size(min = 1, max = 500) String impression,
-        @NotNull @Size(min = 1, max = 3) Set<String> tagSet,
+        @NotNull @Size(min = 1, max = 3) Set<String> tagNameSet,
         @NotNull boolean secret) {}

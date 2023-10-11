@@ -2,12 +2,10 @@ package com.todaysfail.api.web.image;
 
 import com.todaysfail.api.web.image.dto.response.ImageResponse;
 import com.todaysfail.api.web.image.dto.response.PresignedUrlResponse;
-import com.todaysfail.api.web.image.mapper.ImageMapper;
+import com.todaysfail.api.web.image.usecase.GeneratePresignedUrlUseCase;
+import com.todaysfail.api.web.image.usecase.ImageUploadSuccessUseCase;
 import com.todaysfail.common.type.image.ImageFileExtension;
 import com.todaysfail.common.type.image.ImageType;
-import com.todaysfail.config.security.SecurityUtils;
-import com.todaysfail.domains.image.usecase.GeneratePresignedUrlUseCase;
-import com.todaysfail.domains.image.usecase.ImageUploadSuccessUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "access-token")
 @RequiredArgsConstructor
 public class ImageController {
-    private final ImageMapper imageMapper;
     private final GeneratePresignedUrlUseCase generatePresignedUrlUseCase;
     private final ImageUploadSuccessUseCase imageUploadSuccessUseCase;
 
@@ -34,9 +31,7 @@ public class ImageController {
             @Parameter(description = "이미지 타입", required = true) @RequestParam ImageType imageType,
             @Parameter(description = "이미지 파일의 확장자", required = true) @RequestParam
                     ImageFileExtension imageFileExtension) {
-        Long userId = SecurityUtils.getCurrentUserId();
-        return imageMapper.toPresignedUrlResponse(
-                generatePresignedUrlUseCase.execute(userId, imageType, imageFileExtension));
+        return generatePresignedUrlUseCase.execute(imageType, imageFileExtension);
     }
 
     @Operation(summary = "이미지 업로드 성공 시 호출합니다.")
@@ -46,9 +41,6 @@ public class ImageController {
             @Parameter(description = "이미지 파일의 확장자", required = true) @RequestParam
                     ImageFileExtension imageFileExtension,
             @Parameter(description = "이미지 파일의 키", required = true) @RequestParam String imageKey) {
-        Long userId = SecurityUtils.getCurrentUserId();
-        String imageUrl =
-                imageUploadSuccessUseCase.success(userId, imageType, imageFileExtension, imageKey);
-        return imageMapper.toImageResponse(imageUrl);
+        return imageUploadSuccessUseCase.execute(imageType, imageFileExtension, imageKey);
     }
 }

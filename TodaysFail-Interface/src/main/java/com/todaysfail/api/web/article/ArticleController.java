@@ -1,9 +1,8 @@
 package com.todaysfail.api.web.article;
 
 import com.todaysfail.api.web.article.dto.response.ArticleResponse;
-import com.todaysfail.api.web.article.mapper.ArticleMapper;
+import com.todaysfail.api.web.article.usecase.ArticleQueryUseCase;
 import com.todaysfail.api.web.common.SliceResponse;
-import com.todaysfail.domains.article.usecase.ArticleQueryUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,14 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "access-token")
 @RequiredArgsConstructor
 public class ArticleController {
-    private final ArticleMapper articleMapper;
     private final ArticleQueryUseCase articleQueryUseCase;
 
     @Operation(summary = "아티클을 조회합니다.")
     @GetMapping
     public SliceResponse<ArticleResponse> queryArticle(
             @ParameterObject @PageableDefault final Pageable pageable) {
-        return articleMapper.toArticleSliceResponse(
-                articleQueryUseCase.execute(new ArticleQueryUseCase.Query(pageable)));
+        return articleQueryUseCase.execute(pageable);
     }
 }

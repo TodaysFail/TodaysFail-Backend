@@ -6,6 +6,6 @@ public class TagCountExceedException extends TodaysFailCodeException {
     public static final TodaysFailCodeException EXCEPTION = new TagCountExceedException();
 
     public TagCountExceedException() {
-        super(TagErrorCode.FAILURE_TAG_COUNT_EXCEED);
+        super(TagErrorCode.TAG_COUNT_EXCEED);
     }
 }
