@@ -39,14 +39,26 @@ public class User extends BaseTimeEntity {
     @Embedded private OauthInfo oauthInfo;
 
     @Enumerated(EnumType.STRING)
-    private UserStatus userStatus = UserStatus.NORMAL;
+    private UserStatus userStatus;
 
     @Enumerated(EnumType.STRING)
-    private UserRole userRole = UserRole.USER;
+    private UserRole userRole;
 
     @Embedded private FcmNotification fcmNotification;
 
-    private LocalDateTime lastLoginAt = LocalDateTime.now();
+    private LocalDateTime lastLoginAt;
+
+    public static User registerNormalUser(
+            Profile profile, OauthInfo oauthInfo, FcmNotification fcmNotification) {
+        return User.builder()
+                .profile(profile)
+                .oauthInfo(oauthInfo)
+                .fcmNotification(fcmNotification)
+                .userRole(UserRole.USER)
+                .userStatus(UserStatus.NORMAL)
+                .lastLoginAt(LocalDateTime.now())
+                .build();
+    }
 
     @PostPersist
     public void registerEvent() {

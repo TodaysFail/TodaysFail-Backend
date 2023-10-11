@@ -3,10 +3,9 @@ package com.todaysfail.api.web.user;
 import com.todaysfail.api.web.user.dto.response.RandomNicknameResponse;
 import com.todaysfail.api.web.user.usecase.RandomNicknameUseCase;
 import com.todaysfail.api.web.user.usecase.UserQueryUseCase;
+import com.todaysfail.api.web.user.usecase.UserWithDrawUseCase;
 import com.todaysfail.common.annotation.DisableSwaggerSecurity;
 import com.todaysfail.common.vo.UserDetail;
-import com.todaysfail.config.security.SecurityUtils;
-import com.todaysfail.domains.user.usecase.UserWithDrawUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,7 +36,7 @@ public class UserController {
     @Operation(summary = "회원탈퇴")
     @DeleteMapping("/me")
     public void withdrawal() {
-        userWithDrawUseCase.execute(SecurityUtils.getCurrentUserId());
+        userWithDrawUseCase.execute();
     }
 
     @DisableSwaggerSecurity

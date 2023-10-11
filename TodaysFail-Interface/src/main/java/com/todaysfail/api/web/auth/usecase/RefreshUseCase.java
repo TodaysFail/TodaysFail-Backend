@@ -1,29 +1,31 @@
-package com.todaysfail.domains.auth.service;
+package com.todaysfail.api.web.auth.usecase;
 
+import com.todaysfail.api.web.auth.dto.response.TokenAndUserResponse;
+import com.todaysfail.api.web.auth.mapper.AuthMapper;
+import com.todaysfail.common.annotation.UseCase;
 import com.todaysfail.common.jwt.JwtTokenHelper;
 import com.todaysfail.domains.auth.domain.TokenAndUser;
-import com.todaysfail.domains.auth.usecase.RefreshUseCase;
-import com.todaysfail.domains.auth.usecase.TokenGenerateUseCase;
+import com.todaysfail.domains.auth.helper.TokenGenerateHelper;
 import com.todaysfail.domains.user.domain.User;
 import com.todaysfail.domains.user.port.RefreshTokenPort;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
+@UseCase
 @RequiredArgsConstructor
-public class RefreshService implements RefreshUseCase {
+public class RefreshUseCase {
+    private final AuthMapper authMapper;
     private final RefreshTokenPort refreshTokenPort;
     private final JwtTokenHelper jwtTokenHelper;
-    private final TokenGenerateUseCase tokenGenerateUseCase;
+    private final TokenGenerateHelper tokenGenerateHelper;
     private final UserQueryPort userQueryPort;
 
-    @Override
-    public TokenAndUser execute(String refreshToken) {
+    public TokenAndUserResponse execute(String refreshToken) {
         refreshTokenPort.queryRefreshToken(refreshToken);
         Long refreshUserId = jwtTokenHelper.parseRefreshToken(refreshToken);
         User user = userQueryPort.queryUser(refreshUserId);
         user.refresh();
-        return tokenGenerateUseCase.execute(user);
+        TokenAndUser tokenAndUser = tokenGenerateHelper.tokenGenerate(user);
+        return authMapper.toTokenAndUserResponse(tokenAndUser);
     }
 }
