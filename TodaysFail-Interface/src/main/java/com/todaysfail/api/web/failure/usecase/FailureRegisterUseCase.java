@@ -38,7 +38,7 @@ public class FailureRegisterUseCase {
                         .tags(tags.stream().map(Tag::getId).collect(Collectors.toList()))
                         .secret(request.secret())
                         .build();
-        Failure registeredFailure = failureDomainService.register(failure, category);
+        Failure registeredFailure = failureDomainService.register(failure, category, tags);
         return failureMapper.toFailureResponse(registeredFailure);
     }
 }

@@ -8,4 +8,8 @@ public interface TagQueryPort {
     List<Tag> queryAllByNames(Set<String> tags);
 
     List<Tag> queryAllByIds(List<Long> tags);
+
+    List<Tag> querySearch(String searchKeyword);
+
+    List<Tag> queryPopular();
 }

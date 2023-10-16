@@ -6,4 +6,6 @@ import java.util.Set;
 
 public interface TagCommandPort {
     List<Tag> saveAndRetrieveAllTags(Set<String> tagNameSet);
+
+    List<Tag> saveAll(List<Tag> tags);
 }
