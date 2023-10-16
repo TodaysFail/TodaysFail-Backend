@@ -32,4 +32,14 @@ public class TagQueryAdapter implements TagQueryPort {
     public List<Tag> queryAllByIds(List<Long> tags) {
         return tagRepository.findAllById(tags);
     }
+
+    @Override
+    public List<Tag> querySearch(String searchKeyword) {
+        return tagRepository.findTop5ByTagNameContainsIgnoreCase(searchKeyword);
+    }
+
+    @Override
+    public List<Tag> queryPopular() {
+        return tagRepository.findTop5ByOrderByUsedCountDesc();
+    }
 }

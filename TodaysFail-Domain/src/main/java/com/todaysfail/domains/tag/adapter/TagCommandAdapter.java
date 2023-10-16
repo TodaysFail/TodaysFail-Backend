@@ -23,12 +23,12 @@ public class TagCommandAdapter implements TagCommandPort {
                         tagName ->
                                 tagRepository
                                         .findByTagName(tagName)
-                                        .orElseGet(
-                                                () ->
-                                                        tagRepository.save(
-                                                                Tag.builder()
-                                                                        .tagName(tagName)
-                                                                        .build())))
+                                        .orElseGet(() -> tagRepository.save(Tag.register(tagName))))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Tag> saveAll(List<Tag> tags) {
+        return tagRepository.saveAll(tags);
     }
 }

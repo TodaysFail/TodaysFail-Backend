@@ -24,4 +24,14 @@ public class Tag extends BaseTimeEntity {
     private Long id;
 
     private String tagName;
+
+    private Long usedCount;
+
+    public static Tag register(String tagName) {
+        return Tag.builder().tagName(tagName).usedCount(0L).build();
+    }
+
+    public void increaseUsedCount() {
+        this.usedCount++;
+    }
 }
