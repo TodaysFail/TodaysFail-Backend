@@ -1,6 +1,7 @@
 package com.todaysfail.domains.tag.domain;
 
 import com.todaysfail.common.BaseTimeEntity;
+import com.todaysfail.domains.tag.exception.TagNameLengthExceedException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Tag extends BaseTimeEntity {
+    private static final int MAX_TAG_NAME_LENGTH = 23;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
@@ -33,5 +36,11 @@ public class Tag extends BaseTimeEntity {
 
     public void increaseUsedCount() {
         this.usedCount++;
+    }
+
+    public void validateTagNameLength() {
+        if (this.tagName.length() > MAX_TAG_NAME_LENGTH) {
+            throw TagNameLengthExceedException.EXCEPTION;
+        }
     }
 }
