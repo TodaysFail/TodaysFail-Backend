@@ -16,7 +16,11 @@ public enum TagErrorCode implements BaseErrorCode {
     TAG_COUNT_EXCEED(TodaysFailConst.BAD_REQUEST, "TAG_400_1", "허용된 최대 태그 개수를 초과했습니다."),
 
     @ExplainError("태그를 찾을 수 없습니다.")
-    TAG_NOT_FOUND(TodaysFailConst.BAD_REQUEST, "TAG_400_2", "태그를 찾을 수 없습니다.");
+    TAG_NOT_FOUND(TodaysFailConst.BAD_REQUEST, "TAG_400_2", "태그를 찾을 수 없습니다."),
+
+    @ExplainError("태그 이름의 길이 제한을 초과했습니다.")
+    TAG_NAME_LENGTH_EXCEED(TodaysFailConst.BAD_REQUEST, "TAG_400_3", "태그 이름의 길이 제한을 초과했습니다."),
+    ;
 
     private Integer status;
     private String code;
