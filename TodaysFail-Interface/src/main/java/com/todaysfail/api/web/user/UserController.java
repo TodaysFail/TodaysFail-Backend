@@ -2,6 +2,7 @@ package com.todaysfail.api.web.user;
 
 import com.todaysfail.api.web.user.dto.response.RandomNicknameResponse;
 import com.todaysfail.api.web.user.usecase.RandomNicknameUseCase;
+import com.todaysfail.api.web.user.usecase.UserFirstTimeCheckUseCase;
 import com.todaysfail.api.web.user.usecase.UserQueryUseCase;
 import com.todaysfail.api.web.user.usecase.UserWithDrawUseCase;
 import com.todaysfail.common.annotation.DisableSwaggerSecurity;
@@ -24,6 +25,7 @@ public class UserController {
     private final UserQueryUseCase userQueryUseCase;
     private final RandomNicknameUseCase randomNicknameUseCase;
     private final UserWithDrawUseCase userWithDrawUseCase;
+    private final UserFirstTimeCheckUseCase userFirstTimeCheckUseCase;
 
     @SecurityRequirement(name = "access-token")
     @Operation(summary = "내 정보를 조회합니다.")
@@ -44,5 +46,11 @@ public class UserController {
     @GetMapping("/nickname/generate")
     public RandomNicknameResponse generateRandomNickname() {
         return randomNicknameUseCase.execute();
+    }
+
+    @Operation(summary = "생성 된 카테고리와 실패기록이 없는지 확인합니다.")
+    @GetMapping("/check-first")
+    public boolean checkIfFirstTimeUser() {
+        return userFirstTimeCheckUseCase.execute();
     }
 }
