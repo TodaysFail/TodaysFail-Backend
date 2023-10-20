@@ -9,4 +9,6 @@ public interface FailureQueryPort {
     Slice<Failure> queryFeed(Pageable pageable);
 
     List<Failure> queryFailureByUserId(Long userId);
+
+    List<Integer> queryDailyStatusByYearMonth(int year, int month);
 }
