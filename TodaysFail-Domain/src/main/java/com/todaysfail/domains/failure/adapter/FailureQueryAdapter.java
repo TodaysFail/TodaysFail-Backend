@@ -25,4 +25,9 @@ public class FailureQueryAdapter implements FailureQueryPort {
     public List<Failure> queryFailureByUserId(Long userId) {
         return failureRepository.findAllByUserId(userId);
     }
+
+    @Override
+    public List<Integer> queryDailyStatusByYearMonth(int year, int month) {
+        return failureRepository.findDailyStatusByYearMonth(year, month);
+    }
 }

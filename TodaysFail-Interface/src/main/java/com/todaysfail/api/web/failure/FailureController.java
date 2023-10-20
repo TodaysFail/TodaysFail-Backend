@@ -2,13 +2,16 @@ package com.todaysfail.api.web.failure;
 
 import com.todaysfail.api.web.common.SliceResponse;
 import com.todaysfail.api.web.failure.dto.request.FailureRegisterRequest;
+import com.todaysfail.api.web.failure.dto.response.FailureMonthlyDailyStatusResponse;
 import com.todaysfail.api.web.failure.dto.response.FailureResponse;
 import com.todaysfail.api.web.failure.usecase.FailureFeedQueryUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureLikeUseCase;
+import com.todaysfail.api.web.failure.usecase.FailureMonthlyDailyStatusUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureRegisterUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.YearMonth;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "4. [실패]")
@@ -30,6 +34,7 @@ public class FailureController {
     private final FailureRegisterUseCase failureRegisterUseCase;
     private final FailureFeedQueryUseCase failureFeedQueryUseCase;
     private final FailureLikeUseCase failureLikeUseCase;
+    private final FailureMonthlyDailyStatusUseCase failureMonthlyDailyStatusUseCase;
 
     @Operation(summary = "실패 등록")
     @PostMapping
@@ -48,5 +53,11 @@ public class FailureController {
     @PostMapping("/like/{failureId}")
     public void likeFailure(@PathVariable Long failureId) {
         failureLikeUseCase.execute(failureId);
+    }
+
+    @Operation(summary = "년, 월을 입력받아 일별 실패 기록여부 반환")
+    @GetMapping("/monthly-daily-status")
+    public FailureMonthlyDailyStatusResponse checkMonthFailures(@RequestParam YearMonth yearMonth) {
+        return failureMonthlyDailyStatusUseCase.execute(yearMonth);
     }
 }
