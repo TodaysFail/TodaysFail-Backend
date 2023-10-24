@@ -1,3 +1,8 @@
 package com.todaysfail.domains.usertaghistory.port;
 
-public interface UserTagHistoryQueryPort {}
+import com.todaysfail.domains.usertaghistory.domain.UserTagHistory;
+import java.util.List;
+
+public interface UserTagHistoryQueryPort {
+    List<UserTagHistory> queryUserTagHistory(Long userId);
+}
