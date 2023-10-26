@@ -1,6 +1,7 @@
 package com.todaysfail.domains.failure.repository;
 
 import com.todaysfail.domains.failure.domain.Failure;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -18,4 +19,6 @@ public interface FailureRepository extends JpaRepository<Failure, Long> {
                     + "and month(f.failureDate) = :month "
                     + "group by DAY(f.failureDate)")
     List<Integer> findDailyStatusByYearMonth(int year, int month);
+
+    List<Failure> findAllByUserIdAndFailureDate(Long userId, LocalDate date);
 }
