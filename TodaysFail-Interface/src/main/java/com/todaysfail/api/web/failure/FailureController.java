@@ -2,8 +2,10 @@ package com.todaysfail.api.web.failure;
 
 import com.todaysfail.api.web.common.SliceResponse;
 import com.todaysfail.api.web.failure.dto.request.FailureRegisterRequest;
+import com.todaysfail.api.web.failure.dto.response.FailureByCategoryResponse;
 import com.todaysfail.api.web.failure.dto.response.FailureMonthlyDailyStatusResponse;
 import com.todaysfail.api.web.failure.dto.response.FailureResponse;
+import com.todaysfail.api.web.failure.usecase.FailureByCategoryQueryUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureFeedQueryUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureLikeUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureMonthlyDailyStatusUseCase;
@@ -11,12 +13,14 @@ import com.todaysfail.api.web.failure.usecase.FailureRegisterUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +39,7 @@ public class FailureController {
     private final FailureFeedQueryUseCase failureFeedQueryUseCase;
     private final FailureLikeUseCase failureLikeUseCase;
     private final FailureMonthlyDailyStatusUseCase failureMonthlyDailyStatusUseCase;
+    private final FailureByCategoryQueryUseCase failureByCategoryQueryUseCase;
 
     @Operation(summary = "실패 등록")
     @PostMapping
@@ -59,5 +64,12 @@ public class FailureController {
     @GetMapping("/monthly-daily-status")
     public FailureMonthlyDailyStatusResponse checkMonthFailures(@RequestParam YearMonth yearMonth) {
         return failureMonthlyDailyStatusUseCase.execute(yearMonth);
+    }
+
+    @Operation(summary = "선택 한 날짜의 실패 기록을 카테고리별로 조회")
+    @GetMapping("/{date}")
+    public FailureByCategoryResponse getFailures(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return failureByCategoryQueryUseCase.execute(date);
     }
 }

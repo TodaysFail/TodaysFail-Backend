@@ -12,6 +12,7 @@ import com.todaysfail.domains.tag.port.TagQueryPort;
 import com.todaysfail.domains.user.domain.User;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 
@@ -33,5 +34,11 @@ public class FailureMapper {
 
     public SliceResponse<FailureResponse> toFailureSliceResponse(Slice<Failure> failureSlice) {
         return SliceResponse.of(failureSlice.map(failure -> toFailureResponse(failure)));
+    }
+
+    public List<FailureResponse> toFailureListResponse(List<Failure> failures) {
+        return failures.stream()
+                .map(failure -> toFailureResponse(failure))
+                .collect(Collectors.toList());
     }
 }
