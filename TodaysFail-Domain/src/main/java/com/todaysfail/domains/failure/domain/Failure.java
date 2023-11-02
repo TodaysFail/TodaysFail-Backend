@@ -62,4 +62,13 @@ public class Failure extends BaseTimeEntity {
             throw FailureOwnedByUserException.EXCEPTION;
         }
     }
+
+    public void modify(Failure failure) {
+        this.categoryId = failure.getCategoryId();
+        this.failureDate = failure.getFailureDate();
+        this.title = failure.getTitle();
+        this.content = failure.getContent();
+        this.tags = failure.getTags();
+        this.secret = failure.isSecret();
+    }
 }
