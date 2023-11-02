@@ -18,6 +18,7 @@ import com.todaysfail.domains.user.exception.NicknameGenerationFailedException;
 import com.todaysfail.domains.user.exception.UserNotFountException;
 import com.todaysfail.domains.user.port.UserCommandPort;
 import com.todaysfail.domains.user.port.UserQueryPort;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,12 +42,12 @@ public class UserDomainService {
     @Transactional(noRollbackFor = UserNotFountException.class)
     @RedissonLock(lockName = "개발용회원가입", identifier = "oauthInfo")
     public User upsert(Profile profile, OauthInfo oauthInfo, FcmNotification fcmNotification) {
-        try {
-            return userQueryPort.findByOauthInfo(oauthInfo);
-        } catch (UserNotFountException e) {
+        Optional<User> userOptional = userQueryPort.findByOauthInfo(oauthInfo);
+        if (userOptional.isEmpty()) {
             return userCommandPort.save(
                     User.registerNormalUser(profile, oauthInfo, fcmNotification));
         }
+        return userOptional.get();
     }
 
     @Transactional

@@ -6,6 +6,7 @@ import com.todaysfail.domains.user.domain.User;
 import com.todaysfail.domains.user.exception.UserNotFountException;
 import com.todaysfail.domains.user.port.UserQueryPort;
 import com.todaysfail.domains.user.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +17,8 @@ public class UserQueryAdapter implements UserQueryPort {
     private final UserRepository userRepository;
 
     @Override
-    public User findByOauthInfo(OauthInfo oauthInfo) {
-        return userRepository
-                .findByOauthInfo(oauthInfo)
-                .orElseThrow(() -> UserNotFountException.EXCEPTION);
+    public Optional<User> findByOauthInfo(OauthInfo oauthInfo) {
+        return userRepository.findByOauthInfo(oauthInfo);
     }
 
     @Override
