@@ -6,4 +6,6 @@ public interface FailureCommandPort {
     Failure save(Failure failure);
 
     Failure queryFailure(Long failureId);
+
+    void delete(Failure failure);
 }

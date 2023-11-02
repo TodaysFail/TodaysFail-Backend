@@ -43,7 +43,6 @@ public class FailureDomainService {
     @RedissonLock(lockName = "실패좋아요", identifier = "failureId")
     public void likeFailure(Long userId, Long failureId) {
         Failure failure = failureCommandPort.queryFailure(failureId);
-        failure.validateOwnership(userId);
         failure.like();
         failureLikeQueryPort.checkAlreadyLiked(userId, failureId);
         failureLikeCommandPort.save(FailureLike.of(userId, failureId));
@@ -70,5 +69,11 @@ public class FailureDomainService {
         if (date.isAfter(LocalDate.now())) {
             throw FutureFailureDateException.EXCEPTION;
         }
+    }
+
+    public void deleteFailure(final Long failureId, final Long userId) {
+        Failure failure = failureCommandPort.queryFailure(failureId);
+        failure.validateOwnership(userId);
+        failureCommandPort.delete(failure);
     }
 }

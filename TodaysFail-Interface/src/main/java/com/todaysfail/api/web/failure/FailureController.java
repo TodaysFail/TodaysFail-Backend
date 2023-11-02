@@ -7,6 +7,7 @@ import com.todaysfail.api.web.failure.dto.response.FailureByCategoryResponse;
 import com.todaysfail.api.web.failure.dto.response.FailureMonthlyDailyStatusResponse;
 import com.todaysfail.api.web.failure.dto.response.FailureResponse;
 import com.todaysfail.api.web.failure.usecase.FailureByCategoryQueryUseCase;
+import com.todaysfail.api.web.failure.usecase.FailureDeleteUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureFeedQueryUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureLikeUseCase;
 import com.todaysfail.api.web.failure.usecase.FailureModifyUseCase;
@@ -23,6 +24,7 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +46,7 @@ public class FailureController {
     private final FailureLikeUseCase failureLikeUseCase;
     private final FailureMonthlyDailyStatusUseCase failureMonthlyDailyStatusUseCase;
     private final FailureByCategoryQueryUseCase failureByCategoryQueryUseCase;
+    private final FailureDeleteUseCase failureDeleteUseCase;
 
     @Operation(summary = "실패 등록")
     @PostMapping
@@ -56,6 +59,12 @@ public class FailureController {
     public FailureResponse modifyFailure(
             @PathVariable Long failureId, @RequestBody FailureModifyRequest request) {
         return failureModifyUseCase.execute(failureId, request);
+    }
+
+    @Operation(summary = "실패 삭제")
+    @DeleteMapping("/{failureId}")
+    public void deleteFailure(@PathVariable Long failureId) {
+        failureDeleteUseCase.execute(failureId);
     }
 
     @Operation(summary = "피드")

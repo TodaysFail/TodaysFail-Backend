@@ -2,7 +2,7 @@ package com.todaysfail.domains.failure.domain;
 
 import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.config.converter.LongArrayConverter;
-import com.todaysfail.domains.failure.exception.FailureOwnedByUserException;
+import com.todaysfail.domains.failure.exception.FailureNotOwnedByUserException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +57,8 @@ public class Failure extends BaseTimeEntity {
     }
 
     public void validateOwnership(Long userId) {
-        // 본인이 생성 한 실패 기록일 경우
-        if (this.userId.equals(userId)) {
-            throw FailureOwnedByUserException.EXCEPTION;
+        if (!this.userId.equals(userId)) {
+            throw FailureNotOwnedByUserException.EXCEPTION;
         }
     }
 
