@@ -2,9 +2,10 @@ package com.todaysfail.domains.user.port;
 
 import com.todaysfail.domains.user.domain.OauthInfo;
 import com.todaysfail.domains.user.domain.User;
+import java.util.Optional;
 
 public interface UserQueryPort {
-    User findByOauthInfo(OauthInfo oauthInfo);
+    Optional<User> findByOauthInfo(OauthInfo oauthInfo);
 
     Boolean existsByOauthInfo(OauthInfo oauthInfo);
 
