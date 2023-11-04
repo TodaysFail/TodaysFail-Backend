@@ -25,4 +25,9 @@ public class FailureCommandAdapter implements FailureCommandPort {
                 .findById(failureId)
                 .orElseThrow(() -> FailureNotFoundException.EXCEPTION);
     }
+
+    @Override
+    public void delete(Failure failure) {
+        failureRepository.delete(failure);
+    }
 }

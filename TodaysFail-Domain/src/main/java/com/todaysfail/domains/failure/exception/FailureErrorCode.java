@@ -20,7 +20,7 @@ public enum FailureErrorCode implements BaseErrorCode {
     FAILURE_DATE_IS_FUTURE(NOT_FOUND, "FAILURE_400_2", "입력 한 날짜가 미래일 수 없습니다."),
 
     @ExplainError("본인이 생성한 실패 기록 입니다.")
-    FAILURE_OWNED_BY_USER(BAD_REQUEST, "FAILURE_400_3", "본인이 생성한 실패 기록 입니다."),
+    FAILURE_NOT_OWNED_BY_USER(BAD_REQUEST, "FAILURE_400_3", "본인이 생성한 실패 기록이 아닙니다."),
     ;
 
     private Integer status;

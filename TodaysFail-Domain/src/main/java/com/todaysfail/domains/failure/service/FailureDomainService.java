@@ -39,6 +39,25 @@ public class FailureDomainService {
         return failureCommandPort.save(failure);
     }
 
+    @Transactional
+    @RedissonLock(lockName = "실패좋아요", identifier = "failureId")
+    public void likeFailure(Long userId, Long failureId) {
+        Failure failure = failureCommandPort.queryFailure(failureId);
+        failure.like();
+        failureLikeQueryPort.checkAlreadyLiked(userId, failureId);
+        failureLikeCommandPort.save(FailureLike.of(userId, failureId));
+    }
+
+    @Transactional
+    public Failure modifyFailure(Long failureId, Failure failure, Category category) {
+        validateFailureTagSize(failure.getTags());
+        validateFailureDate(failure.getFailureDate());
+        category.validateOwnership(failure.getUserId());
+        Failure originFailure = failureCommandPort.queryFailure(failureId);
+        originFailure.modify(failure);
+        return originFailure;
+    }
+
     private void validateFailureTagSize(List<Long> tags) {
         /** 태그는 최대 3개까지만 등록 가능하다. */
         if (tags.size() > 3) {
@@ -52,13 +71,9 @@ public class FailureDomainService {
         }
     }
 
-    @Transactional
-    @RedissonLock(lockName = "실패좋아요", identifier = "failureId")
-    public void likeFailure(Long userId, Long failureId) {
+    public void deleteFailure(final Long failureId, final Long userId) {
         Failure failure = failureCommandPort.queryFailure(failureId);
         failure.validateOwnership(userId);
-        failure.like();
-        failureLikeQueryPort.checkAlreadyLiked(userId, failureId);
-        failureLikeCommandPort.save(FailureLike.of(userId, failureId));
+        failureCommandPort.delete(failure);
     }
 }
