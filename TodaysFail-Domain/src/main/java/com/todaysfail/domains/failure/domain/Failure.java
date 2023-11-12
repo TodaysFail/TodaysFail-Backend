@@ -1,8 +1,10 @@
 package com.todaysfail.domains.failure.domain;
 
+import com.todaysfail.aop.event.Events;
 import com.todaysfail.common.BaseTimeEntity;
 import com.todaysfail.config.converter.LongArrayConverter;
 import com.todaysfail.domains.failure.exception.FailureNotOwnedByUserException;
+import com.todaysfail.events.FailureRegisterEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +50,11 @@ public class Failure extends BaseTimeEntity {
     private int heartCount;
 
     private boolean secret;
+
+    @PostPersist
+    void registerEvent() {
+        Events.raise(new FailureRegisterEvent(this));
+    }
 
     public boolean isMine(Long userId) {
         return this.userId.equals(userId);
