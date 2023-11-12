@@ -1,7 +1,9 @@
 package com.todaysfail.api.web.tag;
 
+import com.todaysfail.api.web.tag.dto.response.TagRecommendResponse;
 import com.todaysfail.api.web.tag.dto.response.TagResponse;
 import com.todaysfail.api.web.tag.usecase.TagPopularUseCase;
+import com.todaysfail.api.web.tag.usecase.TagRecommendUseCase;
 import com.todaysfail.api.web.tag.usecase.TagSearchUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TagController {
     private final TagSearchUseCase tagSearchUseCase;
     private final TagPopularUseCase tagPopularUseCase;
+    private final TagRecommendUseCase tagRecommendUseCase;
 
     @Operation(summary = "태그를 검색합니다. (5개)")
     @GetMapping("/search")
@@ -34,7 +37,9 @@ public class TagController {
         return tagPopularUseCase.execute();
     }
 
-    // @Operation(summary = "추천 태그를 조회합니다.")
-    // @GetMapping("/recommend")
-    // TODO: 추천 태그 조회 API 구현
+    @Operation(summary = "추천 태그를 조회합니다.")
+    @GetMapping("/recommend")
+    public List<TagRecommendResponse> recommendTag() {
+        return tagRecommendUseCase.execute();
+    }
 }

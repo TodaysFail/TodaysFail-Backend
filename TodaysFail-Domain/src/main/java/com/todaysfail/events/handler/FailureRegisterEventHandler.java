@@ -1,5 +1,7 @@
 package com.todaysfail.events.handler;
 
+import static com.todaysfail.common.consts.TodaysFailConst.RECOMMEND_TAG_KEY;
+
 import com.todaysfail.common.annotation.EventHandler;
 import com.todaysfail.domains.failure.domain.Failure;
 import com.todaysfail.domains.tag.domain.Tag;
@@ -36,7 +38,7 @@ public class FailureRegisterEventHandler {
                         tag -> {
                             redisTemplate
                                     .opsForZSet()
-                                    .incrementScore("RecommendTag", tag.getTagName(), 1);
+                                    .incrementScore(RECOMMEND_TAG_KEY, tag.getTagName(), 1);
                         });
     }
 }

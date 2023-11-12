@@ -12,6 +12,7 @@ public class TodaysFailConst {
     public static final String TOKEN_ISSUER = "TodaysFail";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
+    public static final String RECOMMEND_TAG_KEY = "RecommendTag";
 
     public static final int MILLI_TO_SECOND = 1000;
     public static final int SERVICE_UNAVAILABLE = 503;
