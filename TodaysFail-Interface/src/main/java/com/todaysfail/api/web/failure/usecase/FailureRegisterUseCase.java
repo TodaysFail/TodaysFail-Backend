@@ -11,8 +11,6 @@ import com.todaysfail.domains.failure.domain.Failure;
 import com.todaysfail.domains.failure.service.FailureDomainService;
 import com.todaysfail.domains.tag.domain.Tag;
 import com.todaysfail.domains.tag.service.TagDomainService;
-import com.todaysfail.domains.usertaghistory.domain.UserTagHistory;
-import com.todaysfail.domains.usertaghistory.port.UserTagHistoryCommandPort;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,6 @@ public class FailureRegisterUseCase {
     private final CategoryQueryPort categoryQueryPort;
     private final FailureDomainService failureDomainService;
     private final TagDomainService tagDomainService;
-    private final UserTagHistoryCommandPort userTagHistoryCommandPort;
 
     @Transactional
     public FailureResponse execute(FailureRegisterRequest request) {
@@ -44,9 +41,6 @@ public class FailureRegisterUseCase {
                         .secret(request.secret())
                         .build();
         Failure registeredFailure = failureDomainService.register(failure, category, tags);
-        tags.stream()
-                .map(tag -> UserTagHistory.registerUserTagHistory(currentUserId, tag.getId()))
-                .forEach(userTagHistoryCommandPort::save);
         return failureMapper.toFailureResponse(registeredFailure);
     }
 }
