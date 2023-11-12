@@ -3,7 +3,7 @@ package com.todaysfail.config.mysql;
 import java.util.List;
 import org.springframework.context.annotation.Profile;
 
-@Profile({"prod", "dev"})
+@Profile("prod")
 public class ReadOnlyDataSourceCycle<T> {
     private List<T> readOnlyDataSourceLookupKeys;
     private int index = 0;

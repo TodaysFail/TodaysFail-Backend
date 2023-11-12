@@ -14,7 +14,7 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 
 @Configuration
 @RequiredArgsConstructor
-@Profile({"prod", "dev"})
+@Profile("prod")
 public class ReplicationDataSourceConfiguration {
     private final ReplicationDataSourceProperties replicationDataSourceProperties;
 
