@@ -8,6 +8,7 @@ import com.todaysfail.events.FailureRegisterEvent;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
@@ -17,6 +18,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @RequiredArgsConstructor
 public class FailureRegisterEventHandler {
     private final TagQueryPort tagQueryPort;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Async
     @TransactionalEventListener(
@@ -24,9 +26,17 @@ public class FailureRegisterEventHandler {
             phase = TransactionPhase.AFTER_COMMIT)
     public void handleUserRegisterEvent(FailureRegisterEvent event) {
         final Failure failure = event.getFailure();
+        log.info("[DOMAIN EVENT : FailureRegisterEvent] failureId: {}", failure.getId());
+
         List<Long> tagIds = failure.getTags();
         List<Tag> tags = tagQueryPort.queryAllByIds(tagIds);
 
-        log.info("[DOMAIN EVENT : FailureRegisterEvent] {}", event);
+        tags.stream()
+                .forEach(
+                        tag -> {
+                            redisTemplate
+                                    .opsForZSet()
+                                    .incrementScore("RecommendTag", tag.getTagName(), 1);
+                        });
     }
 }
